@@ -3,7 +3,6 @@ package com.starters.dodu.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
