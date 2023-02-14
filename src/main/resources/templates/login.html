@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layout/layout}">
+
+<head>
+  <style>
+    body{
+      background:white;
+    }
+
+    h1{
+      color: #0a53be;
+      font-size:48px;
+      letter-spacing:-3px;
+      text-align:center;
+      margin:100px 0 80px 0 ;
+      transition:.2s linear;
+    }
+
+    form{
+      text-align: center;
+
+      margin: auto;
+    }
+    .separator{
+      text-align: center;
+    }
+
+
+    .google__btn,
+    .github__btn{
+      display:block;
+      width:90%;
+      max-width:680px;
+      margin:20px auto;
+      height:50px;
+      cursor:pointer;
+      font-size:14px;
+      font-family: 'Montserrat', sans-serif;
+      border-radius:8px;
+      border:none;
+      line-height:40px;
+    &.google__btn{
+       background:#5b90f0;
+       color:white;
+       box-shadow:0 15px 30px rgba(#5b90f0,.36);
+       transition:.2s linear;
+    }
+    &.github__btn{
+       background:#25282d;
+       color:white;
+       box-shadow:0 15px 30px rgba(#25282d,.36);
+       transition:.2s linear;
+
+    }
+    }
+
+  </style>
+</head>
+<th:block layout:fragment="content">
+  <div class="container">
+    <!-- Heading -->
+    <h1>SIGN IN</h1>
+
+
+    <!-- Form -->
+    <form>
+      <div class="row mb-3">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+          <input type="email" class="form-control" id="inputEmail3">
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" id="inputPassword3">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Sign in</button>
+    </form>
+    <!-- separator -->
+    <div class="separator">
+      <br>
+      <p>OR</p>
+    </div>
+    <!-- google button -->
+    <button class="google__btn">
+      Sign in with Google
+    </button>
+    <!-- google button -->
+    <button class="github__btn">
+      Sign in with GitHub
+    </button>
+    <div>
+      <br><br><br><br><br>
+
+    </div>
+  </div>
+
+
+</th:block>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layout/layout}">
+
+
+<th:block layout:fragment="content">
+    <header class="bg-primary py-1">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-warning" style="display:inline; margin-top: 100px;">
+                <img src="images/prodo2.png" class="rounded float-start prodo2" alt="..." />
+                <h1 class="display-4 fw-bolder" style="display:inline; margin-left: 100px;">하지석</h1>
+                <p class="lead fw-normal text-warning-50 mb-0" style="display:inline;">OO대학교 OO학과</p>
+                <br />
+                <br />
+                <p class="lead fw-normal text-warning-50 mb-0" style="display:inline; margin-left: 100px;">OO대학교의 모든 것을 알려드리겠습니다.</p>
+            </div>
+            <div class="px-lg-5 py-lg-5">
+                <div class="p-4"><div class="text-center"></div></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="d-flex justify-content-between">
+                <div class="p-5"><b>예지</b>님이 제안한 시간</div>
+                <div class="p-5"><b>예지</b>님이 물어보고 싶은 주제</div>
+            </div>
+            <div
+                    class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-start"
+            >
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">3월 3일 10시</h5>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <a class="btn btn-outline-dark mt-auto" href="#">신청하기</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">3월 4일 11시</h5>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <a class="btn btn-outline-dark mt-auto" href="#">신청하기</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">3월 5일 10시</h5>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <a class="btn btn-outline-dark mt-auto" href="#">신청하기</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="col-20">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">서울대학교에 대해 알고 싶어요.</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class="px-5"><b>예지</b>님이 사용한 dodu</div>
+                <div class="px-5" style="width: 500px">$<b>3500</b> dodu</div>
+            </div>
+        </div>
+    </section>
+</th:block>
+</html>
