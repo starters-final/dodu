@@ -20,4 +20,8 @@ public class MainController {
     public String offer(){
         return "offertomentor";
     }
+
+    @GetMapping("/layout")
+    public String phoneLay(){return "/layout/phonelay";  }
+
 }
