@@ -26,7 +26,7 @@ public class Apply {
 
   @ManyToOne
   @JoinColumn(name = "mentee_id")
-  private Mentee menteeId;
+  private Mentee mentee;
 
   @ManyToOne
   @JoinColumn(name = "mentor_id")
