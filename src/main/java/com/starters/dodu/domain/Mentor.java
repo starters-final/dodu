@@ -1,13 +1,11 @@
 package com.starters.dodu.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-
-import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -15,13 +13,16 @@ import static jakarta.persistence.FetchType.LAZY;
 public class Mentor {
 
   @Id
-  @GeneratedValue
-  @Column(name = "mentor_id")
-  private UUID id; // 식별자
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(
+          name = "UUID",
+          strategy = "org.hibernate.id.UUIDGenerator"
+  )
+  @Column(updatable = false, nullable = false)
+  private UUID id;
 
   @Column(nullable = true)
   private String password; // 비밀번호
-
 
   @Column(nullable = false)
   private String email;
@@ -36,4 +37,20 @@ public class Mentor {
   private String gender;
 
   private LocalDateTime indate; // 생성일
+
+  private String image;
+
+  private String university;
+
+  private String major;
+
+  private String status;
+
+  @OneToOne
+  @JoinColumn(name = "category_id")
+  private Category category;
+
+  @OneToOne
+  @JoinColumn(name = "wallet_id")
+  private Wallet wallet;
 }
