@@ -58,8 +58,12 @@
           #logo{
               margin: 305px 0px 0px 0px;
           }
-          #text{
+
+          .font{
               font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+          }
+          #wrap {
+               min-height: calc(100% - 265px);
           }
       }
   </style>
@@ -70,12 +74,15 @@
 
 <div id="dodu">
     <img src="/images/DoDulogo.png" width="200px" id="logo">
-    <p id="text">For you who don't have any problems.</p>
+    <p class="font">We Always have enough time to do things right.</p>
 </div>
 <div id="mobile">
     <div id="contents">
         <th:block th:replace="/layout/fragments/navbar::navbar"></th:block>
+        <div id="wrap">
         <th:block layout:fragment="content"></th:block>
+        </div>
+
         <th:block th:replace="/layout/fragments/footer::footer"></th:block>
     </div>
 </div>
