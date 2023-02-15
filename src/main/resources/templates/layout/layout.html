@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-   <link href="/css/style.css" rel="stylesheet" />
+<link href="/css/style.css" rel="stylesheet" />
 
-    <th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="css"></th:block>
 
-    <th:block th:replace="/layout/fragments/navbar::navbar"></th:block>
-    <th:block layout:fragment="content"></th:block>
-    <th:block th:replace="/layout/fragments/footer::footer"></th:block>
+<th:block th:replace="/layout/fragments/navbar::navbar"></th:block>
+<th:block layout:fragment="content"></th:block>
+<th:block th:replace="/layout/fragments/footer::footer"></th:block>
 
 </html>
