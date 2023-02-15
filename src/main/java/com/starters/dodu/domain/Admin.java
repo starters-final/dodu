@@ -19,6 +19,10 @@ public class Admin {
 
   private String password; // 비밀번호
 
+  private String grade;
+
+  private String department;
+
   private LocalDateTime indate; // 생성일
 
 }
