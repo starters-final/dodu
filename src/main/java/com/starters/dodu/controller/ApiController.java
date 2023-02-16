@@ -5,9 +5,13 @@ import com.starters.dodu.dto.ApplyResultDTO;
 import com.starters.dodu.dto.MenteeDTO;
 import com.starters.dodu.dto.MentorDTO;
 import com.starters.dodu.service.MentorService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,6 +29,14 @@ public class ApiController {
     return mentorService.findById(id);
   }
 
+
+  @ResponseStatus(HttpStatus.OK)
+  @PostMapping("/offer/saveApply")
+  public void saveApply(ApplyFormDTO applyFormDTO, HttpServletResponse response) throws IOException {
+    mentorService.saveApply(applyFormDTO);
+    response.sendRedirect("/");
+  }
+
   @GetMapping("/mypage/{id}/applyList")
   public List<ApplyResultDTO> getApplyListById(@PathVariable String id) {
     UUID uuid = stringtoUUID(id);
@@ -36,5 +48,4 @@ public class ApiController {
     UUID uuid = stringtoUUID(id);
     return mentorService.getApplyForm(id);
   }
-
 }

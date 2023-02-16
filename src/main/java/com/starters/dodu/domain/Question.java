@@ -24,4 +24,5 @@ public class Question implements Serializable {
     @JoinColumn(name = "category_id")
     @ToString.Exclude
     private Category category;
+
 }
