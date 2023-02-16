@@ -7,9 +7,8 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface MentorRepository extends CrudRepository<Mentor, UUID> {
+public interface MentorRepository extends CrudRepository<Mentor, Long> {
 
-  @Query("SELECT m FROM Mentor m")
-  Optional<Mentor> findById(UUID id);
+  Optional<Mentor> findById(String id);
 
 }
