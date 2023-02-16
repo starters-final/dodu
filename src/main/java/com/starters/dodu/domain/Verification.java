@@ -4,16 +4,15 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Getter
 @Table(name = "verifications")
 public class Verification {
     @Id
-    @GeneratedValue
-    @Column(name = "verification_id")
-    private UUID id; // 식별자
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "verfication_id")
+    private Long id; // 식별자
 
     private String file;
 

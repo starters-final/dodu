@@ -11,7 +11,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class MentorDTO {
 
-  private UUID id;
+  private Long id;
   private String email;
   private String nickname;
 

@@ -2,6 +2,7 @@ package com.starters.dodu.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -11,9 +12,9 @@ import java.util.UUID;
 @Table(name = "chats")
 public class Chat {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chat_id")
-    private UUID id;
+    private Long id;
 
     private String mentee_id;
 
