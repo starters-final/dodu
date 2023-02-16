@@ -2,6 +2,7 @@ package com.starters.dodu.controller;
 
 import com.starters.dodu.dto.ApplyFormDTO;
 import com.starters.dodu.dto.ApplyResultDTO;
+import com.starters.dodu.dto.MenteeDTO;
 import com.starters.dodu.dto.MentorDTO;
 import com.starters.dodu.service.MentorService;
 import lombok.RequiredArgsConstructor;
