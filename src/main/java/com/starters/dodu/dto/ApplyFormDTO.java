@@ -4,6 +4,7 @@ import com.starters.dodu.domain.Mentor;
 import com.starters.dodu.domain.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ public class ApplyFormDTO {
 
   @Getter
   @NoArgsConstructor
-  public static class Response {
+  public static class GetApplyForm {
     private Long id;
     private String nickname;
     private String image;
@@ -23,14 +24,14 @@ public class ApplyFormDTO {
     private String major;
     private List<QuestionsDto> questions = new ArrayList<>();
 
-    public Response(Mentor mentor) {
+    public GetApplyForm(Mentor mentor) {
       this.id = mentor.getId();
       this.nickname = mentor.getNickname();
       this.university = mentor.getUniversity();
       this.image = mentor.getImage();
       this.major = mentor.getMajor();
       this.questions = mentor.getCategory().getQuestions().stream()
-              .map(question -> new QuestionsDto(question))
+              .map(QuestionsDto::new)
               .collect(Collectors.toList());
     }
   }
