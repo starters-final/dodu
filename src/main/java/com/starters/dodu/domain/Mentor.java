@@ -46,6 +46,8 @@ public class Mentor {
 
   private String status;
 
+  private String matchCount;
+
   @OneToOne
   @JoinColumn(name = "category_id")
   private Category category;
