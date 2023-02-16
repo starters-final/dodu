@@ -22,6 +22,10 @@ public class MainController {
         return "offertomentor";
     }
 
+    @GetMapping("/menteechecked")
+    public String menteechecked(){ return "menteechecked";
+    }
+
     @GetMapping("/layout")
     public String phoneLay(){return "/layout/phonelay";  }
 
