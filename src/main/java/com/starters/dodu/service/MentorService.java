@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 public class MentorService {
 
     private final JavaMailSender javaMailSender;
-
     private final ApplyListRepository applyListRepository;
     private final MentorRepository mentorRepository;
 
@@ -38,26 +37,26 @@ public class MentorService {
 
     }
 
-  @Transactional(readOnly = true)
-  public MentorDTO findById(String id) {
+    @Transactional(readOnly = true)
+    public MentorDTO findById(String id) {
       Mentor entity = mentorRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
+              .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
 
       return new MentorDTO(entity);
-  }
+    }
 
-  @Transactional(readOnly = true)
-  public List<ApplyResultDTO> findAllDesc(String id) {
+    @Transactional(readOnly = true)
+    public List<ApplyResultDTO> findAllDesc(String id) {
       return applyListRepository.findAllDesc(id).stream()
-            .map(ApplyResultDTO::new)
-            .collect(Collectors.toList());
-  }
+              .map(ApplyResultDTO::new)
+              .collect(Collectors.toList());
+    }
 
-  @Transactional(readOnly = true)
-  public ApplyFormDTO.Response getApplyForm(String id) {
-    Mentor entity = mentorRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
+    @Transactional(readOnly = true)
+    public ApplyFormDTO.GetApplyForm getApplyForm(String id) {
+      Mentor entity = mentorRepository.findById(id)
+              .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
 
-    return new ApplyFormDTO.Response(entity);
-  }
+      return new ApplyFormDTO.GetApplyForm(entity);
+    }
 }

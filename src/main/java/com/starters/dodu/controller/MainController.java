@@ -17,19 +17,13 @@ public class MainController {
         return "login";
     }
 
-    @GetMapping("/offer")
-    public String offer(){
+    @GetMapping("/offertomentor")
+    public String offertomentor(){
         return "offertomentor";
     }
 
     @GetMapping("/menteechecked")
     public String menteechecked(){ return "menteechecked";
     }
-
-    @GetMapping("/layout")
-    public String phoneLay(){return "/layout/phonelay";  }
-
-
-
 
 }

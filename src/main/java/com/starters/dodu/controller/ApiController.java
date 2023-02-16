@@ -5,9 +5,7 @@ import com.starters.dodu.dto.ApplyResultDTO;
 import com.starters.dodu.dto.MentorDTO;
 import com.starters.dodu.service.MentorService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -32,9 +30,10 @@ public class ApiController {
     return mentorService.findAllDesc(id);
   }
 
-  @GetMapping("/applyReq/{id}")
-  public ApplyFormDTO.Response getApplyForm(@PathVariable String id) {
+  @GetMapping("/applyRequest/{id}")
+  public ApplyFormDTO.GetApplyForm getApplyForm(@PathVariable String id) {
     UUID uuid = stringtoUUID(id);
     return mentorService.getApplyForm(id);
   }
+
 }

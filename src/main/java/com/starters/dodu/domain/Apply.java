@@ -3,11 +3,9 @@ package com.starters.dodu.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name = "applys")
