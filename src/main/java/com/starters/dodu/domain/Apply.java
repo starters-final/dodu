@@ -3,6 +3,7 @@ package com.starters.dodu.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -14,9 +15,9 @@ import java.util.UUID;
 @Getter
 public class Apply {
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "apply_id")
-  private UUID id; // 식별자
+  private Long id; // 식별자
 
   private Timestamp matchTime1;
   private Timestamp matchTime2;
@@ -33,5 +34,9 @@ public class Apply {
   @ManyToOne
   @JoinColumn(name = "mentor_id")
   private Mentor mentorId;
+
+  @OneToOne
+  @JoinColumn(name = "question_id")
+  private Question question;
 
 }

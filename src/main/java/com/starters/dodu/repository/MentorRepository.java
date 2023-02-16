@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface MentorRepository extends CrudRepository<Mentor, UUID> {
 
-  @Query("SELECT m FROM Mentor m")
-  Optional<Mentor> findById(UUID id);
+  @Query("SELECT m FROM Mentor m WHERE m.id = :id")
+  Optional<Mentor> findById(String id);
 
 }

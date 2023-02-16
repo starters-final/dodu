@@ -4,16 +4,15 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.sql.Timestamp;
-import java.util.UUID;
 
 @Entity
 @Getter
 @Table(name = "reviews")
 public class Review {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
-    private UUID id;
+    private Long id;
 
     private String content;
 

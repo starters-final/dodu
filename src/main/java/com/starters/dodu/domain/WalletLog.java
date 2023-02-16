@@ -4,16 +4,15 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Getter
 @Table(name = "walletlogs")
 public class WalletLog {
     @Id
-    @GeneratedValue
-    @Column(name = "walletlog_id")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "wallet_log_id")
+    private Long id;
 
     private String plus;
 
