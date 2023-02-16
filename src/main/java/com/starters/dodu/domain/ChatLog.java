@@ -11,9 +11,9 @@ import java.util.UUID;
 @Table(name = "chat_logs")
 public class ChatLog {
     @Id
-    @GeneratedValue
-    @Column(name = "chatlog_id")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "chat_log_id")
+    private Long id;
 
     private String sendId;
 

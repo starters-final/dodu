@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ApplyListRepository extends JpaRepository<Apply, UUID> {
-  @Query("SELECT a FROM Apply a ORDER BY a.indate DESC")
-  List<Apply> findAllDesc();
+  @Query("SELECT a FROM Apply a where a.id = :id ORDER BY a.indate DESC")
+  List<Apply> findAllDesc(String id);
 }

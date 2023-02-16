@@ -1,25 +1,24 @@
 package com.starters.dodu.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.ToString;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 @Entity
 @Getter
 @Table(name = "mentors")
-public class Mentor {
+public class Mentor implements Serializable {
 
   @Id
-  @GeneratedValue(generator = "UUID")
-  @GenericGenerator(
-          name = "UUID",
-          strategy = "org.hibernate.id.UUIDGenerator"
-  )
-  @Column(updatable = false, nullable = false)
-  private UUID id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "mentor_id")
+  private Long id;
 
   @Column(nullable = true)
   private String password; // 비밀번호
@@ -48,8 +47,9 @@ public class Mentor {
 
   private String matchCount;
 
-  @OneToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "category_id")
+  @ToString.Exclude
   private Category category;
 
   @OneToOne
