@@ -2,6 +2,7 @@ package com.starters.dodu.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
@@ -29,5 +30,8 @@ public class MainController {
     @GetMapping("/mymentoring")
     public String mymentoring(){ return "mymentoring";
     }
+
+    @RequestMapping("/chat")
+    public String chat() {return "chat";}
 
 }
