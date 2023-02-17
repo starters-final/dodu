@@ -26,4 +26,8 @@ public class MainController {
     public String menteechecked(){ return "menteechecked";
     }
 
+    @GetMapping("/mymentoring")
+    public String mymentoring(){ return "mymentoring";
+    }
+
 }
