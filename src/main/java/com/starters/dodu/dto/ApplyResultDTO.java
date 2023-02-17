@@ -10,9 +10,12 @@ import java.time.LocalDateTime;
 @Getter
 public class ApplyResultDTO {
   private Long id;
-  private Timestamp matchTime1;
-  private Timestamp matchTime2;
-  private Timestamp matchTime3;
+//  private Timestamp matchTime1;
+//  private Timestamp matchTime2;
+//  private Timestamp matchTime3
+  private String matchTime1;
+  private String matchTime2;
+  private String matchTime3;
   private String status;
   private LocalDateTime indate;
   private Mentee mentee;
