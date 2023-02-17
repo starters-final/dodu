@@ -1,0 +1,51 @@
+package com.starters.dodu.dto;
+
+import com.starters.dodu.domain.Apply;
+import com.starters.dodu.domain.Mentee;
+import com.starters.dodu.domain.Question;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Getter
+@NoArgsConstructor
+public class SaveApplyDTO {
+    private Long id;
+    private Timestamp matchTime1;
+    private Timestamp matchTime2;
+    private Timestamp matchTime3;
+    private String status;
+    private LocalDateTime indate;
+    private Mentee mentee;
+    private Question question;
+
+    @Builder
+    public SaveApplyDTO(Long id, Timestamp matchTime1, Timestamp matchTime2, Timestamp matchTime3,
+                        String status, LocalDateTime indate, Mentee mentee, Question question) {
+        this.id = id;
+        this.matchTime1 = matchTime1;
+        this.matchTime2 = matchTime2;
+        this.matchTime3 = matchTime3;
+        this.status = status;
+        this.indate = indate;
+        this.mentee = mentee;
+        this.question = question;
+
+    }
+
+//    public Apply toEntity(){
+//        return Apply.builder()
+//                .id(id)
+//                .matchTime1(matchTime1)
+//                .matchTime2(matchTime2)
+//                .matchTime3(matchTime3)
+//                .status(status)
+//                .indate(indate)
+//                .mentee(mentee)
+//                .build();
+//    }
+}
