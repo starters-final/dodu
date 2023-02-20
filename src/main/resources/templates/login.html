@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html  xmlns:th="http://www.thymeleaf.org"
        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-       layout:decorate="~{layout/layout}">
+       layout:decorate="~{layout/phonelayNotnav}">
 
 <head>
   <style>
@@ -10,94 +10,74 @@
     }
 
     h1{
-      color: #0a53be;
+      color: rgba(216,90,123,0.5);
       font-size:48px;
       letter-spacing:-3px;
       text-align:center;
-      margin:100px 0 80px 0 ;
+      margin: 120px 0 30px 0 ;
       transition:.2s linear;
     }
 
-    form{
+    form, .sign_up {
       text-align: center;
-
       margin: auto;
+      border: 0px solid;
+      background-color: white;
+    }
+
+    td{
+      padding: 30px;
     }
     .separator{
       text-align: center;
     }
 
+    .sign_in{
+      background-color: white;
+      border: 0px;
+      margin: 4px auto;
+    }
 
-    .google__btn,
-    .github__btn{
-      display:block;
-      width:90%;
-      max-width:680px;
-      margin:20px auto;
-      height:50px;
-      cursor:pointer;
-      font-size:14px;
-      font-family: 'Montserrat', sans-serif;
-      border-radius:8px;
-      border:none;
-      line-height:40px;
-    &.google__btn{
-       background:#5b90f0;
-       color:white;
-       box-shadow:0 15px 30px rgba(#5b90f0,.36);
-       transition:.2s linear;
+    .sign_in_btn{
+      width: 170px;
     }
-    &.github__btn{
-       background:#25282d;
-       color:white;
-       box-shadow:0 15px 30px rgba(#25282d,.36);
-       transition:.2s linear;
 
+    .sign_up_img{
+      width: 50px;
     }
-    }
+
+
 
   </style>
 </head>
 <th:block layout:fragment="content">
   <div class="container">
     <!-- Heading -->
-    <h1>SIGN IN</h1>
+    <h1 class="font">SIGN IN</h1>
 
 
     <!-- Form -->
-    <form>
-      <div class="row mb-3">
-        <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-        <div class="col-sm-10">
-          <input type="email" class="form-control" id="inputEmail3">
-        </div>
-      </div>
-      <div class="row mb-3">
-        <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-        <div class="col-sm-10">
-          <input type="password" class="form-control" id="inputPassword3">
-        </div>
+      <div class="row ">
+        <button class="sign_in" ><img class="sign_in_btn" src="images/btn_google_signin.png"></button>
+        <button class="sign_in" ><img  class="sign_in_btn" src="images/btnN_signin.png"></button>
       </div>
 
-      <button type="submit" class="btn btn-primary">Sign in</button>
-    </form>
+    <br><br><br>
+    <hr>
+
     <!-- separator -->
     <div class="separator">
-      <br>
-      <p>OR</p>
+      <p class="font" >SING UP </p>
     </div>
-    <!-- google button -->
-    <button class="google__btn">
-      Sign in with Google
-    </button>
-    <!-- google button -->
-    <button class="github__btn">
-      Sign in with GitHub
-    </button>
-    <div>
-      <br><br><br><br><br>
 
-    </div>
+    <!-- SING_UP button -->
+    <table class="sign_up">
+      <tr> 
+        <td><button class="sign_up"><img class="sign_up_img" src="images/g-logo.png"></button></td>
+        <td><button class="sign_up"><img class="sign_up_img" src="images/btnN.png"></button></td>
+      </tr>
+    </table>
+
   </div>
 
 

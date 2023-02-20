@@ -55,7 +55,7 @@
         <hr style="margin: 10px">
 
         <!--채팅 영역 -->
-        <div style="width: 325px; height: 370px; overflow-y: auto;display: flex; flex-direction: column-reverse;">
+        <div id="chatarea" style="width: 325px; height: 370px; overflow-y: auto;display: flex; flex-direction: column-reverse;">
         <div id="mentor" class="font" style="font-size: 5px;"></div>
         <div id="mentee" class="font" style="font-size: 5px; margin-left: auto;"></div>
         </div>
@@ -94,6 +94,7 @@
                     }
                     $("#message").val('');
                 });// on sendbtn
+
                 $('input').keyup(function(event) {
                     if (event.which === 13) {
                         var nickname =  $('#nickname').val();
@@ -106,11 +107,14 @@
                         $("#message").val('');
                     }
                 });
+
+
+
             });
 
             function message(event){
                 if(event.data.split(":")[0] === '2'){
-                    $('#mentee').append(event.data.split(":")[1] + "<br>"+ event.data.split(":")[2]+ "<= <br>");
+                    $('#mentee').append(event.data.split(":")[1] + "<br>"+ event.data.split(":")[2]+ "<=<br>");
                 } else{
                     $('#mentor').append(event.data.split(":")[1] + "<br>=>"+ event.data.split(":")[2]+ "<br>");
                 }
