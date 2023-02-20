@@ -10,7 +10,7 @@
 <th:block layout:fragment="content">
     <nav class="navbar navbar-light bg-light" style="position: relative; padding: 0px; height: 40px; background-color: transparent;">
         <div class="container-fluid" style="height: 26px;">
-            <button class="navbar-toggler" type="button" style="padding: 0px; margin: 0px; width: 30px; height: 25px;" >
+            <button class="navbar-toggler" type="button" style="padding: 0px; margin: 0px; width: 30px; height: 25px;" onClick="location.href='http://localhost:8080/'">
                 <span class="font" style="width: 15px;height: 15px; " > < </span>
             </button>
             <p class="navbar-brand font"  style="font-size:17px; padding: 0px; margin: 0px;" href="#">DoDu</p>
@@ -160,7 +160,7 @@
         </div>
 
         <div style="margin-top: 20px; text-align: center;">
-            <input class="btn" style="background-color: rgba(216,90,123,0.5); margin: 5px;" type="submit" value="제안하기">
+            <input class="btn" style="background-color: rgba(216,90,123,0.5); margin: 5px;" type="button" value="제안하기" onClick="location.href='http://localhost:8080/menteechecked'">
             <input class="btn btn-secondary" style="margin: 5px;" type="reset" value="취소하기" onclick="location.href='/'">
         </div>
 
