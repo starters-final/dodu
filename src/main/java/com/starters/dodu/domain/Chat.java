@@ -2,10 +2,9 @@ package com.starters.dodu.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.sql.Timestamp;
-import java.util.UUID;
+
 
 @Entity
 @Getter
@@ -25,5 +24,6 @@ public class Chat {
     private Timestamp start_time;
 
     private Timestamp finish_time;
+
 
 }
