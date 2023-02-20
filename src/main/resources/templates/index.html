@@ -2,7 +2,6 @@
 <html  xmlns:th="http://www.thymeleaf.org"
                 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                 layout:decorate="~{layout/phonelay}">
-
 <th:block layout:fragment="content">
     <div>
         <!-- carousel -->
@@ -78,56 +77,99 @@
         <!-- Section-->
         <section class="py-1">
             <div class="d-flex justify-content-start">
-                <div class="p-2 font" style="font-size: 8px; margin: 3px "> <b th:text="${mentee.get().getNickname()}" />님을 위한 추천 카테고리</div>
+                <div class="p-2 font" style="font-size: 8px; margin: 3px "> <b th:text="${mentee.getNickname()}" />님을 위한 추천 카테고리</div>
             </div>
             <div th:if="${not #lists.isEmpty(categories)}">
             <div class="btn-toolbar text-center" role="toolbar" aria-label="Toolbar with button groups"
                 style="margin: 10px; ">
                 <div class="btn-group btn-group-sm " role="group" aria-label="First group" style="">
                     <div th:each="category : ${categories}">
-                        <button th:text="${category.title}" class="btn btn-outline-secondary font"></button>
+                        <button th:text="${category.getTitle()}" th:id="${category.id}" class="btn btn-outline-secondary font" onclick="changeCategory()" />
                     </div>
                 </div>
             </div>
             </div>
 
             <div class="d-flex justify-content-start">
-                <div class="p-2 font" style="font-size: 8px; margin: 3px "><b th:text="${mentee.get().getNickname()}" />님을 위한 추천 멘토</div>
+                <div class="p-2 font" style="font-size: 8px; margin: 3px "><b th:text="${mentee.getNickname()}" />님을 위한 추천 멘토</div>
             </div>
 
-            <div class="container px-4 px-lg-5">
+            <div class="container px-4 px-lg-5" id="carousel-final">
                 <!-- mento carousel-->
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div th:each="mentor, iterStat : ${mentors}" class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active'">
+                <div class="carousel-inner" id="mentor-carousel-inner">
+                    <div th:each="mentor, iterStat : ${categories.get(0).getMentors()}" class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active'">
                         <div th:text="${mentor.getCategory().getTitle()}" class="badge bg-light position-absolute font" style="top: 0.5rem; right: 0.5rem; color: black"></div>
                         <div class="carousel-caption" style="top: 0.5rem; right: 0.5rem; color: black"></div>
-                        <img class="" th:src="${mentor.getImage()}" alt="Slice" width="312px" height="80px" />
+                            <img class="" th:src="${mentor.getImage()}" alt="Slice" width="312px" height="80px" />
                         <div class="" style="padding: 10px; height: 50px">
                             <div class="text-center">
                                 <h5 th:text="${mentor.getNickname()}" class="fw-bolder font" style="font-size:10px;"></h5>
-                                <b th:text="${mentor.getUniversity()}" class="font" style="font-size: 3px;" /> <b th:text="${mentor.getMajor()}" />
+                                <b th:text="${mentor.getUniversity()}" class="font" style="font-size: 3px;" /><b th:text="${mentor.getMajor()}" />
                             </div>
                         </div>
                         <div class="" style="padding: 10px 10px 10px 10px; background-color: rgba(216,90,123,1);">
                             <div class="text-center"><a class="btn btn-outline-light font btn-sm" style="font-size: 10px" href="http://localhost:8080/offertomentor " >자세히 보기</a></div>
                         </div>
-                        </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
                 </div>
             </div>
         </section>
-
     </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
+        <script th:inline="javascript">
+            function changeCategory () {
+            let categoryId = event.target.id;
+                $.ajax({
+                    type: "GET",
+                    url: "/api/v1",
+                    dataType:"JSON",
+                    data:{
+                        'categoryId' : categoryId
+                    },
+                    success: function (data) {
+                        for (let i = 0; i < data.length; i++) {
+                            $("#carousel-final").html('');
+                            $("#carousel-final").append('<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">' +
+                                '           <div class="carousel-inner" id="mentor-carousel-inner">' +
+                                '               <div class="carousel-item active">\n' +
+                                '                        <div class="badge bg-light position-absolute font" style="top: 0.5rem; right: 0.5rem; color: black">' + data[i].category +'</div>\n' +
+                                '                        <div class="carousel-caption" style="top: 0.5rem; right: 0.5rem; color: black"></div>\n' +
+                                '                            <img class="" src=" ' + data[i].image + '" alt="Slice" width="312px" height="80px" />\n' +
+                                '                        <div class="" style="padding: 10px; height: 50px">\n' +
+                                '                            <div class="text-center">\n' +
+                                '                                <h5 class="fw-bolder font" style="font-size:10px;">' + data[i].nickname + '</h5>\n' +
+                                '                                <b class="font" style="font-size: 3px;">' + data[i].university + '</b><b>' + data[i].major + ' </b>\n' +
+                                '                            </div>\n' +
+                                '                        </div>\n' +
+                                '                        <div class="" style="padding: 10px 10px 10px 10px; background-color: rgba(216,90,123,1);">\n' +
+                                '                            <div class="text-center"><a class="btn btn-outline-light font btn-sm" style="font-size: 10px" href="/applyRequest/' + data[i].id + '" >자세히 보기</a></div>\n' +
+                                '                        </div>\n' +
+                                '                        </div>\n' +
+                                '                    </div>' +
+                                '                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">\n' +
+                                '                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>\n' +
+                                '                    <span class="visually-hidden">Previous</span>\n' +
+                                '                </button>\n' +
+                                '                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">\n' +
+                                '                    <span class="carousel-control-next-icon" aria-hidden="true"></span>\n' +
+                                '                    <span class="visually-hidden">Next</span>\n' +
+                                '                </button>' +
+                            '</div>');
+                        }
+                    }
+                });
+            }
+        </script>
 </th:block>
-
 </body>
 </html>

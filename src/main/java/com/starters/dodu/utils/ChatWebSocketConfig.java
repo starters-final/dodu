@@ -1,4 +1,4 @@
-package com.starters.dodu.controller;
+package com.starters.dodu.utils;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.WebSocketHandler;

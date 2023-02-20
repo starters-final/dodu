@@ -10,8 +10,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface MentorRepository extends CrudRepository<Mentor, Long> {
-
-  Optional<Mentor> findById(String id);
-  List<Mentor> findAllByCategory(Category category);
-
+  List<Mentor> findAllByCategoryId(Long id);
 }
