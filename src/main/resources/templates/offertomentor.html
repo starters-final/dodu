@@ -3,7 +3,7 @@
        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
        layout:decorate="~{layout/phonelayNotnav}">
 <head>
-    <script></script>
+    <script src="/js/Apply.js"></script>
 </head>
 
 
@@ -46,11 +46,11 @@
     <header class="" style="background-color: rgba(216,90,123,0.5); width: 375px; height: 100px; padding: 10px ">
         <div class="container">
             <div class="" style="display:inline; margin-top: 0px;">
-                <img src="images/prodo2.png" class="rounded float-start prodo2" alt="..." style="width: 50px; height: 50px; margin: 12px 0px 0px 0px" />
-                <p class="font" style="display:inline; margin-left: 20px; margin-right: 5px; font-size: 20px;">하지석</p>
-                <p class="font" style="display:inline; font-size: 10px">OO대학교 OO학과</p>
+                <img th:src="${mentorData.image}" class="rounded float-start prodo2" alt="..." style="width: 50px; height: 50px; margin: 12px 0px 0px 0px" />
+                <p class="font" style="display:inline; margin-left: 20px; margin-right: 5px; font-size: 20px;">[[${mentorData.nickname}]]</p>
+                <p class="font" style="display:inline; font-size: 10px">[[${mentorData.university}]] [[${mentorData.major}]]</p>
                 <hr style="margin: 0px 0px 4px 72px; width: 145px;" >
-                <p class="font" style="display: inline; margin-left: 20px; font-size: 13px; margin-bottom: 0px;">OO대학교의 모든 것을 알려드리겠습니다.</p>
+                <p class="font" style="display: inline; margin-left: 20px; font-size: 13px; margin-bottom: 0px;">[[${mentorData.university}]]의 모든 것을 알려드리겠습니다.</p>
             </div>
         </div>
     </header>
@@ -63,34 +63,37 @@
         </div>
         <select id="questionList">
             <option value="">궁금한 질문을 골라주세요</option>
-            <th:block th:each="question : ${questions}">
-                <option th:value=""></option>
-            </th:block>
+            <!-- 이 경우 json의 형태이므로, get메서드를 이용하지 않고 바로 가져올 수 있다-->
+            <option
+                    th:each="question : ${mentorData.questions}"
+                    th:value="${question.id}"
+                    th:text="${question.question}"
+            ></option>
         </select>
-        <div class="" style="margin: 0px 0px 0px 25px">
-            <table style="text-align: center">
-                <tr>
-                    <td style="padding: 3px">
-                    <input type="radio" class="btn-check" name="options1" id="option1" >
-                    <label class="btn btn-secondary font" style="font-size: 3px" for="option1">저에게 무엇을 <br> 알려줄 수 있는지 궁금해요!</label>
-                    </td>
-                    <td style="padding: 3px">
-                    <input type="radio" class="btn-check" name="options1" id="option2" >
-                    <label class="btn btn-secondary font" style="font-size: 3px" for="option2">나는 00한 것이 궁굼해요?</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 3px">
-                    <input type="radio" class="btn-check" name="options1" id="option3" >
-                    <label class="btn btn-secondary font" style="font-size: 3px" for="option1">워홀은 어디나라로 갈 수 있나요? </label>
-                    </td>
-                    <td style="padding: 3px">
-                    <input type="radio" class="btn-check" name="options1" id="option4">
-                    <label class="btn btn-secondary font" style="font-size: 3px" for="option2">만나서 이야기 하고 싶어요!</label>
-                    </td>
-                </tr>
-            </table>
-        </div>
+<!--        <div class="" style="margin: 0px 0px 0px 25px">-->
+<!--            <table style="text-align: center">-->
+<!--                <tr>-->
+<!--                    <td style="padding: 3px">-->
+<!--                    <input type="radio" class="btn-check" name="options1" id="option1" >-->
+<!--                    <label class="btn btn-secondary font" style="font-size: 3px" for="option1">저에게 무엇을 <br> 알려줄 수 있는지 궁금해요!</label>-->
+<!--                    </td>-->
+<!--                    <td style="padding: 3px">-->
+<!--                    <input type="radio" class="btn-check" name="options1" id="option2" >-->
+<!--                    <label class="btn btn-secondary font" style="font-size: 3px" for="option2">나는 00한 것이 궁굼해요?</label>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td style="padding: 3px">-->
+<!--                    <input type="radio" class="btn-check" name="options1" id="option3" >-->
+<!--                    <label class="btn btn-secondary font" style="font-size: 3px" for="option1">워홀은 어디나라로 갈 수 있나요? </label>-->
+<!--                    </td>-->
+<!--                    <td style="padding: 3px">-->
+<!--                    <input type="radio" class="btn-check" name="options1" id="option4">-->
+<!--                    <label class="btn btn-secondary font" style="font-size: 3px" for="option2">만나서 이야기 하고 싶어요!</label>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </table>-->
+<!--        </div>-->
 
         <div class="d-flex justify-content-start">
             <div class="p-2 font" style="font-size: 8px; margin: 3px "> <b>예지</b>님 가능한 시간을 알려주세요.</div>
@@ -108,12 +111,14 @@
                                 </div>
                                 <div class="card-footer" style="padding: 0px;">
                                     <div class="text-center">
-                                        <label class="btn btn-secondary font" style="font-size: 3px" for="op1">희망시간1<input type="datetime-local" name="matchTime1" id="op1"></label>
+                                        <label class="btn btn-secondary font" style="font-size: 3px; padding : 6px 0px 0px 0px " for="op1">희망시간1<input type="datetime-local" name="matchTime1" id="op1"></label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </td>
+                    <tr>
+                    </tr>
                     <td style="padding: 15px">
                         <div class="col">
                             <div class="card h-100">
@@ -124,12 +129,14 @@
                                 </div>
                                 <div class="card-footer" style="padding: 0px;">
                                     <div class="text-center">
-                                        <label class="btn btn-secondary font" style="font-size: 3px" for="op2">희망시간1<input type="datetime-local" name="matchTime2" id="op2"></label>
+                                        <label class="btn btn-secondary font" style="font-size: 3px; padding : 6px 0px 0px 0px" for="op2">희망시간2<input type="datetime-local" name="matchTime2" id="op2"></label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </td>
+                    <tr>
+                    </tr>
                     <td style="padding: 15px">
                         <div class="col">
                             <div class="card h-100">
@@ -140,7 +147,7 @@
                                 </div>
                                 <div class="card-footer" style="padding: 0px;">
                                     <div class="text-center">
-                                        <label class="btn btn-secondary font" style="font-size: 3px" for="op3">희망시간1<input type="datetime-local" name="matchTime3" id="op3"></label>
+                                        <label class="btn btn-secondary font" style="font-size: 3px; padding : 6px 0px 0px 0px" for="op3">희망시간3<input type="datetime-local" name="matchTime3" id="op3"></label>
                                     </div>
                                 </div>
                             </div>
@@ -154,7 +161,7 @@
 
         <div class="">
             <div class="d-flex justify-content-start">
-                <div class="p-2 font" style="font-size: 20px; margin: 3px "><b>하지석</b>멘토님에게<br> 도두를 제안하시겠습니까? </div>
+                <div class="p-2 font" style="font-size: 20px; margin: 3px "><b>[[${mentorData.getNickname()}]]</b>멘토님에게<br> 도두를 제안하시겠습니까? </div>
             </div>
             <div class="font" style="font-size: 20px; text-align: right; margin-right: 20px; ">$<b style="color: rgba(216,90,123,1)">3500</b> DoDu</div>
         </div>

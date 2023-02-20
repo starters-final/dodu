@@ -3,13 +3,16 @@ package com.starters.dodu.controller;
 import com.starters.dodu.domain.Category;
 import com.starters.dodu.domain.Mentee;
 import com.starters.dodu.domain.Mentor;
+import com.starters.dodu.dto.ApplyFormDTO;
 import com.starters.dodu.repository.CategoryRepository;
 import com.starters.dodu.repository.MenteeRepository;
 import com.starters.dodu.repository.MentorRepository;
+import com.starters.dodu.service.MentorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -22,7 +25,7 @@ public class MainController {
     private final CategoryRepository categoryRepository;
     private final MenteeRepository menteeRepository;
     private final MentorRepository mentorRepository;
-
+    private final MentorService mentorService;
     @GetMapping("/")
     public String index(Model model) {
         Optional<Mentee> mentee = menteeRepository.findById(1l);
@@ -37,6 +40,13 @@ public class MainController {
     @GetMapping("/login")
     public String login(){
         return "login";
+    }
+
+    @GetMapping("/applyRequest/{id}")
+    public String getApplyForm(@PathVariable String id, Model model) {
+        ApplyFormDTO.GetApplyForm applyFormDTO = mentorService.getApplyForm(id);
+        model.addAttribute("mentorData", applyFormDTO);
+        return "offertomentor";
     }
 
     @GetMapping("/offertomentor")
