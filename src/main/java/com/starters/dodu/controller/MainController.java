@@ -54,8 +54,8 @@ public class MainController {
         return "offertomentor";
     }
 
-    @GetMapping("/layout")
-    public String phoneLay(){return "/layout/phonelay";  }
+    @GetMapping("/admin")
+    public String admintest(){return "admintest";  }
 
     @GetMapping("/menteechecked")
     public String menteechecked(){ return "menteechecked";
