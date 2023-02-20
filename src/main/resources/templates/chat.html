@@ -92,12 +92,25 @@
                     } else {
                         webSocket.send(1 + ":" + nickname + ":" + sendmessage);
                     }
+                    $("#message").val('');
                 });// on sendbtn
+                $('input').keyup(function(event) {
+                    if (event.which === 13) {
+                        var nickname =  $('#nickname').val();
+                        var sendmessage = $('#message').val();
+                        if(nickname == 'mentee'){
+                            webSocket.send(2 + ":"+ nickname + ":" + sendmessage);
+                        } else {
+                            webSocket.send(1 + ":" + nickname + ":" + sendmessage);
+                        }
+                        $("#message").val('');
+                    }
+                });
             });
 
             function message(event){
                 if(event.data.split(":")[0] === '2'){
-                    $('#mentee').append(event.data.split(":")[1] + "<br><="+ event.data.split(":")[2]+ "<br>");
+                    $('#mentee').append(event.data.split(":")[1] + "<br>"+ event.data.split(":")[2]+ "<= <br>");
                 } else{
                     $('#mentor').append(event.data.split(":")[1] + "<br>=>"+ event.data.split(":")[2]+ "<br>");
                 }
