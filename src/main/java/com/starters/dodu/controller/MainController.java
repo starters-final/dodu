@@ -1,12 +1,11 @@
 package com.starters.dodu.controller;
 
-import com.starters.dodu.domain.Category;
-import com.starters.dodu.domain.Mentee;
-import com.starters.dodu.domain.Mentor;
 import com.starters.dodu.dto.ApplyFormDTO;
-import com.starters.dodu.repository.CategoryRepository;
-import com.starters.dodu.repository.MenteeRepository;
-import com.starters.dodu.repository.MentorRepository;
+import com.starters.dodu.dto.CategoryDTO;
+import com.starters.dodu.dto.MenteeDTO;
+import com.starters.dodu.dto.MentorDTO;
+import com.starters.dodu.service.CategoryService;
+import com.starters.dodu.service.MenteeService;
 import com.starters.dodu.service.MentorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -14,31 +13,29 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
 public class MainController {
 
-    private final CategoryRepository categoryRepository;
-    private final MenteeRepository menteeRepository;
-    private final MentorRepository mentorRepository;
+    private final CategoryService categoryService;
+    private final MenteeService menteeService;
     private final MentorService mentorService;
+
     @GetMapping("/")
-    public String index(Model model) {
-        Optional<Mentee> mentee = menteeRepository.findById(1l);
-        List<Category> categories = (List<Category>) categoryRepository.findAll();
-        List<Mentor> mentors = mentorRepository.findAllByCategory(categories.get(0));
+    public String index(Model model, @RequestParam(defaultValue = "0", required = false) Long categoryId) {
+        MenteeDTO mentee = menteeService.findById(1l);
+        List<CategoryDTO> categories = categoryService.findAll();
         model.addAttribute("mentee", mentee);
         model.addAttribute("categories", categories);
-        model.addAttribute("mentors", mentors);
         return "index";
     }
 
     @GetMapping("/login")
-    public String login(){
+    public String login() {
         return "login";
     }
 
@@ -50,22 +47,28 @@ public class MainController {
     }
 
     @GetMapping("/offertomentor")
-    public String offertomentor(){
+    public String offertomentor() {
         return "offertomentor";
     }
 
     @GetMapping("/admin")
-    public String admintest(){return "admintest";  }
+    public String admintest() {
+        return "admintest";  
+    }
 
     @GetMapping("/menteechecked")
-    public String menteechecked(){ return "menteechecked";
+    public String menteechecked() {
+        return "menteechecked";
     }
 
     @GetMapping("/mymentoring")
-    public String mymentoring(){ return "mymentoring";
+    public String mymentoring() {
+        return "mymentoring";
     }
 
     @RequestMapping("/chat")
-    public String chat() {return "chat";}
+    public String chat() {
+        return "chat";
+    }
 
 }

@@ -1,8 +1,7 @@
 package com.starters.dodu.controller;
 
-import com.starters.dodu.dto.ApplyFormDTO;
-import com.starters.dodu.dto.ApplyResultDTO;
-import com.starters.dodu.dto.MentorDTO;
+import com.starters.dodu.dto.*;
+import com.starters.dodu.service.CategoryService;
 import com.starters.dodu.service.MentorService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +20,17 @@ public class ApiController {
 
   private final MentorService mentorService;
 
+  @GetMapping("/api/v1")
+  @ResponseBody
+  public List<MentorDTO> index(@RequestParam(defaultValue = "0", required = false) String categoryId) {
+    return mentorService.findAllByCategoryId(categoryId);
+  }
+
   @GetMapping("/mypage/{id}")
   public MentorDTO getMentorById(@PathVariable String id) {
     UUID uuid = stringtoUUID(id);
     return mentorService.findById(id);
   }
-
 
   @ResponseStatus(HttpStatus.OK)
   @PostMapping("/offer/saveApply")

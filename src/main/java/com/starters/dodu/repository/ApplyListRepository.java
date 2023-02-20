@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.UUID;
 
-public interface ApplyListRepository extends JpaRepository<Apply, String> {
-  @Query("SELECT a FROM Apply a where a.id = :id ORDER BY a.indate DESC")
-  List<Apply> findAllDesc(String id);
+public interface ApplyListRepository extends JpaRepository<Apply, Long> {
+  List<Apply> findAllByIdOrderByIndateDesc(Long id);
 }

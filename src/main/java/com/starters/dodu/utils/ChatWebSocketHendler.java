@@ -1,4 +1,4 @@
-package com.starters.dodu.controller;
+package com.starters.dodu.utils;
 
 import java.util.ArrayList;
 import java.util.List;
