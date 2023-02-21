@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "applys")
 @Getter
+@Setter
 public class Apply {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

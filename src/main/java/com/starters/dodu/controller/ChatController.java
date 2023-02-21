@@ -27,6 +27,11 @@ public class ChatController {
         return "chat";
     }
 
+    @GetMapping("/chatgpt")
+    public String chatgpt(){
+        return "chatgpt";
+    }
+
 //    @ResponseStatus(HttpStatus.OK)
 //    @PostMapping("/chat/{chat_id}")
 //    public ResponseEntity<ChatLogDTO> postChatLog(@PathVariable("chat_id") Long chat_id, @RequestBody ChatLogDTO chatLogDTO){

@@ -21,7 +21,7 @@ import java.util.List;
 @Log4j2
 public class ChatHandler extends TextWebSocketHandler {
     private static List<WebSocketSession> list = new ArrayList<>();
-    // 쉽게 표현하자면, 이 list의 session은 메세지를 받아보는 session들
+    //  이 list의 session은 메세지를 받아보는 session들
 
     //DBSaver saver;
     private final ChatService chatService;
@@ -45,7 +45,6 @@ public class ChatHandler extends TextWebSocketHandler {
         StringBuilder builder = new StringBuilder();
         for(int i = 1; i < values.length; i ++) {
             builder.append(values[i]);
-//            if i
         }
         String text_value = builder.toString();
 
