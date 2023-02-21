@@ -1,7 +1,9 @@
 package com.starters.dodu.domain;
 
+import com.starters.dodu.domain.Mentee;
+import com.starters.dodu.domain.Mentor;
+import com.starters.dodu.domain.Question;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -12,7 +14,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "applys")
-@NoArgsConstructor
 @Getter
 @Setter
 public class Apply {
