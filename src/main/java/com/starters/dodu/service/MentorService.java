@@ -18,10 +18,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,8 +44,15 @@ public class MentorService {
     }
 
     @Transactional(readOnly = true)
+    public List<MentorDTO> findAllByCategoryId(String id) {
+        return mentorRepository.findAllByCategoryId(Long.parseLong(id)).stream()
+                .map(MentorDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
     public MentorDTO findById(String id) {
-      Mentor entity = mentorRepository.findById(id)
+      Mentor entity = mentorRepository.findById(Long.parseLong(id))
               .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
 
       return new MentorDTO(entity);
@@ -78,14 +81,14 @@ public class MentorService {
 
     @Transactional(readOnly = true)
     public List<ApplyResultDTO> findAllDesc(String id) {
-        return applyListRepository.findAllDesc(id).stream()
+        return applyListRepository.findAllByIdOrderByIndateDesc(Long.parseLong(id)).stream()
                 .map(ApplyResultDTO::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public ApplyFormDTO.GetApplyForm getApplyForm(String id) {
-        Mentor entity = mentorRepository.findById(id)
+        Mentor entity = mentorRepository.findById(Long.parseLong(id))
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
 
         return new ApplyFormDTO.GetApplyForm(entity);
