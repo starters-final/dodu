@@ -105,11 +105,11 @@
                         <div class="" style="padding: 10px; height: 50px">
                             <div class="text-center">
                                 <h5 th:text="${mentor.getNickname()}" class="fw-bolder font" style="font-size:10px;"></h5>
-                                <b th:text="${mentor.getUniversity()}" class="font" style="font-size: 3px;" /><b th:text="${mentor.getMajor()}" />
+                                <b th:text="${mentor.getUniversity()}" class="font" style="font-size: 3px;" /> <b th:text=" ${mentor.getMajor()}" class="font" style="font-size: 3px;" />
                             </div>
                         </div>
                         <div class="" style="padding: 10px 10px 10px 10px; background-color: rgba(216,90,123,1);">
-                            <div class="text-center"><a class="btn btn-outline-light font btn-sm" style="font-size: 10px" href="http://localhost:8080/offertomentor " >자세히 보기</a></div>
+                            <div class="text-center"><a class="btn btn-outline-light font btn-sm" style="font-size: 10px" th:href="@{/applyForm/{mentorId}(mentorId=${mentor.getId()})}" >자세히 보기</a></div>
                         </div>
                     </div>
                 </div>
@@ -128,7 +128,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
         <script th:inline="javascript">
             function changeCategory () {
-            let categoryId = event.target.id;
+                let categoryId = event.target.id;
                 $.ajax({
                     type: "GET",
                     url: "/api/v1",
@@ -148,11 +148,11 @@
                                 '                        <div class="" style="padding: 10px; height: 50px">\n' +
                                 '                            <div class="text-center">\n' +
                                 '                                <h5 class="fw-bolder font" style="font-size:10px;">' + data[i].nickname + '</h5>\n' +
-                                '                                <b class="font" style="font-size: 3px;">' + data[i].university + '</b><b>' + data[i].major + ' </b>\n' +
+                                '                                <b class="font" style="font-size: 3px;">' + data[i].university + '</b> <b class="font" style="font-size: 3px;"> ' + data[i].major + '</b>\n' +
                                 '                            </div>\n' +
                                 '                        </div>\n' +
                                 '                        <div class="" style="padding: 10px 10px 10px 10px; background-color: rgba(216,90,123,1);">\n' +
-                                '                            <div class="text-center"><a class="btn btn-outline-light font btn-sm" style="font-size: 10px" href="/applyRequest/' + data[i].id + '" >자세히 보기</a></div>\n' +
+                                '                            <div class="text-center"><a class="btn btn-outline-light font btn-sm" style="font-size: 10px" href="/applyForm/' + data[i].id + '" >자세히 보기</a></div>\n' +
                                 '                        </div>\n' +
                                 '                        </div>\n' +
                                 '                    </div>' +

@@ -22,7 +22,6 @@ public class Apply {
   @Column(name = "apply_id")
   private Long id; // 식별자
 
-
   private String matchTime1;
   private String matchTime2;
   private String matchTime3;
@@ -38,9 +37,9 @@ public class Apply {
 
   @ManyToOne
   @JoinColumn(name = "mentor_id")
-  private Mentor mentorId;
+  private Mentor mentor;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "question_id")
   private Question question;
 

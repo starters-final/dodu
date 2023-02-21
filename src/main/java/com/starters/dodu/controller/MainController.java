@@ -1,9 +1,7 @@
 package com.starters.dodu.controller;
 
-import com.starters.dodu.dto.ApplyFormDTO;
-import com.starters.dodu.dto.CategoryDTO;
-import com.starters.dodu.dto.MenteeDTO;
-import com.starters.dodu.dto.MentorDTO;
+import com.starters.dodu.dto.*;
+import com.starters.dodu.service.ApplyService;
 import com.starters.dodu.service.CategoryService;
 import com.starters.dodu.service.MenteeService;
 import com.starters.dodu.service.MentorService;
@@ -24,6 +22,7 @@ public class MainController {
     private final CategoryService categoryService;
     private final MenteeService menteeService;
     private final MentorService mentorService;
+    private final ApplyService applyService;
 
     @GetMapping("/")
     public String index(Model model, @RequestParam(defaultValue = "0", required = false) Long categoryId) {
@@ -39,31 +38,36 @@ public class MainController {
         return "login";
     }
 
-    @GetMapping("/applyRequest/{id}")
+    @GetMapping("/applyForm/{id}")
     public String getApplyForm(@PathVariable String id, Model model) {
+        MenteeDTO mentee = menteeService.findById(1l);
         ApplyFormDTO.GetApplyForm applyFormDTO = mentorService.getApplyForm(id);
+        model.addAttribute("mentee", mentee);
         model.addAttribute("mentorData", applyFormDTO);
-        return "offertomentor";
-    }
-
-    @GetMapping("/offertomentor")
-    public String offertomentor() {
-        return "offertomentor";
+        return "apply-form";
     }
 
     @GetMapping("/admin")
-    public String admintest() {
-        return "admintest";  
+    public String getAdminPage() {
+        return "admin";
     }
 
-    @GetMapping("/menteechecked")
-    public String menteechecked() {
-        return "menteechecked";
+    @GetMapping("/applyResult")
+    public String getApplyResult(@RequestParam String menteeId, @RequestParam String mentorId, Model model) {
+        ApplyResultDTO apply = applyService.findByMenteeIdAndMentorId(Long.parseLong(menteeId), Long.parseLong(mentorId));
+        MenteeDTO mentee = menteeService.findById(Long.parseLong(menteeId));
+        model.addAttribute("mentee", mentee);
+        model.addAttribute("apply", apply);
+        return "apply-result";
     }
 
-    @GetMapping("/mymentoring")
-    public String mymentoring() {
-        return "mymentoring";
+    @GetMapping("/mentee/applyList/{id}")
+    public String getMenteeApplyList(@PathVariable String id, Model model) {
+        MenteeDTO mentee = menteeService.findById(Long.parseLong(id));
+        List<ApplyResultDTO> applyList = applyService.findAllByMenteeId(Long.parseLong(id));
+        model.addAttribute("mentee", mentee);
+        model.addAttribute("applyList", applyList);
+        return "mentee-apply-list";
     }
 
     @RequestMapping("/chat")

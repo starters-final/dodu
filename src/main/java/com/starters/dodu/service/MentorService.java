@@ -9,8 +9,8 @@ import com.starters.dodu.dto.MailDTO;
 import com.starters.dodu.repository.ApplyListRepository;
 import com.starters.dodu.repository.MentorRepository;
 
-import com.starters.dodu.repository.QuestionRepository;
 import com.starters.dodu.repository.SaveApplyRepository;
+import jakarta.persistence.NonUniqueResultException;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -30,17 +30,15 @@ public class MentorService {
     private final ApplyListRepository applyListRepository;
     private final MentorRepository mentorRepository;
     private final SaveApplyRepository saveApplyRepository;
-
-    private final QuestionRepository questionRepository;
+    private final ApplyService applyService;
 
     public void sendMail(MailDTO mailDTO) {
-      SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-      simpleMailMessage.setTo(mailDTO.getAddress());
-      simpleMailMessage.setSubject(mailDTO.getTitle());
-      simpleMailMessage.setText(mailDTO.getMessage());
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setTo(mailDTO.getAddress());
+        simpleMailMessage.setSubject(mailDTO.getTitle());
+        simpleMailMessage.setText(mailDTO.getMessage());
 
-      javaMailSender.send(simpleMailMessage);
-
+        javaMailSender.send(simpleMailMessage);
     }
 
     @Transactional(readOnly = true)
@@ -52,16 +50,14 @@ public class MentorService {
 
     @Transactional(readOnly = true)
     public MentorDTO findById(String id) {
-      Mentor entity = mentorRepository.findById(Long.parseLong(id))
+        Mentor entity = mentorRepository.findById(Long.parseLong(id))
               .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
 
-      return new MentorDTO(entity);
+        return new MentorDTO(entity);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = NonUniqueResultException.class)
     public ApplyFormDTO saveApply(ApplyFormDTO applyFormDTO) {
-
-        System.out.println("==================TEST====================");
 
         Apply apply = new Apply();
         apply.setId(applyFormDTO.getId());
@@ -71,10 +67,14 @@ public class MentorService {
         apply.setStatus(applyFormDTO.getStatus());
         apply.setIndate(applyFormDTO.getIndate());
         apply.setMentee(applyFormDTO.getMentee());
-        apply.setMentorId(applyFormDTO.getMentorId());
+        apply.setMentor(applyFormDTO.getMentor());
         apply.setQuestion(applyFormDTO.getQuestion());
 
         saveApplyRepository.save(apply);
+        if(applyService.findByMenteeIdAndMentorId(apply.getMentee().getId(), apply.getMentor().getId()) == null) {
+            throw new NonUniqueResultException("멘티와 멘토 사이에 이미 신청서가 존재합니다.");
+        }
+
         return ApplyFormDTO.applyDto(apply);
 
     }

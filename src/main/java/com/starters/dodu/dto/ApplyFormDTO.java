@@ -29,9 +29,8 @@ public class ApplyFormDTO {
   private String  matchTime3;
   private String status;
   private LocalDateTime indate;
-
   private Mentee mentee;
-  private Mentor mentorId;
+  private Mentor mentor;
   private Question question;
 
   public static ApplyFormDTO applyDto(Apply apply){
@@ -44,7 +43,7 @@ public class ApplyFormDTO {
             apply.getStatus(),
             apply.getIndate(),
             apply.getMentee(),
-            apply.getMentorId(),
+            apply.getMentor(),
             apply.getQuestion()
     );
   }

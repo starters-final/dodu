@@ -47,7 +47,7 @@ public class Mentor implements Serializable {
 
   private String matchCount;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne//(fetch = FetchType.LAZY)
   @JoinColumn(name = "category_id")
   @ToString.Exclude
   private Category category;

@@ -1,6 +1,7 @@
 package com.starters.dodu.controller;
 
 import com.starters.dodu.dto.*;
+import com.starters.dodu.service.ApplyService;
 import com.starters.dodu.service.CategoryService;
 import com.starters.dodu.service.MentorService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import static com.starters.dodu.utils.StringToUuid.stringtoUUID;
 public class ApiController {
 
   private final MentorService mentorService;
+  private final ApplyService applyService;
 
   @GetMapping("/api/v1")
   @ResponseBody
@@ -35,14 +37,19 @@ public class ApiController {
   @ResponseStatus(HttpStatus.OK)
   @PostMapping("/offer/saveApply")
   public void saveApply(ApplyFormDTO applyFormDTO, HttpServletResponse response) throws IOException {
-    mentorService.saveApply(applyFormDTO);
-    response.sendRedirect("/");
+    ApplyFormDTO apply = mentorService.saveApply(applyFormDTO);
+    response.sendRedirect("/applyResult?menteeId=" + apply.getMentee().getId() + "&mentorId=" + apply.getMentor().getId());
   }
 
   @GetMapping("/mypage/{id}/applyList")
   public List<ApplyResultDTO> getApplyListById(@PathVariable String id) {
     UUID uuid = stringtoUUID(id);
     return mentorService.findAllDesc(id);
+  }
+
+  @GetMapping("/api/v1/applyResult")
+  public ApplyResultDTO getApplyResultRest(@RequestParam String menteeId, @RequestParam String mentorId) {
+    return applyService.findByMenteeIdAndMentorId(Long.parseLong(menteeId), Long.parseLong(mentorId));
   }
 
 }
