@@ -3,7 +3,6 @@ package com.starters.dodu.controller;
 import com.starters.dodu.dto.ApplyFormDTO;
 import com.starters.dodu.dto.CategoryDTO;
 import com.starters.dodu.dto.MenteeDTO;
-import com.starters.dodu.dto.MentorDTO;
 import com.starters.dodu.service.CategoryService;
 import com.starters.dodu.service.MenteeService;
 import com.starters.dodu.service.MentorService;
@@ -51,10 +50,6 @@ public class MainController {
         return "offertomentor";
     }
 
-    @GetMapping("/admin")
-    public String admintest() {
-        return "admintest";  
-    }
 
     @GetMapping("/menteechecked")
     public String menteechecked() {
@@ -70,5 +65,7 @@ public class MainController {
     public String chat() {
         return "chat";
     }
+
+
 
 }
