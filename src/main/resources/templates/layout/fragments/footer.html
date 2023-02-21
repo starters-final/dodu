@@ -8,7 +8,7 @@
     <hr>
       <div class="btn-group" role="group" aria-label="Basic outlined example">
         <button type="button" style="font-size: 3px; color: gray; width: 82px" class="btn btn-outline-light font" onClick="location.href='http://localhost:8080/'">Home</button>
-        <button type="button" style="font-size: 3px; color: gray; width: 82px" class="btn btn-outline-light font" onClick="location.href='http://localhost:8080/mymentoring'">나의멘토링</button>
+        <button type="button" style="font-size: 3px; color: gray; width: 82px" class="btn btn-outline-light font" th:onclick="|location.href='http://localhost:8080/mentee/applyList/${mentee.id}'|">나의 멘토링</button>
         <button type="button" style="font-size: 3px; color: gray; width: 82px" class="btn btn-outline-light font">ChatLog</button>
         <button type="button" style="font-size: 3px; color: gray; width: 82px" class="btn btn-outline-light font" onclick="location.href='/login'">로그인</button>
       </div>
