@@ -27,7 +27,21 @@ public class ApplyService {
 
     return new ApplyResultDTO(entity);
   }
+
+  public ApplyResultDTO findById(Long id) {
+    Apply entity = applyListRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
+
+    return new ApplyResultDTO(entity);
+  }
   public List<Apply> findAll(){
     return applyListRepository.findAll();
+  }
+
+  public void updateApplyStatus(Long id, String status) {
+    int updatedRows = applyListRepository.setStatusForApply(id, "1");
+    if (updatedRows == 0) {
+      throw new RuntimeException("Apply not found with id : " + id);
+    }
   }
 }

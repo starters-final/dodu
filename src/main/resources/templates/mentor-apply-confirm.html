@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org"
-       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-       layout:decorate="~{layout/phonelayNotnav}">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/phonelayNotnav}">
+
 <head>
     <script src="/js/Apply.js"></script>
 </head>
@@ -10,7 +11,7 @@
 <th:block layout:fragment="content">
     <nav class="navbar navbar-light bg-light" style="position: relative; padding: 0px; height: 40px; background-color: transparent;">
         <div class="container-fluid" style="height: 26px;">
-            <button class="navbar-toggler" type="button" style="padding: 0px; margin: 0px; width: 30px; height: 25px;" onClick="location.href='/'">
+            <button class="navbar-toggler" type="button" style="padding: 0px; margin: 0px; width: 30px; height: 25px;" onClick="location.href='http://localhost:8080/'">
                 <span class="font" style="width: 15px;height: 15px; " > < </span>
             </button>
             <p class="navbar-brand font"  style="font-size:17px; padding: 0px; margin: 0px;" href="#">DoDu</p>
@@ -46,84 +47,70 @@
     <header class="" style="background-color: rgba(216,90,123,0.5); width: 375px; height: 100px; padding: 10px ">
         <div class="container">
             <div class="" style="display:inline; margin-top: 0px;">
-                <img th:src="${mentorData.image}" class="rounded float-start prodo2" alt="..." style="width: 50px; height: 50px; margin: 12px 0px 0px 0px" />
-                <p class="font" style="display:inline; margin-left: 20px; margin-right: 5px; font-size: 20px;">[[${mentorData.nickname}]]</p>
-                <p class="font" style="display:inline; font-size: 10px">[[${mentorData.university}]] [[${mentorData.major}]]</p>
+                <img th:src="${apply.mentor.image}" class="rounded float-start prodo2" alt="..." style="width: 50px; height: 50px; margin: 12px 0px 0px 0px" />
+                <p class="font" style="display:inline; margin-left: 20px; margin-right: 5px; font-size: 20px;" th:text="|${apply.mentor.nickname} 멘토님|" />
+                <p class="font" style="display:inline; font-size: 10px"> 안녕하세요!</p>
                 <hr style="margin: 0px 0px 4px 72px; width: 145px;" >
-                <p class="font" style="display: inline; margin-left: 20px; font-size: 13px; margin-bottom: 0px;">[[${mentorData.university}]]의 모든 것을 알려드리겠습니다.</p>
+                <p class="font" style="display: inline; margin-left: 20px; font-size: 13px; margin-bottom: 0px;" th:text="|${apply.mentee.nickname} 멘티의 dodu 제안서입니다.|" />
             </div>
         </div>
     </header>
 
-    <form th:action="@{/api/v1/offer/saveApply}" method="POST">
+    <form th:action="@{/api/v1/saveMatching}" method="POST" >
         <!-- Section-->
         <section class="py-1">
             <div class="d-flex justify-content-start">
-                <div class="p-2 font" style="font-size: 8px; margin: 3px "> <b th:text="${session.user.name}" />님 사전질문 중 1개를 선택해 주세요!</div>
+                <div class="p-2 font" style="font-size: 15px; margin: 0px auto; text-align: center;"><b>날짜 및 시간을 확정해 주세요!~</b></div>
             </div>
-            <select id="question" name="question">
-                <option value="">궁금한 질문을 골라주세요</option>
-                <!-- 이 경우 json의 형태이므로, get메서드를 이용하지 않고 바로 가져올 수 있다-->
-                <option
-                        th:each="question : ${mentorData.questions}"
-                        th:value="${question.id}"
-                        th:text="${question.question}"
-                ></option>
-            </select>
-
-            <div class="d-flex justify-content-start">
-                <div class="p-2 font" style="font-size: 8px; margin: 3px "><b th:text="${session.user.name}" />님 가능한 시간을 알려주세요.</div>
-            </div>
-            <div class="" style="margin: -10px 0px 0px 30px">
-                <table style="text-align: center">
+            <div class="" style="margin: 0px auto; text-align: center;">
+                <table style="text-align: center;  margin: auto; ">
                     <tr>
                         <td style="padding: 15px">
                             <div class="col">
                                 <div class="card h-100">
                                     <div class="card-body" style="padding: 0px;">
                                         <div class="text-center">
-    <!--                                        <p class="font" style="font-size: 3px; margin-bottom:0;  ">3월 3일 10시</p>-->
-                                        </div>
-                                    </div>
-                                    <div class="card-footer" style="padding: 0px;">
-                                        <div class="text-center">
-                                            <label class="btn btn-secondary font" style="font-size: 3px; padding : 6px 0px 0px 0px " for="op1">희망시간1<input type="datetime-local" name="matchTime1" id="op1" /></label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                        <tr>
-                        </tr>
-                        <td style="padding: 15px">
-                            <div class="col">
-                                <div class="card h-100">
-                                    <div class="card-body" style="padding: 0px;">
-                                        <div class="text-center">
-    <!--                                        <p class="font" style="font-size: 3px; margin-bottom:0;  ">3월 4일 10시</p>-->
-                                        </div>
-                                    </div>
-                                    <div class="card-footer" style="padding: 0px;">
-                                        <div class="text-center">
-                                            <label class="btn btn-secondary font" style="font-size: 3px; padding : 6px 0px 0px 0px" for="op2">희망시간2<input type="datetime-local" name="matchTime2" id="op2" /></label>
+                                            <input type="radio" class="btn-check" name="selectedMatchTime" id="option1" th:value="${apply.matchTime1}" />
+                                            <label
+                                                    class="btn btn-secondary font"
+                                                    style="font-size: 10px; margin-bottom:0; padding: 8px;"
+                                                    for="option1"
+                                                    th:text="|${apply.getMatchTime1().substring(5, 7)}월 ${apply.getMatchTime1().substring(8, 10)}일 ${apply.getMatchTime1().substring(11, 13)}시|"
+                                            ></label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </td>
-                        <tr>
-                        </tr>
                         <td style="padding: 15px">
                             <div class="col">
                                 <div class="card h-100">
                                     <div class="card-body" style="padding: 0px;">
                                         <div class="text-center">
-                                           <!-- <p class="font" style="font-size: 3px; margin-bottom:0;  ">3월 5일 10시</p>-->
+                                            <input type="radio" class="btn-check" name="selectedMatchTime" id="option2" th:value="${apply.matchTime2}" />
+                                            <label
+                                                    class="btn btn-secondary font"
+                                                    style="font-size: 10px; margin-bottom:0; padding: 8px;"
+                                                    for="option2"
+                                                    th:text="|${apply.getMatchTime2().substring(5, 7)}월 ${apply.getMatchTime2().substring(8, 10)}일 ${apply.getMatchTime2().substring(11, 13)}시|"
+                                            ></label>
                                         </div>
                                     </div>
-                                    <div class="card-footer" style="padding: 0px;">
+                                </div>
+                            </div>
+                        </td>
+                        <td style="padding: 15px">
+                            <div class="col">
+                                <div class="card h-100">
+                                    <div class="card-body" style="padding: 0px;">
                                         <div class="text-center">
-                                            <label class="btn btn-secondary font" style="font-size: 3px; padding : 6px 0px 0px 0px" for="op3">희망시간3<input type="datetime-local" name="matchTime3" id="op3" /></label>
+                                            <input type="radio" class="btn-check" name="selectedMatchTime" id="option3" th:value="${apply.matchTime3}" />
+                                            <label
+                                                    class="btn btn-secondary font"
+                                                    style="font-size: 10px; margin-bottom:0; padding: 8px;"
+                                                    for="option3"
+                                                    th:text="|${apply.getMatchTime3().substring(5, 7)}월 ${apply.getMatchTime3().substring(8, 10)}일 ${apply.getMatchTime3().substring(11, 13)}시|"
+                                            ></label>
                                         </div>
                                     </div>
                                 </div>
@@ -132,22 +119,36 @@
                     </tr>
                 </table>
             </div>
+
+            <div class="d-flex justify-content-start">
+                <div class="p-2 font" style="font-size: 8px; margin: 3px "> <b th:text="${apply.mentee.nickname}"/>님이 선택한 질문</div>
+            </div>
+            <div class="" style="margin: 0px auto; text-align: center;">
+                <table style="text-align: center;  margin: auto; margin-bottom: 15px;">
+                    <tr>
+                        <td style="padding: 0px">
+                            <div class="col">
+                                <p class="btn btn-secondary font" style="font-size: 20px" for="option4" th:text="${apply.question}" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <hr>
             <div class="">
                 <div class="d-flex justify-content-start">
-                    <div class="p-2 font" style="font-size: 20px; margin: 3px "><b>[[${mentorData.getNickname()}]]</b> 멘토에게<br> 도두를 제안하시겠습니까? </div>
+                    <div class="p-2 font" style="font-size: 20px; margin: 3px "><b th:text="${apply.mentee.nickname}"></b> 멘티의<br> 도두를 수락하시겠습니까? </div>
                 </div>
-                <div class="font" style="font-size: 20px; text-align: right; margin-right: 20px; "><b style="color: rgba(216,90,123,1)">3500</b> DoDu</div>
+                <div class="font" style="font-size: 20px; text-align: right; margin-right: 20px; ">받은 <b style="color: rgba(216,90,123,1)">3500</b> DoDu</div>
             </div>
             <div style="margin-top: 20px; text-align: center;">
-                <input type="hidden" name="status" th:value=0 />
-                <input type="hidden" name="mentee" th:value="${session.user.id}" />
-                <input type="hidden" name="mentor" th:value="${mentorData.getId()}" />
-                <button class="btn" style="background-color: rgba(216,90,123,0.5); margin: 5px;" type="submit">제안하기</button>
+                <input type="hidden" name="status" th:value='0' />
+                <input type="hidden" name="apply" id="apply" th:value="${apply.id}" />
+                <button class="btn" style="background-color: rgba(216,90,123,0.5); margin: 5px;" type="submit"  th:text="수락하기"></button>
                 <input class="btn btn-secondary" style="margin: 5px;" type="reset" value="취소하기" onclick="location.href='/'">
             </div>
         </section>
-        <!--추후 value에 session 값을 담아 실제 mentee_id를 저장해야 함-->
     </form>
+    <script></script>
 </th:block>
 </html>

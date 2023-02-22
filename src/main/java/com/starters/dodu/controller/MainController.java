@@ -2,13 +2,7 @@ package com.starters.dodu.controller;
 
 import com.starters.dodu.config.auth.LoginUser;
 import com.starters.dodu.config.auth.SessionUser;
-import com.starters.dodu.domain.Category;
-import com.starters.dodu.domain.Mentee;
-import com.starters.dodu.domain.Mentor;
 import com.starters.dodu.dto.ApplyFormDTO;
-import com.starters.dodu.repository.CategoryRepository;
-import com.starters.dodu.repository.MenteeRepository;
-import com.starters.dodu.repository.MentorRepository;
 import com.starters.dodu.dto.*;
 import com.starters.dodu.service.ApplyService;
 import com.starters.dodu.service.CategoryService;
@@ -22,10 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
@@ -53,6 +45,13 @@ public class MainController {
         ApplyFormDTO.GetApplyForm applyFormDTO = mentorService.getApplyForm(id);
         model.addAttribute("mentorData", applyFormDTO);
         return "apply-form";
+    }
+
+    @GetMapping("/mentor/apply/confirm/{id}")
+    public String getMentorApplyConfirm(@PathVariable String id, Model model) {
+        ApplyResultDTO apply = applyService.findById(Long.parseLong(id));
+        model.addAttribute("apply", apply);
+        return "mentor-apply-confirm";
     }
 
     @GetMapping("/applyResult")

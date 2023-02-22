@@ -1,14 +1,26 @@
 package com.starters.dodu.dto;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import com.starters.dodu.domain.Apply;
+import com.starters.dodu.domain.Matching;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class MatchingDTO {
-  String inputDate = "2022-12-14T00:11:59";
-  DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-  LocalDateTime dateTime = LocalDateTime.parse(inputDate, inputFormatter);
 
-  DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초");
-  String outputDate = dateTime.format(outputFormatter);
+  private Long id;
+  private String selectedMatchTime;
+  private String status;
+  private Apply apply;
+
+  public MatchingDTO(Matching entity) {
+    this.id = entity.getId();
+    this.selectedMatchTime = entity.getSelectedMatchTime();
+    this.status = entity.getStatus();
+    this.apply = entity.getApply();
+  }
 
 }

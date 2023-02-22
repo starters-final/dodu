@@ -128,7 +128,7 @@
     <script>
         function changeCategory() {
             let categoryId = event.target.id;
-            fetch(`/api/v1?categoryId=${categoryId}`)
+            fetch(`/api/v1?categoryId=${categoryId}`, {mode:"no-cors"})
                 .then(response => response.json())
                 .then(data => {
                     const carouselFinal = document.getElementById("carousel-final");
