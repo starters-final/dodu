@@ -4,19 +4,17 @@ import com.starters.dodu.domain.Apply;
 import com.starters.dodu.domain.Mentor;
 import com.starters.dodu.dto.ApplyFormDTO;
 import com.starters.dodu.dto.ApplyResultDTO;
-import com.starters.dodu.dto.MentorDTO;
 import com.starters.dodu.dto.MailDTO;
+import com.starters.dodu.dto.MentorDTO;
 import com.starters.dodu.repository.ApplyListRepository;
 import com.starters.dodu.repository.MentorRepository;
-
 import com.starters.dodu.repository.SaveApplyRepository;
 import jakarta.persistence.NonUniqueResultException;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -92,6 +90,10 @@ public class MentorService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
 
         return new ApplyFormDTO.GetApplyForm(entity);
+    }
+
+    public List<Mentor> findAll(){
+        return mentorRepository.findAllByStatusGreaterThanEqual("통과");
     }
 }
 

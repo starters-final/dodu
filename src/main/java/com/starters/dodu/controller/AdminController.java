@@ -1,7 +1,9 @@
 package com.starters.dodu.controller;
 
 import com.starters.dodu.domain.Mentee;
+import com.starters.dodu.domain.Mentor;
 import com.starters.dodu.service.MenteeService;
+import com.starters.dodu.service.MentorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,12 @@ import java.util.List;
 public class AdminController {
 
     private final MenteeService menteeService;
+    private final MentorService mentorService;
+
+    @GetMapping("/admin")
+    public String getHome(){
+        return "adminhome";
+    }
 
     // mentee 관리
     @GetMapping("/admin/mentee")
@@ -22,6 +30,15 @@ public class AdminController {
         model.addAttribute("mentees", mentees);
         return "adminmentee";
     }
+
+    // mentor 관리
+    @GetMapping("/admin/mentor")
+    public String getMentors(Model model) {
+        List<Mentor> mentors = mentorService.findAll();
+        model.addAttribute("mentors", mentors);
+        return "adminmentor";
+    }
+
     @GetMapping("/admin/apply")
     public String getApply(){
         return "adminapply";
