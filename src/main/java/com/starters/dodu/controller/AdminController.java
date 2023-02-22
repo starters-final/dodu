@@ -4,8 +4,10 @@ import com.starters.dodu.domain.Apply;
 import com.starters.dodu.domain.Mentee;
 import com.starters.dodu.service.ApplyService;
 import com.starters.dodu.domain.Mentor;
+import com.starters.dodu.domain.Verification;
 import com.starters.dodu.service.MenteeService;
 import com.starters.dodu.service.MentorService;
+import com.starters.dodu.service.VerificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +22,19 @@ public class AdminController {
     private final MenteeService menteeService;
     private final ApplyService applyService;
     private final MentorService mentorService;
+    private final VerificationService verificationService;
 
     @GetMapping("/admin")
     public String getHome(){
         return "adminhome";
+    }
+
+    // varification 관리
+    @GetMapping("/admin/veri")
+    public String getVeris(Model model) {
+        List<Verification> verification = verificationService.findAll();
+        model.addAttribute("verification", verification);
+        return "adminverification";
     }
 
     // mentee 관리
@@ -37,10 +48,11 @@ public class AdminController {
     // mentor 관리
     @GetMapping("/admin/mentor")
     public String getMentors(Model model) {
-        List<Mentor> mentors = mentorService.findAll();
+        List<Mentor> mentors = mentorService.findAllPass();
         model.addAttribute("mentors", mentors);
         return "adminmentor";
     }
+
 
     @GetMapping("/admin/apply")
     public String getApplyList(Model model){

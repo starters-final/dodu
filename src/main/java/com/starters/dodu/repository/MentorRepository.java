@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface MentorRepository extends CrudRepository<Mentor, Long> {
   List<Mentor> findAllByCategoryId(Long id);
-  List<Mentor> findAllByStatusGreaterThanEqual(String status);
+  List<Mentor> findAllByStatusEquals(String status);
 }

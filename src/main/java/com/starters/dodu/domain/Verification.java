@@ -21,9 +21,9 @@ public class Verification {
 
     private LocalDateTime indate;
 
-    @ManyToOne
-    @JoinColumn(name = "mentor_id")
-    private Mentor mentorId;
+    @OneToOne
+    @JoinColumn(name = "mentor_id", unique = true)
+    private Mentor mentor;
 
 
 }
