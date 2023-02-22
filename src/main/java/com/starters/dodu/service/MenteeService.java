@@ -6,6 +6,8 @@ import com.starters.dodu.repository.MenteeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @Service
@@ -18,5 +20,9 @@ public class MenteeService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id = " + id));
 
         return new MenteeDTO(entity);
+    }
+
+    public List<Mentee> findAll(){
+        return menteeRepository.findAll();
     }
 }

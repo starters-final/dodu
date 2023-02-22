@@ -47,11 +47,6 @@ public class MainController {
         return "apply-form";
     }
 
-    @GetMapping("/admin")
-    public String getAdminPage() {
-        return "admin";
-    }
-
     @GetMapping("/applyResult")
     public String getApplyResult(@RequestParam String menteeId, @RequestParam String mentorId, Model model) {
         ApplyResultDTO apply = applyService.findByMenteeIdAndMentorId(Long.parseLong(menteeId), Long.parseLong(mentorId));
