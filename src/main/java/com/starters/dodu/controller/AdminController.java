@@ -22,5 +22,9 @@ public class AdminController {
         model.addAttribute("mentees", mentees);
         return "adminmentee";
     }
+    @GetMapping("/admin/apply")
+    public String getApply(){
+        return "adminapply";
+    }
 
 }
