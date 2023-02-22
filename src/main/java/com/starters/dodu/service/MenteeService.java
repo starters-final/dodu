@@ -4,6 +4,7 @@ import com.starters.dodu.domain.Mentee;
 import com.starters.dodu.dto.MenteeDTO;
 import com.starters.dodu.repository.MenteeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +24,6 @@ public class MenteeService {
     }
 
     public List<Mentee> findAll(){
-        return menteeRepository.findAll();
+        return menteeRepository.findAll(Sort.by(Sort.Direction.DESC,"email"));
     }
 }
