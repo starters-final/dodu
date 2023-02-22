@@ -2,7 +2,6 @@ package com.starters.dodu.service;
 
 import com.starters.dodu.domain.Chat;
 import com.starters.dodu.domain.ChatLog;
-import com.starters.dodu.dto.ChatDTO;
 import com.starters.dodu.dto.ChatLogDTO;
 import com.starters.dodu.repository.ChatLogRepository;
 import com.starters.dodu.repository.ChatRepository;

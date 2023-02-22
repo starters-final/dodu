@@ -1,9 +1,6 @@
 package com.starters.dodu.service;
 
-import com.starters.dodu.domain.Category;
-import com.starters.dodu.domain.Mentor;
 import com.starters.dodu.dto.CategoryDTO;
-import com.starters.dodu.dto.MentorDTO;
 import com.starters.dodu.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

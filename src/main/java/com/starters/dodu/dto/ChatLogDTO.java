@@ -1,6 +1,5 @@
 package com.starters.dodu.dto;
 
-import com.starters.dodu.domain.Chat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
