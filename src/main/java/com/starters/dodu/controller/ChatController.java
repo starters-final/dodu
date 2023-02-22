@@ -1,5 +1,6 @@
 package com.starters.dodu.controller;
 
+import org.springframework.ui.Model;
 import com.starters.dodu.dto.ChatLogDTO;
 import com.starters.dodu.service.ChatService;
 import lombok.extern.log4j.Log4j2;
@@ -25,6 +26,12 @@ public class ChatController {
         log.info("@ChatController, chat GET()");
 
         return "chat";
+    }
+
+    @GetMapping("/chatlist")
+    public String chatlist(Model model){
+        model.addAttribute("chatlist", chatService.getAllChatList());
+        return "chatlist";
     }
 
     @GetMapping("/chatgpt")
