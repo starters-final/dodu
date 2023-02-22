@@ -92,8 +92,9 @@ public class MentorService {
         return new ApplyFormDTO.GetApplyForm(entity);
     }
 
-    public List<Mentor> findAll(){
-        return mentorRepository.findAllByStatusGreaterThanEqual("통과");
+    // 맨토 관리
+    public List<Mentor> findAllPass(){
+        return mentorRepository.findAllByStatusEquals("통과");
     }
 }
 

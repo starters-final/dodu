@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{layout/adminlay}">
+<head>
+    <style>
+
+    </style>
+</head>
+
+<th:block layout:fragment="content">
+
+    <h2>검증 관리</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th scope="col">회원번호</th>
+                <th scope="col">이름</th>
+                <th scope="col">전화번호</th>
+                <th scope="col">이메일</th>
+                <th scope="col">대학</th>
+                <th scope="col">전공</th>
+                <th scope="col">제출서류</th>
+                <th scope="col">확인상태</th>
+                <th scope="col">가입상태</th>
+                <th scope="col">가입일</th>
+                <th scope="col">통과</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="v : ${verification}">
+                <td th:text="${v.getMentor().getId()}"></td>
+                <td th:text="${v.getMentor().getNickname()}"></td>
+                <td th:text="${v.getMentor().getPhone()}"></td>
+                <td th:text="${v.getMentor().getEmail()}"></td>
+                <td th:text="${v.getMentor().getUniversity()}"></td>
+                <td th:text="${v.getMentor().getMajor()}"></td>
+                <td th:text="${v.getFile()}"></td>
+                <td th:text="${v.getStatus()}"></td>
+                <td th:text="${v.getMentor().getStatus()}"></td>
+                <td th:text="${v.getMentor().getIndate()}"></td>
+                <td><button>통과</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</th:block>
+
+
+</html>

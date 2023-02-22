@@ -55,4 +55,5 @@ public class Mentor implements Serializable {
   @OneToOne
   @JoinColumn(name = "wallet_id")
   private Wallet wallet;
+
 }
