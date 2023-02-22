@@ -1,6 +1,8 @@
 package com.starters.dodu.controller;
 
+import com.starters.dodu.domain.Apply;
 import com.starters.dodu.domain.Mentee;
+import com.starters.dodu.service.ApplyService;
 import com.starters.dodu.domain.Mentor;
 import com.starters.dodu.service.MenteeService;
 import com.starters.dodu.service.MentorService;
@@ -16,6 +18,7 @@ import java.util.List;
 public class AdminController {
 
     private final MenteeService menteeService;
+    private final ApplyService applyService;
     private final MentorService mentorService;
 
     @GetMapping("/admin")
@@ -40,7 +43,9 @@ public class AdminController {
     }
 
     @GetMapping("/admin/apply")
-    public String getApply(){
+    public String getApplyList(Model model){
+        List<Apply> applylist = applyService.findAll();
+        model.addAttribute("applylist", applylist);
         return "adminapply";
     }
 

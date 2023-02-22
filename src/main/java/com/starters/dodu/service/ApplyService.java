@@ -27,4 +27,7 @@ public class ApplyService {
 
     return new ApplyResultDTO(entity);
   }
+  public List<Apply> findAll(){
+    return applyListRepository.findAll();
+  }
 }
