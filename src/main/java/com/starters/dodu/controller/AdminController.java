@@ -70,7 +70,7 @@ public class AdminController {
     // 채팅 관리
     @GetMapping("/admin/chat")
     public String getChats(Model model) {
-        List<Chat> chat =  chatService.findAll();
+        List<Chat> chat =  chatService.getAllChatList();
         model.addAttribute("chat", chat);
         return "admin-chat";
     }
