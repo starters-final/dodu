@@ -26,7 +26,7 @@ public class AdminController {
 
     @GetMapping("/admin")
     public String getHome(){
-        return "adminhome";
+        return "admin-home";
     }
 
     // varification 관리
@@ -34,7 +34,8 @@ public class AdminController {
     public String getVeris(Model model) {
         List<Verification> verification = verificationService.findAll();
         model.addAttribute("verification", verification);
-        return "adminverification";
+        //return "admin-verification";
+        return "admin-verification";
     }
 
     // mentee 관리
@@ -42,7 +43,7 @@ public class AdminController {
     public String getMentees(Model model) {
         List<Mentee> mentees = menteeService.findAll();
         model.addAttribute("mentees", mentees);
-        return "adminmentee";
+        return "admin-mentee";
     }
 
     // mentor 관리
@@ -50,7 +51,7 @@ public class AdminController {
     public String getMentors(Model model) {
         List<Mentor> mentors = mentorService.findAllPass();
         model.addAttribute("mentors", mentors);
-        return "adminmentor";
+        return "admin-mentor";
     }
 
 
@@ -58,7 +59,7 @@ public class AdminController {
     public String getApplyList(Model model){
         List<Apply> applylist = applyService.findAll();
         model.addAttribute("applylist", applylist);
-        return "adminapply";
+        return "admin-apply";
     }
 
 }
