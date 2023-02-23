@@ -48,7 +48,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 attributes.getNameAttributeKey());
     }
 
-
     private Mentee saveOrUpdate(OAuthAttributes attributes) {
         // 이메일이 이미 존재하면
         Mentee mentee = menteeRepository.findByEmail(attributes.getEmail())

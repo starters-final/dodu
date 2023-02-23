@@ -32,7 +32,6 @@ public class AdminController {
     public String getVeris(Model model) {
         List<Verification> verification = verificationService.findAll();
         model.addAttribute("verification", verification);
-        //return "admin-verification";
         return "admin-verification";
     }
 
