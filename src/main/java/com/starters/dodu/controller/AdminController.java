@@ -23,6 +23,11 @@ public class AdminController {
     private final ChatService chatService;
 
     @GetMapping("/admin")
+    public String getlogin(){
+        return "admin-login";
+    }
+
+    @GetMapping("/admin/home")
     public String getHome(){
         return "admin-home";
     }
