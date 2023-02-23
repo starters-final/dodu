@@ -1,21 +1,38 @@
 package com.starters.dodu.dto;
 
+import com.starters.dodu.domain.Chat;
+import com.starters.dodu.domain.Mentee;
+import com.starters.dodu.domain.Mentor;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 @Data
 public class ChatDTO {
 
     private Long id;
 
-    private String mentee_id;
+    private Mentee mentee;
 
-    private String mentor_id;
+    private Mentor mentor;
 
     private String status;
 
-    private LocalDateTime start_time;
+    private String startTime;
 
-    private LocalDateTime finish_time;
+    private String finishTime;
+
+    public ChatDTO(Mentee mentee, Mentor mentor, String startTime) {
+        this.mentee = mentee;
+        this.mentor = mentor;
+        this.startTime = startTime;
+    }
+
+    public ChatDTO(Chat chat) {
+        this.id = chat.getId();
+        this.mentee = chat.getMentee();
+        this.mentor = chat.getMentor();
+        this.startTime = chat.getStartTime();
+        this.finishTime = chat.getFinishTime();
+        this.status = chat.getStatus();
+    }
+
 }

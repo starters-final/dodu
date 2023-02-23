@@ -18,7 +18,7 @@ public interface ApplyListRepository extends JpaRepository<Apply, Long> {
 
   @Transactional
   @Modifying
-  @Query("UPDATE Apply a SET a.status = ?2 WHERE a.id = ?1")
-  int setStatusForApply(Long id, String status);
+  @Query("UPDATE Apply a SET a.status = ?1 WHERE a.id = ?2")
+  int setStatusForApply(String status, Long id);
 
 }

@@ -35,13 +35,6 @@
               <span class="chat-box mine">${document.querySelector('#input').value}</span>
             </div>
         `;
-        document.querySelector('#input').value = "";
-        document.querySelector('.chat-content').insertAdjacentHTML('beforeend', template);
-        template = `
-          <div class="line">
-            <span class="chat-box">시간이 오래 걸릴 수 있습니다. 추가로 검색하지 말고 잠시 기다려주세요. 64byte까지 출력됩니다.</span>
-          </div>
-        `;
         document.querySelector('.chat-content').insertAdjacentHTML('beforeend', template);
         try {
             const response = await fetch('/api/v1/config');
@@ -54,11 +47,12 @@
                 model: "text-davinci-003",
                 prompt: document.querySelector('#input').value,
                 temperature: 0.7,
-                max_tokens: 64,
+                max_tokens: 200,
                 top_p: 1,
                 frequency_penalty: 0,
                 presence_penalty: 0,
             });
+            document.querySelector('#input').value = "";
             template = `
               <div class="line">
                 <span class="chat-box">${result.data.choices[0].text}</span>

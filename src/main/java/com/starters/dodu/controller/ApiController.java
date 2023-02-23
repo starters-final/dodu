@@ -2,6 +2,7 @@ package com.starters.dodu.controller;
 
 import com.starters.dodu.dto.*;
 import com.starters.dodu.service.ApplyService;
+import com.starters.dodu.service.ChatService;
 import com.starters.dodu.service.MatchingService;
 import com.starters.dodu.service.MentorService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,9 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import static com.starters.dodu.utils.StringToUuid.stringtoUUID;
@@ -27,6 +26,7 @@ public class ApiController {
   private final MentorService mentorService;
   private final ApplyService applyService;
   private final MatchingService matchingService;
+  private final ChatService chatService;
   @Value("${chatgpt.api.key.script}")
   private String chatgptApiKeyScript;
 
@@ -65,10 +65,9 @@ public class ApiController {
     response.sendRedirect("/applyResult?menteeId=" + apply.getMentee().getId() + "&mentorId=" + apply.getMentor().getId());
   }
 
-//  @PutMapping("/setApplyStatus")
   public ResponseEntity<String> updateApplyStatus(Long applyId, String status) {
     try {
-      if(status.equals("0")) {
+      if(status.equals("미열람")) {
         applyService.updateApplyStatus(applyId, status);
         return ResponseEntity.ok("Apply status updated successfully");
       } else return ResponseEntity.noContent().build();
@@ -81,17 +80,19 @@ public class ApiController {
   @PostMapping("/saveMatching")
   public void saveMatching(MatchingDTO matchingDTO, HttpServletResponse response) throws IOException {
     MatchingDTO match = matchingService.saveMatching(matchingDTO);
+    updateApplyStatus(match.getApply().getId(), match.getApply().getStatus());
+    ChatDTO chat = new ChatDTO(match.getApply().getMentee(), match.getApply().getMentor(), match.getSelectedMatchTime());
+    ChatDTO chatResult = chatService.createChat(chat);
     sendEmail(
             match.getApply().getMentor().getEmail(),
             match.getApply().getMentor().getNickname() + "님, " + match.getApply().getMentee().getNickname()  + " 멘티와의 매칭이 완료됐어요!",
-            "http://localhost:8080/chat"
+            "http://localhost:8080/chat/" + chatResult.getId()
     );
     sendEmail(
             match.getApply().getMentee().getEmail(),
             match.getApply().getMentee().getNickname() + "님, " + match.getApply().getMentor().getNickname() + " 멘토가 DoDu를 수락했어요!",
-            "http://localhost:8080/chat"
+            "http://localhost:8080/chat/" + chatResult.getId()
     );
-    updateApplyStatus(match.getApply().getId(), match.getApply().getStatus());
     response.sendRedirect("/");
   }
 

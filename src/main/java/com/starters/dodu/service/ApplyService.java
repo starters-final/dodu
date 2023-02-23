@@ -34,12 +34,13 @@ public class ApplyService {
 
     return new ApplyResultDTO(entity);
   }
+
   public List<Apply> findAll(){
     return applyListRepository.findAll();
   }
 
   public void updateApplyStatus(Long id, String status) {
-    int updatedRows = applyListRepository.setStatusForApply(id, "1");
+    int updatedRows = applyListRepository.setStatusForApply("열람", id);
     if (updatedRows == 0) {
       throw new RuntimeException("Apply not found with id : " + id);
     }

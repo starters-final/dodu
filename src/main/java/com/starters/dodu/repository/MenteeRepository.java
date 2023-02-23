@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface MenteeRepository extends JpaRepository<Mentee, Long> {
 
-    //Optional<Mentee> findById(Long id);
     // 회원가입 시 이메일로 중복된 회원이 있는지 검사하는 쿼리 메서드
     Optional<Mentee> findByEmail(String email);
 }
