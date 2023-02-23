@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class MatchingService {
@@ -24,5 +26,10 @@ public class MatchingService {
     matchingRepository.save(match);
 
     return new MatchingDTO(match);
+  }
+
+  //admin 매칭 관리
+  public List<Matching> findAll(){
+    return matchingRepository.findAll();
   }
 }
