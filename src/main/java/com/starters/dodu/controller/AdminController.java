@@ -1,6 +1,7 @@
 package com.starters.dodu.controller;
 
 import com.starters.dodu.domain.*;
+import com.starters.dodu.dto.CategoryDTO;
 import com.starters.dodu.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ public class AdminController {
     private final MentorService mentorService;
     private final VerificationService verificationService;
     private final MatchingService matchingService;
+    private final CategoryService categoryService;
 
     @GetMapping("/admin")
     public String getHome(){
@@ -74,6 +76,8 @@ public class AdminController {
     // 질문 관리
     @GetMapping("/admin/category")
     public String getCategoris(Model model) {
+        List<CategoryDTO> categories = categoryService.findAll();
+        model.addAttribute("category", categories);
         return "admin-category";
     }
 
