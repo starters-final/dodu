@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -35,23 +36,25 @@ public class Mentee {
 
   private String address;
 
+  @CreationTimestamp
   private LocalDateTime indate; // 생성일
 
   @Builder
-  public Mentee(Long id, String password, String email, String nickname, String phone, int age, String gender, String address) {
+  public Mentee(Long id, String password, String email, String nickname, String phone, String gender, int age) {
     this.id = id;
     this.password = password;
     this.email = email;
     this.nickname = nickname;
     this.phone = phone;
-    this.age = age;
     this.gender = gender;
-    this.address = address;
+    this.age = age;
   }
 
-  public Mentee update(String nickname) {
+  public Mentee update(String nickname, String gender, String phone, int age) {
     this.nickname = nickname;
-
+    this.gender = gender;
+    this.phone = phone;
+    this.age = age;
     return this;
   }
 

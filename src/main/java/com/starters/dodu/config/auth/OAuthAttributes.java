@@ -13,18 +13,22 @@ public class OAuthAttributes {
     private String name;
     private String email;
     // 추가
-    private String phone;
+    private String nickname;
     private String gender;
+    private String mobile;
+    private String birthyear;
 
     @Builder
-    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String phone, String gender) {
+    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String nickname, String gender, String mobile, String birthyear) {
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.name = name;
         this.email = email;
         // 추가
-        this.phone = phone;
+        this.nickname = nickname;
         this.gender = gender;
+        this.mobile = mobile;
+        this.birthyear = birthyear;
     }
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
@@ -40,8 +44,10 @@ public class OAuthAttributes {
                 .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
                 // 추가
-                .phone((String) attributes.get("phone"))
+                .nickname((String) attributes.get("nickname"))
                 .gender((String) attributes.get("gender"))
+                .mobile((String) attributes.get("mobile"))
+                .birthyear((String) attributes.get("birthyear"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
@@ -54,8 +60,10 @@ public class OAuthAttributes {
                 .name((String) response.get("name"))
                 .email((String) response.get("email"))
                 // 추가
-                .phone((String) response.get("phone"))
-                .gender((String) attributes.get("gender"))
+                .nickname((String) response.get("nickname"))
+                .gender((String) response.get("gender")) // gender 추가
+                .mobile((String) response.get("mobile")) // mobile 추가
+                .birthyear((String) response.get("birthyear")) // birthyear 추가
                 .attributes(response)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
@@ -66,8 +74,10 @@ public class OAuthAttributes {
                 .nickname(name)
                 .email(email)
                 // 추가
-                .phone(phone)
+                .nickname(nickname)
                 .gender(gender)
+                .phone(mobile)
+                .age(2023 - Integer.parseInt(birthyear))
                 .build();
     }
 }

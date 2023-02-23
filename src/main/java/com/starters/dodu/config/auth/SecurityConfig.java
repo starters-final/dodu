@@ -43,7 +43,6 @@ public class SecurityConfig {
                                 .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/profile")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/api/v1/**")).permitAll()
-//                                .requestMatchers(new AntPathRequestMatcher("/api/v1/**")).hasRole("ROLE_MENTEE") // ?
                                 .anyRequest().permitAll() // 임시 - 수정 필요
                                 //.anyRequest().authenticated()
                                 //.anyRequest().hasRole("ROLE_MENTEE")
