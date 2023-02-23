@@ -31,7 +31,7 @@ public class MentorDTO {
 
   private String status;
 
-  private String matchCount;
+  private int matchCount;
 
   private String category;
 

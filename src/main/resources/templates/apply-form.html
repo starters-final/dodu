@@ -59,10 +59,10 @@
         <!-- Section-->
         <section class="py-1">
             <div class="d-flex justify-content-start">
-                <div class="p-2 font" style="font-size: 8px; margin: 3px "> <b th:text="${session.user.name}" />님 사전질문 중 1개를 선택해 주세요!</div>
+                <div class="p-2 font" style="font-size: 8px; margin: 3px; "> <b th:text="${session.user.name}" />님 사전질문 중 1개를 선택해 주세요!</div>
             </div>
             <select id="question" name="question">
-                <option value="">궁금한 질문을 골라주세요</option>
+                <option>궁금한 질문을 골라주세요</option>
                 <!-- 이 경우 json의 형태이므로, get메서드를 이용하지 않고 바로 가져올 수 있다-->
                 <option
                         th:each="question : ${mentorData.questions}"

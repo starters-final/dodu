@@ -45,7 +45,7 @@ public class Mentor implements Serializable {
 
   private String status;
 
-  private String matchCount;
+  private int matchCount;
 
   @ManyToOne//(fetch = FetchType.LAZY)
   @JoinColumn(name = "category_id")
