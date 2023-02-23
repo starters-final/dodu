@@ -35,6 +35,9 @@
                         <li class="nav-item">
                             <a class="nav-link active font" style="font-size: 3px;color: black;" aria-current="page" href="#">멘토<br>안보이게하기</a>
                         </li>
+                        <li class="nav-item">
+                            <a id="outchat" class="nav-link active font" style="font-size: 3px;color: black;" aria-current="page">채팅나가기</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -53,22 +56,22 @@
 
         <!--입장 기능 일단 만들어논거임 추후 삭제 -->
         <p class="font" style="font-size: 5px; margin-bottom: 0px;" >ID : <input type="text" id="nickname" value="" style="width: 100px; margin: 10px 0px 0px 0px; ">
-            <input class="btn btn-light btn-sm" type="button"  style="font-size: 5px;" id="enterbtn" value="입장"></p>
+        <input class="btn btn-light btn-sm" type="button"  style="font-size: 5px;" id="enterbtn" value="입장"></p>
         <hr style="margin: 10px">
 
         <!--채팅 영역 -->
         <div id="chatarea" style="width: 325px; height: 370px; overflow-y: auto;display: flex; flex-direction: column-reverse;">
-            <div id="mentor" class="font" style="font-size: 5px;"></div>
-            <div id="mentee" class="font" style="font-size: 5px; margin-left: auto;"></div>
+        <div id="mentor" class="font" style="font-size: 5px;"></div>
+        <div id="mentee" class="font" style="font-size: 5px; margin-left: auto;"></div>
         </div>
 
         <!-- 채팅창 -->
         <div style="position: absolute; bottom:0px; width: 330px">
-            <hr style="margin: 10px">
-            <p class="font" style="font-size: 14px; margin-bottom: 0px;" >Message :
-                <input type="text" id="message" style="width: 150px; ">
-                <input class="btn btn-light btn-sm" type="button" style="font-size: 14px;" id="sendbtn" value="send">
-            </p>
+        <hr style="margin: 10px">
+        <p class="font" style="font-size: 14px; margin-bottom: 0px;" >Message :
+        <input type="text" id="message" style="width: 150px; ">
+        <input class="btn btn-light btn-sm" type="button" style="font-size: 14px;" id="sendbtn" value="send">
+        </p>
         </div>
 
 
@@ -89,36 +92,44 @@
                     //서버로 보내는 이벤트 발생
                     var nickname =  $('#nickname').val();
                     var sendmessage = $('#message').val();
-                    // if(nickname == 'mentee'){
+                   // if(nickname == 'mentee'){
                     webSocket.send(nickname + ":" + sendmessage);
-                    // }
+                   // }
                     //else {
                     //    webSocket.send(1 + ":" + nickname + ":" + sendmessage);
                     //}
                     $("#message").val('');
                 });// on sendbtn
 
-                /*
+
+                $("#outchat").on('click', function(){
+                    var out = confirm('채팅방을 정말 나가시겠습니까?');
+                    if(out){
+                       location.href='/mentee/applyList/${mentee.getId()}';
+
+                    }
+                });
 
 
-                  $('input').keyup(function(event) {
-
-                      if (event.which === 13) {
-                          var nickname =  $('#nickname').val();
-                          var sendmessage = $('#message').val();
-                          if(nickname == 'mentee'){
-                              webSocket.send(2 + ":"+ nickname + ":" + sendmessage);
-                          } else {
-                              webSocket.send(1 + ":" + nickname + ":" + sendmessage);
-                          }
-                          $("#message").val('');
-                      }
-
-                  }); */
-
-            });
+              /*  
 
 
+                $('input').keyup(function(event) {
+
+                    if (event.which === 13) {
+                        var nickname =  $('#nickname').val();
+                        var sendmessage = $('#message').val();
+                        if(nickname == 'mentee'){
+                            webSocket.send(2 + ":"+ nickname + ":" + sendmessage);
+                        } else {
+                            webSocket.send(1 + ":" + nickname + ":" + sendmessage);
+                        }
+                        $("#message").val('');
+                    }
+
+                }); */
+
+                });
 
             function open(){console.log("웹소켓연결성공");}
             function close(){console.log("웹소켓해제성공");}

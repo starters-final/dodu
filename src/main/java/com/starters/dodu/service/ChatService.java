@@ -21,7 +21,7 @@ public class ChatService {
 
     //chatlog db 저장
     @Transactional
-    public void postChatLog(ChatLogDTO chatLogDTO) {
+    public void postChatLog(ChatLogDTO chatLogDTO){
         // Chat을 레포에서 가져온다 (ChatLogDTO 내의 chat_id를 이용하여)
         Long chat_id = chatLogDTO.getChat_id();
         Optional<Chat> chat_ = chatRepository.findById(chat_id);
@@ -36,10 +36,8 @@ public class ChatService {
         chatLogRepository.save(chatLog);
     }
 
-    //admin 채팅관리
-    public List<Chat> findAll(){
+    //전체 채팅방 조회
+    public List<Chat> getAllChatList(){
         return chatRepository.findAll();
     }
-
 }
-
