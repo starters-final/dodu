@@ -2,6 +2,7 @@ package com.starters.dodu.service;
 
 import com.starters.dodu.domain.Chat;
 import com.starters.dodu.domain.ChatLog;
+import com.starters.dodu.dto.ChatDTO;
 import com.starters.dodu.dto.ChatLogDTO;
 import com.starters.dodu.repository.ChatLogRepository;
 import com.starters.dodu.repository.ChatRepository;
@@ -36,8 +37,29 @@ public class ChatService {
         chatLogRepository.save(chatLog);
     }
 
+    public Optional<Chat> findById(Long id) {
+        return chatRepository.findById(id);
+    }
+
     //전체 채팅방 조회
     public List<Chat> getAllChatList(){
         return chatRepository.findAll();
+    }
+
+    @Transactional
+    public ChatDTO createChat(ChatDTO chatDTO) {
+        Chat chat = new Chat();
+        chat.setMentee(chatDTO.getMentee());
+        chat.setMentor(chatDTO.getMentor());
+        chat.setStartTime(chatDTO.getStartTime());
+        chat.setFinishTime(chatDTO.getStartTime().substring(0, 11)
+                + (Integer.parseInt(chatDTO.getStartTime().substring(11, 13)) + 2)
+                + chatDTO.getStartTime().substring(14, 16)
+        );
+        chat.setStatus("대기");
+
+        Chat savedChat = chatRepository.save(chat);
+        return new ChatDTO(savedChat);
+
     }
 }

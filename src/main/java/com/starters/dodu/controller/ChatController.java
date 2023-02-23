@@ -1,5 +1,9 @@
 package com.starters.dodu.controller;
 
+import com.starters.dodu.domain.Chat;
+import com.starters.dodu.dto.ApplyFormDTO;
+import com.starters.dodu.dto.ChatDTO;
+import jakarta.websocket.server.PathParam;
 import org.springframework.ui.Model;
 import com.starters.dodu.dto.ChatLogDTO;
 import com.starters.dodu.service.ChatService;
@@ -9,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 @Log4j2
@@ -21,15 +27,17 @@ public class ChatController {
         this.chatService = chatService;
     }
 
-    @GetMapping("/chat")
-    public String chat(){
+    @GetMapping("/chat/{id}")
+    public String chat(@PathVariable Long id, Model model) {
+        Optional<Chat> chat = chatService.findById(id);
+        model.addAttribute("chat", chat);
         log.info("@ChatController, chat GET()");
 
         return "chat";
     }
 
     @GetMapping("/chatlist")
-    public String chatlist(Model model){
+    public String chatlist(Model model) {
         model.addAttribute("chatlist", chatService.getAllChatList());
         return "chatlist";
     }

@@ -72,9 +72,4 @@ public class MainController {
         return "mentee-apply-list";
     }
 
-    @RequestMapping("/chat")
-    public String chat() {
-        return "chat";
-    }
-
 }
