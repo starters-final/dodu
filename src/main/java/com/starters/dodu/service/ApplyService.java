@@ -44,4 +44,5 @@ public class ApplyService {
       throw new RuntimeException("Apply not found with id : " + id);
     }
   }
+
 }

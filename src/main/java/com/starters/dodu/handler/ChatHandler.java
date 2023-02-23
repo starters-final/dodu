@@ -30,7 +30,7 @@ public class ChatHandler extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws IOException {
         // log용
         String payload = message.getPayload(); //payload? 전송되는 데이터
-        log.info("payload: "+payload);
+        log.info("payload: " + payload);
 
         // chat의 id를 가져온다.
         Long chat_id = (Long) session.getAttributes().get("chat_id");
@@ -51,7 +51,7 @@ public class ChatHandler extends TextWebSocketHandler {
         LocalDateTime now = LocalDateTime.now();
 
         // 메세지 전송
-        for(WebSocketSession sess : list){
+        for(WebSocketSession sess : list) {
             sess.sendMessage(message);
         }
 

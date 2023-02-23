@@ -30,6 +30,7 @@ public class ChatGptService {
         );
         return responseEntity.getBody();
     }
+
     public ChatGptResponseDTO askQuestion(QuestionRequestDTO requestDTO) {
         return this.getResponse(
                 this.buildHttpEntity(
@@ -43,4 +44,5 @@ public class ChatGptService {
                 )
         );
     }
+
 }

@@ -6,12 +6,15 @@ import com.starters.dodu.service.MatchingService;
 import com.starters.dodu.service.MentorService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import static com.starters.dodu.utils.StringToUuid.stringtoUUID;
@@ -24,6 +27,8 @@ public class ApiController {
   private final MentorService mentorService;
   private final ApplyService applyService;
   private final MatchingService matchingService;
+  @Value("${chatgpt.api.key.script}")
+  private String chatgptApiKeyScript;
 
   @GetMapping
   public ResponseEntity<List<MentorDTO>> getMentorsByCategoryId(@RequestParam(defaultValue = "0", required = false) String categoryId) {
@@ -38,7 +43,7 @@ public class ApiController {
   }
 
   @GetMapping("/send")
-  public ResponseEntity<MailDTO> sendEmail(@RequestParam String address, @RequestParam String title, @RequestParam String message){
+  public ResponseEntity<MailDTO> sendEmail(@RequestParam String address, @RequestParam String title, @RequestParam String message) {
     MailDTO dto = new MailDTO();
     dto.setAddress(address);
     dto.setTitle(title);
@@ -99,6 +104,11 @@ public class ApiController {
   @GetMapping("/applyResult")
   public ApplyResultDTO getApplyResultRest(@RequestParam String menteeId, @RequestParam String mentorId) {
     return applyService.findByMenteeIdAndMentorId(Long.parseLong(menteeId), Long.parseLong(mentorId));
+  }
+
+  @GetMapping("/config")
+  public String getConfig() {
+    return chatgptApiKeyScript;
   }
 
 }

@@ -21,42 +21,55 @@
         <span class="chat-box mine"></span>
     </div>
 </div>
+<div style="text-align: center">
 <input class="chat-box" id="input">
 <button id="send">전송</button>
+</div>
 
 <script type="module">
     import { Configuration, OpenAIApi } from 'https://cdn.skypack.dev/openai';
 
-    document.querySelector('#send').addEventListener('click', function(){
-        var template = `<div class="line">
-        <span class="chat-box mine">${ document.querySelector('#input').value }</span>
-      </div>`
+    document.querySelector('#send').addEventListener('click', async () => {
+        let template = `
+            <div class="line">
+              <span class="chat-box mine">${document.querySelector('#input').value}</span>
+            </div>
+        `;
+        document.querySelector('#input').value = "";
         document.querySelector('.chat-content').insertAdjacentHTML('beforeend', template);
-
-
-
-        const configuration = new Configuration({
-            apiKey: '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',
-        });
-        const openai = new OpenAIApi(configuration);
-
-        openai.createCompletion({
-            model: "text-davinci-002",
-            prompt: document.querySelector('#input').value,
-            temperature: 0.7,
-            max_tokens: 500,
-            top_p: 1,
-            frequency_penalty: 0,
-            presence_penalty: 0,
-        }).then((result)=>{
-            console.log(result.data.choices[0].text)
-            var template = `<div class="line">
-          <span class="chat-box">${ result.data.choices[0].text }</span>
-        </div>`
+        template = `
+          <div class="line">
+            <span class="chat-box">시간이 오래 걸릴 수 있습니다. 추가로 검색하지 말고 잠시 기다려주세요. 64byte까지 출력됩니다.</span>
+          </div>
+        `;
+        document.querySelector('.chat-content').insertAdjacentHTML('beforeend', template);
+        try {
+            const response = await fetch('/api/v1/config');
+            const data = await response.text();
+            const configuration = new Configuration({
+                apiKey: data
+            });
+            const openai = new OpenAIApi(configuration);
+            const result = await openai.createCompletion({
+                model: "text-davinci-003",
+                prompt: document.querySelector('#input').value,
+                temperature: 0.7,
+                max_tokens: 64,
+                top_p: 1,
+                frequency_penalty: 0,
+                presence_penalty: 0,
+            });
+            template = `
+              <div class="line">
+                <span class="chat-box">${result.data.choices[0].text}</span>
+              </div>
+            `;
             document.querySelector('.chat-content').insertAdjacentHTML('beforeend', template);
-        })
-
-    })
+        }
+        catch (err) {
+            console.log(err);
+        }
+    });
 </script>
 
 </body>

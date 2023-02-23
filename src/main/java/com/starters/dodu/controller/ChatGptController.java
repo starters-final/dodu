@@ -20,6 +20,4 @@ public class ChatGptController {
         return chatGptService.askQuestion(requestDTO);
     }
 
-
-
 }
