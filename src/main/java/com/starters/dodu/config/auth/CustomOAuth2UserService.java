@@ -31,9 +31,13 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
                 .getUserInfoEndpoint().getUserNameAttributeName();
+        // 추가
+        System.out.println("[oAuth2USer] : " + oAuth2User);
+        System.out.println("[getAttribtues] : " + oAuth2User.getAttributes());
 
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
-        //System.out.println(attributes.getName()); // 여기까진 OK
+
+        System.out.println("===LOG=== :: " + attributes.getGender());
         Mentee mentee = saveOrUpdate(attributes);
         httpSession.setAttribute("user", new SessionUser(mentee));
 
@@ -48,7 +52,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     private Mentee saveOrUpdate(OAuthAttributes attributes) {
         // 이메일이 이미 존재하면
         Mentee mentee = menteeRepository.findByEmail(attributes.getEmail())
-                .map(entity -> entity.update(attributes.getName()))
+                .map(entity -> entity.update(attributes.getNickname(), attributes.getGender(), attributes.getMobile(), 2023 - Integer.parseInt(attributes.getBirthyear())))
                 .orElse(attributes.toEntity());
 
         return menteeRepository.save(mentee);
