@@ -1,13 +1,7 @@
 package com.starters.dodu.controller;
 
-import com.starters.dodu.domain.Apply;
-import com.starters.dodu.domain.Mentee;
-import com.starters.dodu.service.ApplyService;
-import com.starters.dodu.domain.Mentor;
-import com.starters.dodu.domain.Verification;
-import com.starters.dodu.service.MenteeService;
-import com.starters.dodu.service.MentorService;
-import com.starters.dodu.service.VerificationService;
+import com.starters.dodu.domain.*;
+import com.starters.dodu.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +17,7 @@ public class AdminController {
     private final ApplyService applyService;
     private final MentorService mentorService;
     private final VerificationService verificationService;
+    private final MatchingService matchingService;
 
     @GetMapping("/admin")
     public String getHome(){
@@ -54,12 +49,32 @@ public class AdminController {
         return "admin-mentor";
     }
 
-
+    // 신청관리
     @GetMapping("/admin/apply")
     public String getApplyList(Model model){
         List<Apply> applylist = applyService.findAll();
         model.addAttribute("applylist", applylist);
         return "admin-apply";
+    }
+
+    // 매칭 관리
+    @GetMapping("/admin/matching")
+    public String getMatchings(Model model) {
+        List<Matching> matching = matchingService.findAll();
+        model.addAttribute("matching", matching);
+        return "admin-matching";
+    }
+
+    // 채팅 관리
+    @GetMapping("/admin/chat")
+    public String getChats(Model model) {
+        return "admin-chat";
+    }
+
+    // 질문 관리
+    @GetMapping("/admin/category")
+    public String getCategoris(Model model) {
+        return "admin-category";
     }
 
 }
