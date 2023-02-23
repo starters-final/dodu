@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+                xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                layout:decorate="~{layout/adminlay}">
+<head>
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+
+    </style>
+</head>
+
+<th:block layout:fragment="content">
+    <h2>관리자 페이지에 접속하려면 로그인을 해주세요</h2>
+    <div id="adminForm">
+        <form class="" action="/admin/login" method="post">
+            <div class="form-floating w-50">
+                <input type="text" class="form-control" id="floatingInput" placeholder="Admin Id" name="adminName">
+                <label for="floatingInput">Admin Id</label>
+            </div>
+            <div class="form-floating w-50">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+                <label for="floatingPassword">Password</label>
+            </div>
+            <button class="w-50 btn btn-lg btn-primary" type="submit">Sign in</button>
+        </form>
+    </div>
+
+
+</th:block>
+
+
+</html>

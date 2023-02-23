@@ -17,21 +17,24 @@
             <tr>
                 <th scope="col">번호</th>
                 <th scope="col">시작시간</th>
-                <th scope="col">맨토</th>
                 <th scope="col">멘티</th>
+                <th scope="col">맨토</th>
                 <th scope="col">종료시간</th>
                 <th scope="col">상태</th>
                 <th scope="col">채팅확인</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="chat : ${chat}">
-                <td th:text="${chat.getId()}"></td>
-                <td th:text="${chat.getStart_time()}"></td>
-                <td th:text="${chat.getMentor_id()}"></td>
-                <td th:text="${chat.getMentee_id()}"></td>
-                <td th:text="${chat.getFinish_time()}"></td>
-                <td th:text="${chat.getStatus()}"></td>
+            <tr th:each="c : ${chat}">
+                <td th:text="${c.getId()}"></td>
+<!--                <td th:text="|${c.getStartTime().substring(0, 4)}년 ${c.getStartTime().substring(5, 7)}월 ${c.getStartTime().substring(8, 10)}일 ${c.getStartTime().substring(11, 13)}시|"></td>-->
+                <td th:text="|${c.getStartTime()?.substring(0, 4)}년 ${c.getStartTime()?.substring(5, 7)}월 ${c.getStartTime()?.substring(8, 10)}일 ${c.getStartTime()?.substring(11, 13)}시 ${c.getStartTime()?.substring(14, 15)}분|"></td>
+                <!-- c.getMentee 객체가 null일 경우, null을 반환하고, null이 아니라면  c.getMentee().getNickname()을 반환-->
+                <td th:text="${c.getMentee()?.getNickname()}"></td>
+                <td th:text="${c.getMentor()?.getNickname()}"></td>
+<!--                <td th:text="|${c.getFinishTime().substring(0, 4)}년 ${c.getFinishTime().substring(5, 7)}월 ${c.getFinishTime().substring(8, 10)}일 ${c.getFinishTime().substring(11, 13)}시|"></td>-->
+                <td th:text="|${c.getFinishTime()?.substring(0, 4)}년 ${c.getFinishTime()?.substring(5, 7)}월 ${c.getFinishTime()?.substring(8, 10)}일 ${c.getFinishTime()?.substring(11, 13)}시 ${c.getFinishTime()?.substring(14, 15)}분|"></td>
+                <td th:text="${c.getStatus()}"></td>
                 <td ><button>채팅보기</button></td>
 
             </tr>

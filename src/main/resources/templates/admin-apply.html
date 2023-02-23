@@ -17,8 +17,8 @@
             <tr>
                 <th scope="col">신청서 번호</th>
                 <th scope="col">신청일자</th>
-                <th scope="col">신청자(멘티)</th>
-                <th scope="col">피신청자(멘토)</th>
+                <th scope="col">멘티</th>
+                <th scope="col">멘토</th>
                 <th scope="col">희망시간1</th>
                 <th scope="col">희망시간2</th>
                 <th scope="col">희망시간3</th>
@@ -29,12 +29,12 @@
             <tbody>
             <tr th:each="a : ${applylist}">
                 <td th:text="${a.getId()}"></td>
-                <td th:text="|${a.getIndate().getYear()}년 ${a.getIndate().getMonthValue()}월 ${a.getIndate().getDayOfMonth()}일 ${a.getIndate().getHour()}시|"></td>
+                <td th:text="|${a.getIndate().getYear()}년 ${a.getIndate().getMonthValue()}월 ${a.getIndate().getDayOfMonth()}일|"></td>
                 <td th:text="${a.getMentee().getNickname()}"></td>
                 <td th:text="${a.getMentor().getNickname()}"></td>
-                <td th:text="|${a.getMatchTime1().substring(0, 4)}년 ${a.getMatchTime1().substring(5, 7)}월 ${a.getMatchTime1().substring(8, 10)}일 ${a.getMatchTime1().substring(11, 13)}시|"></td>
-                <td th:text="|${a.getMatchTime2().substring(0, 4)}년 ${a.getMatchTime2().substring(5, 7)}월 ${a.getMatchTime2().substring(8, 10)}일 ${a.getMatchTime2().substring(11, 13)}시|"></td>
-                <td th:text="|${a.getMatchTime3().substring(0, 4)}년 ${a.getMatchTime3().substring(5, 7)}월 ${a.getMatchTime3().substring(8, 10)}일 ${a.getMatchTime3().substring(11, 13)}시|"></td>
+                <td th:text="|${a.getMatchTime1().substring(0, 4)}년 ${a.getMatchTime1().substring(5, 7)}월 ${a.getMatchTime1().substring(8, 10)}일 ${a.getMatchTime1().substring(11, 13)}시 ${a.getMatchTime1().substring(14, 15)}분|"></td>
+                <td th:text="|${a.getMatchTime2().substring(0, 4)}년 ${a.getMatchTime2().substring(5, 7)}월 ${a.getMatchTime2().substring(8, 10)}일 ${a.getMatchTime2().substring(11, 13)}시 ${a.getMatchTime2().substring(14, 15)}분|"></td>
+                <td th:text="|${a.getMatchTime3().substring(0, 4)}년 ${a.getMatchTime3().substring(5, 7)}월 ${a.getMatchTime3().substring(8, 10)}일 ${a.getMatchTime3().substring(11, 13)}시 ${a.getMatchTime3().substring(14, 15)}분|"></td>
                 <td th:text="${a.getQuestion().getQuestion()}"></td>
                 <td th:text="${a.getStatus()}"></td>
             </tr>

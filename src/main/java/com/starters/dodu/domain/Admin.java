@@ -16,7 +16,8 @@ public class Admin {
   @Column(name = "admin_id")
   private Long id; // 식별자
 
-  private String nickname; // 닉네임
+  private String nickname; // 운영자 닉네임
+  private String adminName; // 운영자 로그인을 위한 아이디
 
   private String password; // 비밀번호
 
