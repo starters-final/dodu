@@ -15,30 +15,25 @@
         <table class="table table-striped table-sm">
             <thead>
             <tr>
-                <th scope="col">회원번호</th>
-                <th scope="col">이름</th>
-                <th scope="col">전화번호</th>
-                <th scope="col">이메일</th>
-                <th scope="col">대학</th>
-                <th scope="col">전공</th>
-                <th scope="col">성별</th>
-                <th scope="col">나이</th>
-                <th scope="col">가입상태</th>
-                <th scope="col">가입일</th>
+                <th scope="col">번호</th>
+                <th scope="col">시작시간</th>
+                <th scope="col">맨토</th>
+                <th scope="col">멘티</th>
+                <th scope="col">종료시간</th>
+                <th scope="col">상태</th>
+                <th scope="col">채팅확인</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="m : ${mentors}">
-                <td th:text="${m.getId()}"></td>
-                <td th:text="${m.getNickname()}"></td>
-                <td th:text="${m.getPhone()}"></td>
-                <td th:text="${m.getEmail()}"></td>
-                <td th:text="${m.getUniversity()}"></td>
-                <td th:text="${m.getMajor()}"></td>
-                <td th:text="${m.getGender()}"></td>
-                <td th:text="${m.getAge()}"></td>
-                <td th:text="${m.getStatus()}"></td>
-                <td th:text="${m.getIndate()}"></td>
+            <tr th:each="chat : ${chat}">
+                <td th:text="${chat.getId()}"></td>
+                <td th:text="${chat.getStart_time()}"></td>
+                <td th:text="${chat.getMentor_id()}"></td>
+                <td th:text="${chat.getMentee_id()}"></td>
+                <td th:text="${chat.getFinish_time()}"></td>
+                <td th:text="${chat.getStatus()}"></td>
+                <td ><button>채팅보기</button></td>
+
             </tr>
             </tbody>
         </table>

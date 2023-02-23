@@ -20,6 +20,7 @@ public class AdminController {
     private final VerificationService verificationService;
     private final MatchingService matchingService;
     private final CategoryService categoryService;
+    private final ChatService chatService;
 
     @GetMapping("/admin")
     public String getHome(){
@@ -70,6 +71,8 @@ public class AdminController {
     // 채팅 관리
     @GetMapping("/admin/chat")
     public String getChats(Model model) {
+        List<Chat> chat =  chatService.findAll();
+        model.addAttribute("chat", chat);
         return "admin-chat";
     }
 
