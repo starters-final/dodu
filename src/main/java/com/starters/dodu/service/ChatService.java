@@ -53,7 +53,7 @@ public class ChatService {
         chat.setMentor(chatDTO.getMentor());
         chat.setStartTime(chatDTO.getStartTime());
         chat.setFinishTime(chatDTO.getStartTime().substring(0, 11)
-                + (Integer.parseInt(chatDTO.getStartTime().substring(11, 13)) + 2)
+                + (Integer.parseInt(chatDTO.getStartTime().substring(11, 13)) + 1)
                 + chatDTO.getStartTime().substring(14, 16)
         );
         chat.setStatus("대기");

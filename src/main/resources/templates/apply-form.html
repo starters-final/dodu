@@ -6,7 +6,6 @@
     <script src="/js/Apply.js"></script>
 </head>
 
-
 <th:block layout:fragment="content">
     <nav class="navbar navbar-light bg-light" style="position: relative; padding: 0px; height: 40px; background-color: transparent;">
         <div class="container-fluid" style="height: 26px;">
@@ -42,7 +41,6 @@
             </div>
         </div>
     </nav>
-
     <header class="" style="background-color: rgba(216,90,123,0.5); width: 375px; height: 100px; padding: 10px ">
         <div class="container">
             <div class="" style="display:inline; margin-top: 0px;">
@@ -54,15 +52,19 @@
             </div>
         </div>
     </header>
-
-    <form th:action="@{/api/v1/offer/saveApply}" method="POST">
+    <div th:if="${session.isEmpty()}">
+        <br /><br /><br />
+        <div class="alert alert-danger">회원가입부터 해주세요!</div>
+        <button type="button" style="font-size: 3px; color: gray; width: 82px" class="alert alert-danger" onclick="location.href='/doduLogin'">로그인</button>
+    </div>
+    <form th:action="@{/api/v1/offer/saveApply}" method="POST" th:if="${session.user}">
         <!-- Section-->
         <section class="py-1">
             <div class="d-flex justify-content-start">
-                <div class="p-2 font" style="font-size: 8px; margin: 3px; "> <b th:text="${session.user.name}" />님 사전질문 중 1개를 선택해 주세요!</div>
+                <div class="p-2 font" style="font-size: 8px; margin: 3px; "> <b th:text="${session.user?.name}" />님 사전질문 중 1개를 선택해 주세요!</div>
             </div>
-            <select id="question" name="question">
-                <option>궁금한 질문을 골라주세요</option>
+            <select id="question" name="question" required>
+                <option value="" selected>궁금한 질문을 골라주세요</option>
                 <!-- 이 경우 json의 형태이므로, get메서드를 이용하지 않고 바로 가져올 수 있다-->
                 <option
                         th:each="question : ${mentorData.questions}"
@@ -70,9 +72,8 @@
                         th:text="${question.question}"
                 ></option>
             </select>
-
             <div class="d-flex justify-content-start">
-                <div class="p-2 font" style="font-size: 8px; margin: 3px "><b th:text="${session.user.name}" />님 가능한 시간을 알려주세요.</div>
+                <div class="p-2 font" style="font-size: 8px; margin: 3px "><b th:text="${session.user?.name}" />님 가능한 시간을 알려주세요.</div>
             </div>
             <div class="" style="margin: -10px 0px 0px 30px">
                 <table style="text-align: center">
@@ -87,7 +88,7 @@
                                     </div>
                                     <div class="card-footer" style="padding: 0px;">
                                         <div class="text-center">
-                                            <label class="btn btn-secondary font" style="font-size: 3px; padding : 6px 0px 0px 0px " for="op1">희망시간1<input type="datetime-local" name="matchTime1" id="op1" /></label>
+                                            <label class="btn btn-secondary font" style="font-size: 3px; padding : 6px 0px 0px 0px " for="op1">희망시간1<input type="datetime-local" name="matchTime1" id="op1" required /></label>
                                         </div>
                                     </div>
                                 </div>
@@ -105,7 +106,7 @@
                                     </div>
                                     <div class="card-footer" style="padding: 0px;">
                                         <div class="text-center">
-                                            <label class="btn btn-secondary font" style="font-size: 3px; padding : 6px 0px 0px 0px" for="op2">희망시간2<input type="datetime-local" name="matchTime2" id="op2" /></label>
+                                            <label class="btn btn-secondary font" style="font-size: 3px; padding : 6px 0px 0px 0px" for="op2">희망시간2<input type="datetime-local" name="matchTime2" id="op2" required /></label>
                                         </div>
                                     </div>
                                 </div>
@@ -123,7 +124,7 @@
                                     </div>
                                     <div class="card-footer" style="padding: 0px;">
                                         <div class="text-center">
-                                            <label class="btn btn-secondary font" style="font-size: 3px; padding : 6px 0px 0px 0px" for="op3">희망시간3<input type="datetime-local" name="matchTime3" id="op3" /></label>
+                                            <label class="btn btn-secondary font" style="font-size: 3px; padding : 6px 0px 0px 0px" for="op3">희망시간3<input type="datetime-local" name="matchTime3" id="op3" required /></label>
                                         </div>
                                     </div>
                                 </div>
@@ -141,10 +142,11 @@
             </div>
             <div style="margin-top: 20px; text-align: center;">
                 <input type="hidden" name="status" th:value="미열람" />
-                <input type="hidden" name="mentee" th:value="${session.user.id}" />
+                <input type="hidden" name="mentee" th:value="${session?.user?.id}" />
                 <input type="hidden" name="mentor" th:value="${mentorData.getId()}" />
-                <button class="btn" style="background-color: rgba(216,90,123,0.5); margin: 5px;" type="submit">제안하기</button>
-                <input class="btn btn-secondary" style="margin: 5px;" type="reset" value="취소하기" onclick="location.href='/'">
+                <button th:if="${session.user}" class="btn" style="background-color: rgba(216,90,123,0.5); margin: 5px;" type="submit">제안하기</button>
+                <button th:unless="${session.user}" class="btn" style="background-color: rgba(216,90,123,0.5); margin: 5px;" disabled="disabled">제안하기</button>
+                <input class="btn btn-secondary" style="margin: 5px;" type="reset" value="취소하기" onclick="location.href='/'" />
             </div>
         </section>
         <!--추후 value에 session 값을 담아 실제 mentee_id를 저장해야 함-->
