@@ -38,3 +38,4 @@ out/
 .DS_Store
 application.properties
 application-oauth.properties
+src/main/java/com/starters/dodu/secure
