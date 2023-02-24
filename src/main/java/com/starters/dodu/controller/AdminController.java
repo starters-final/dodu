@@ -3,6 +3,7 @@ package com.starters.dodu.controller;
 import com.starters.dodu.domain.*;
 import com.starters.dodu.dto.CategoryDTO;
 import com.starters.dodu.service.*;
+import com.starters.dodu.utils.SessionConst;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,7 +31,14 @@ public class AdminController {
     private final AdminService adminService;
 
     @GetMapping("/admin")
-    public  String admin(){
+    public  String admin(HttpSession session){
+        // test (다시 return만 남기고 되돌리기!)
+        System.out.println("[getAttrName] : " + session.getAttributeNames());
+        System.out.println("[servletContext] : " +session.getServletContext());
+        System.out.println("[admin] : " +session.getAttribute("admin"));
+        //System.out.println("[admin] : " +session.getAttribute("admin").toString());
+        System.out.println("[adminDetails] : " +session.getAttribute("adminDetails"));
+        //System.out.println("[adminDetails] : " +session.getAttribute("adminDetails").toString());
         return "admin-login";
     }
 
@@ -41,6 +49,8 @@ public class AdminController {
         if (isAuthenticated) {
             Optional<Admin> admin = adminService.findAdminByAdminNameAndPassword(adminName, password);
             session.setAttribute("admin", admin);
+            // filter
+            session.setAttribute(SessionConst.LOGIN_ADMIN, admin);
             System.out.println("로그인 성공");
             System.out.println(admin);
             System.out.println(admin.get().getAdminName());
@@ -49,16 +59,9 @@ public class AdminController {
         } else {
             System.out.println("로그인 실패");
 
-            return "/admin";
+            return "redirect:/admin"; // 수정 (여기서 잘못된 로그인 처리가 됨!) - CustomLogInFailureHandler 동작X
         }
     }
-    @GetMapping("/admin/logout")
-    public String logout(HttpSession session) {
-        session.removeAttribute("admin");
-        return "redirect:/admin";
-    }
-
-
     @GetMapping("/getAdmin")
     public String getAdminInfo(Model model, HttpSession session){
         Admin admin =(Admin) session.getAttribute("admin");
@@ -73,6 +76,12 @@ public class AdminController {
     }
 
 
+    @GetMapping("/admin/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("admin");
+        session.removeAttribute(SessionConst.LOGIN_ADMIN);
+        return "redirect:/admin/home";
+    }
 
 
     @GetMapping("/admin/home")

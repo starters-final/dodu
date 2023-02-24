@@ -2,10 +2,7 @@ package com.starters.dodu.service;
 
 import com.starters.dodu.domain.Apply;
 import com.starters.dodu.domain.Mentor;
-import com.starters.dodu.dto.ApplyFormDTO;
-import com.starters.dodu.dto.ApplyResultDTO;
-import com.starters.dodu.dto.MailDTO;
-import com.starters.dodu.dto.MentorDTO;
+import com.starters.dodu.dto.*;
 import com.starters.dodu.repository.ApplyListRepository;
 import com.starters.dodu.repository.MentorRepository;
 import com.starters.dodu.repository.SaveApplyRepository;

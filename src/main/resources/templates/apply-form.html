@@ -139,7 +139,7 @@
                 <div class="font" style="font-size: 20px; text-align: right; margin-right: 20px; "><b style="color: rgba(216,90,123,1)">3500</b> DoDu</div>
             </div>
             <div style="margin-top: 20px; text-align: center;">
-                <input type="hidden" name="status" th:value="미열람" />
+                <input type="hidden" name="status" th:value=0 />
                 <input type="hidden" name="mentee" th:value="${session?.user?.id}" />
                 <input type="hidden" name="mentor" th:value="${mentorData.getId()}" />
                 <button th:if="${session.user}" class="btn" style="background-color: rgba(216,90,123,0.5); margin: 5px;" type="submit">제안하기</button>

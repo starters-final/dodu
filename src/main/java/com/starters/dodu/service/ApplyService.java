@@ -42,7 +42,7 @@ public class ApplyService {
   public void updateApplyStatus(Long id, String status) {
     Apply apply = applyListRepository.findById(id).orElse(new Apply());
     if (apply.equals(new Apply())) throw new RuntimeException("Apply not found with id : " + id);
-    if (apply.getStatus().equals("미열람")) apply.setStatus("열람");
+    if (apply.getStatus().equals("0")) apply.setStatus("1");
     applyListRepository.save(apply);
   }
 

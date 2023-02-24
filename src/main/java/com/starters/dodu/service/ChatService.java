@@ -56,7 +56,7 @@ public class ChatService {
                 + (Integer.parseInt(chatDTO.getStartTime().substring(11, 13)) + 1)
                 + chatDTO.getStartTime().substring(14, 16)
         );
-        chat.setStatus("대기");
+        chat.setStatus("0");
 
         Chat savedChat = chatRepository.save(chat);
         return new ChatDTO(savedChat);
