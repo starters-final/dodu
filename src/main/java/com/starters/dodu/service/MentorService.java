@@ -94,7 +94,8 @@ public class MentorService {
 
     // 맨토 관리
     public List<Mentor> findAllPass(){
-        return mentorRepository.findAllByStatusEquals("통과");
+
+        return mentorRepository.findAllByStatusEquals("가입완료");
     }
 }
 

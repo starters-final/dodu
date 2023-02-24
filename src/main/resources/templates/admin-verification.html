@@ -22,9 +22,9 @@
                 <th scope="col">대학</th>
                 <th scope="col">전공</th>
                 <th scope="col">제출서류</th>
-                <th scope="col">확인상태</th>
-                <th scope="col">가입상태</th>
-                <th scope="col">가입일</th>
+                <th scope="col">검증 여부</th>
+                <th scope="col">가입 상태</th>
+                <th scope="col">제출일</th>
                 <th scope="col">통과</th>
             </tr>
             </thead>
@@ -39,7 +39,7 @@
                 <td th:text="${v.getFile()}"></td>
                 <td th:text="${v.getStatus()}"></td>
                 <td th:text="${v.getMentor().getStatus()}"></td>
-                <td th:text="${v.getMentor().getIndate()}"></td>
+                <td th:text="|${v.getIndate()?.getYear()}년 ${v.getIndate()?.getMonthValue()}월 ${v.getIndate()?.getDayOfMonth()}일|"></td>
                 <td><button>통과</button></td>
             </tr>
             </tbody>
