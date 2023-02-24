@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -43,6 +44,9 @@ public class SecurityConfig {
                                 .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/profile")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/api/v1/**")).permitAll()
+                                //.requestMatchers(new AntPathRequestMatcher("/mypage/**")).hasRole("ROLE_MENTEE")
+                                .requestMatchers(new AntPathRequestMatcher("/applyForm/**")).hasRole("ROLE_MENTEE")
+                                .requestMatchers(new AntPathRequestMatcher("/mentee/applyList/**")).hasRole("ROLE-MENTEE")
                                 .anyRequest().permitAll() // 임시 - 수정 필요
                                 //.anyRequest().authenticated()
                                 //.anyRequest().hasRole("ROLE_MENTEE")
@@ -51,7 +55,8 @@ public class SecurityConfig {
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/doduLogout"))
                                 .logoutSuccessUrl("/")
                             .and()
-                                .oauth2Login().defaultSuccessUrl("/").userInfoEndpoint().userService(customOAuth2UserService);
+                                .oauth2Login().loginPage("/doduLogin").defaultSuccessUrl("/").userInfoEndpoint().userService(customOAuth2UserService);
+
                                 //.oauth2Login().userInfoEndpoint().userService(customOAuth2UserService);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -59,5 +64,4 @@ public class SecurityConfig {
                 });
         return http.build();
     }
-
 }

@@ -57,12 +57,15 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         }
 
 
-
-        return new DefaultOAuth2User(
+        // 임시 수정
+        DefaultOAuth2User dUser = new DefaultOAuth2User(
                 //Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_MENTEE")),
                 attributes.getAttributes(),
                 attributes.getNameAttributeKey());
+
+        System.out.println(dUser);
+        return dUser;
     }
 
     //네이버
