@@ -40,10 +40,10 @@ public class ApplyService {
   }
 
   public void updateApplyStatus(Long id, String status) {
-    int updatedRows = applyListRepository.setStatusForApply("열람", id);
-    if (updatedRows == 0) {
-      throw new RuntimeException("Apply not found with id : " + id);
-    }
+    Apply apply = applyListRepository.findById(id).orElse(new Apply());
+    if (apply.equals(new Apply())) throw new RuntimeException("Apply not found with id : " + id);
+    if (apply.getStatus().equals("미열람")) apply.setStatus("열람");
+    applyListRepository.save(apply);
   }
 
 }
