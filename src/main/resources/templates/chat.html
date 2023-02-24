@@ -38,6 +38,9 @@
                         <li class="nav-item">
                             <a id="outchat" class="nav-link active font" style="font-size: 3px;color: black;" aria-current="page">채팅나가기</a>
                         </li>
+                        <li class="nav-item">
+                            <a id="gogpt" class="nav-link active font" style="font-size: 3px;color: black;" aria-current="page">chatGPT</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -103,7 +106,15 @@
                 $("#outchat").on('click', function(){
                     var out = confirm('채팅방을 정말 나가시겠습니까?');
                     if(out){
-                       location.href='/mentee/applyList/${mentee.getId()}';
+                       location.href='/';
+
+                    }
+                });
+
+                $("#gogpt").on('click', function(){
+                    var go = confirm('chatgpt로 이동하시겠습니까?');
+                    if(go){
+                        location.href='http://localhost:8080/chatgpt';
 
                     }
                 });
