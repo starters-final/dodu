@@ -28,18 +28,35 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2UserService delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
-        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        String registrationId = userRequest.getClientRegistration().getRegistrationId(); //서비스 구분을 위한 작업 (구글:google, 네이버:naver)
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
-                .getUserInfoEndpoint().getUserNameAttributeName();
+                .getUserInfoEndpoint().getUserNameAttributeName(); //리턴해야하는 user 정보
         // 추가
+        System.out.println("[registrationId] : " + registrationId);
         System.out.println("[oAuth2USer] : " + oAuth2User);
         System.out.println("[getAttribtues] : " + oAuth2User.getAttributes());
 
-        OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+        OAuthAttributes attributes;
 
-        System.out.println("===LOG=== :: " + attributes.getGender());
-        Mentee mentee = saveOrUpdate(attributes);
-        httpSession.setAttribute("user", new SessionUser(mentee));
+        if(registrationId.equals("naver")){
+            //oauth2user에서 반환하는 사용자 정보는 map이기 때문에 값 하나하나를 반환하기 위해 of()
+             attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+
+            System.out.println("===LOG=== :: " + attributes.getGender());
+            Mentee mentee = saveOrUpdate(attributes);
+            httpSession.setAttribute("user", new SessionUser(mentee));
+        }
+        else if(registrationId.equals("google")){
+            attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+
+            Mentee mentee = saveOrUpdate2(attributes);
+            httpSession.setAttribute("user", new SessionUser(mentee));
+        }
+        else{
+            throw new OAuth2AuthenticationException("허용되지 않는 인증입니다.");
+        }
+
+
 
         return new DefaultOAuth2User(
                 //Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
@@ -48,11 +65,22 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 attributes.getNameAttributeKey());
     }
 
+    //네이버
     private Mentee saveOrUpdate(OAuthAttributes attributes) {
         // 이메일이 이미 존재하면
         Mentee mentee = menteeRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getNickname(), attributes.getGender(), attributes.getMobile(), 2023 - Integer.parseInt(attributes.getBirthyear())))
                 .orElse(attributes.toEntity());
+
+        return menteeRepository.save(mentee);
+    }
+
+    //구글
+    private Mentee saveOrUpdate2(OAuthAttributes attributes){
+
+        Mentee mentee = menteeRepository.findByEmail(attributes.getEmail())
+                //.map(entity -> entity.update2(attributes.getNickname()))
+                .orElse(attributes.toGoogleEntity());
 
         return menteeRepository.save(mentee);
     }

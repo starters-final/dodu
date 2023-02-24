@@ -50,6 +50,7 @@ public class Mentee {
     this.age = age;
   }
 
+
   public Mentee update(String nickname, String gender, String phone, int age) {
     this.nickname = nickname;
     this.gender = gender;
@@ -60,4 +61,9 @@ public class Mentee {
 
 
 
+  //구글
+    public Mentee update2(String nickname) {
+      this.nickname=nickname;
+      return this;
+    }
 }

@@ -44,10 +44,10 @@ public class OAuthAttributes {
                 .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
                 // 추가
-                .nickname((String) attributes.get("nickname"))
-                .gender((String) attributes.get("gender"))
-                .mobile((String) attributes.get("mobile"))
-                .birthyear((String) attributes.get("birthyear"))
+                //.nickname((String) attributes.get("nickname"))
+                //.gender((String) attributes.get("gender"))
+                //.mobile((String) attributes.get("mobile"))
+                //.birthyear((String) attributes.get("birthyear"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
@@ -80,4 +80,13 @@ public class OAuthAttributes {
                 .age(2023 - Integer.parseInt(birthyear))
                 .build();
     }
+
+    public Mentee toGoogleEntity(){
+        return Mentee.builder()
+                .nickname(name)
+                .email(email)
+                .build();
+
+    }
+
 }

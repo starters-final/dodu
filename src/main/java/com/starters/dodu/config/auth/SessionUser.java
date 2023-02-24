@@ -5,6 +5,7 @@ import lombok.Getter;
 
 import java.io.Serializable;
 
+//세션에 사용자 정보를 저장하기 위한 dto 클래스
 @Getter
 public class SessionUser implements Serializable {
     private Long id; // 추가*
