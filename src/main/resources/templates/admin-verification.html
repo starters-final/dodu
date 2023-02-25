@@ -22,10 +22,10 @@
                 <th scope="col">대학</th>
                 <th scope="col">전공</th>
                 <th scope="col">제출서류</th>
-                <th scope="col">검증 여부</th>
-                <th scope="col">가입 상태</th>
                 <th scope="col">제출일</th>
-                <th scope="col">통과</th>
+                <th scope="col">검증 여부</th>
+                <th scope="col">적용</th>
+                <th scope="col">가입 상태</th>
             </tr>
             </thead>
             <tbody>
@@ -37,10 +37,18 @@
                 <td th:text="${v.getMentor().getUniversity()}"></td>
                 <td th:text="${v.getMentor().getMajor()}"></td>
                 <td th:text="${v.getFile()}"></td>
-                <td th:text="${v.getStatus()}"></td>
+                <td th:text="|${(v.getIndate()?.getYear() div 10) mod 10}${v.getIndate()?.getYear() mod 10}년 ${v.getIndate()?.getMonthValue()}월 ${v.getIndate()?.getDayOfMonth()}일|"></td>
+                <td>
+                    <select>
+                        <option>검증 여부</option>
+                        <option>미확인</option>
+                        <option>검토중</option>
+                        <option>반려</option>
+                        <option>통과</option>
+                    </select>
+                </td>
+                <td><button>적용</button></td>
                 <td th:text="${v.getMentor().getStatus()}"></td>
-                <td th:text="|${v.getIndate()?.getYear()}년 ${v.getIndate()?.getMonthValue()}월 ${v.getIndate()?.getDayOfMonth()}일|"></td>
-                <td><button>통과</button></td>
             </tr>
             </tbody>
         </table>
