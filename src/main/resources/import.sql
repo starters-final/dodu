@@ -1,8 +1,8 @@
 insert into admins values (1,'admin', '2021-12-30T11:11:49.000000', '운영자1', 'admin');
-insert into admins values (2, 'admin1', '2021-12-30T11:11:49.000000', '운영자2', 'admin1');
-insert into admins values (3,'admin2', '2021-12-30T11:11:49.000000' ,'운영자3', 'admin2' );
-insert into admins values (4,'admin3', '2021-12-30T11:11:49.000000', '운영자4', 'admin3' );
-insert into admins values (5,'admin4', '2021-12-30T11:11:49.000000', '운영자5','admin4' );
+insert into admins values (2, 'admin2', '2021-12-30T11:11:49.000000', '운영자2', 'admin2');
+insert into admins values (3,'admin3', '2021-12-30T11:11:49.000000' ,'운영자3', 'admin3' );
+insert into admins values (4,'admin4', '2021-12-30T11:11:49.000000', '운영자4', 'admin4' );
+insert into admins values (5,'admin5', '2021-12-30T11:11:49.000000', '운영자5','admin5' );
 
 insert into categories values (1, '진학');
 insert into categories values (2, '워홀');

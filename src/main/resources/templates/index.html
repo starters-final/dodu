@@ -3,7 +3,7 @@
                 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                 layout:decorate="~{layout/phonelay}">
 <th:block layout:fragment="content">
-    <div>
+    <div st>
         <!-- carousel -->
         <div id="carouselExampleIndicators" class="carousel slide">
             <div class="carousel-indicators">
@@ -81,7 +81,7 @@
             </div>
             <div th:if="${not #lists.isEmpty(categories)}">
             <div class="btn-toolbar text-center" role="toolbar" aria-label="Toolbar with button groups"
-                style="margin: 10px; ">
+                style="margin-left: 15%; ">
                 <div class="btn-group btn-group-sm " role="group" aria-label="First group" style="">
                     <div th:each="category : ${categories}">
                         <button th:text="${category.getTitle()}" th:id="${category.id}" class="btn btn-outline-secondary font" onclick="changeCategory()" />

@@ -38,7 +38,7 @@
                 <td th:text="${m.getGender()}"></td>
                 <td th:text="${m.getAge()}"></td>
                 <td th:text="${m.getStatus()}"></td>
-                <td th:text="|${m.getIndate()?.getYear()}년 ${m.getIndate()?.getMonthValue()}월 ${m.getIndate()?.getDayOfMonth()}일|"></td>
+                <td th:text="|${(m.getIndate()?.getYear() div 10) mod 10}${m.getIndate()?.getYear() mod 10}년 ${m.getIndate()?.getMonthValue()}월 ${m.getIndate()?.getDayOfMonth()}일|"></td>
             </tr>
             </tbody>
         </table>

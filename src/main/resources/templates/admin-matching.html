@@ -22,18 +22,17 @@
                 <th scope="col">질문내용</th>
                 <th scope="col">진행상태</th>
                 <th scope="col">신청일</th>
-                <th scope="col">성사일</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="mat : ${matching}">
                 <td th:text="${mat.getId()}"></td>
-                <td th:text="|${mat.getSelectedMatchTime().substring(0, 4)}년 ${mat.getSelectedMatchTime().substring(5, 7)}월 ${mat.getSelectedMatchTime().substring(8, 10)}일 ${mat.getSelectedMatchTime().substring(11, 13)}시 ${mat.getSelectedMatchTime().substring(14, 15)}분|"></td>
+                <td th:text="|${mat.getSelectedMatchTime().substring(2, 4)}년 ${mat.getSelectedMatchTime().substring(5, 7)}월 ${mat.getSelectedMatchTime().substring(8, 10)}일 ${mat.getSelectedMatchTime().substring(11, 13)}시 ${mat.getSelectedMatchTime().substring(14, 15)}분|"></td>
                 <td th:text="${mat.getApply().getMentee().getNickname()}"></td>
                 <td th:text="${mat.getApply().getMentor().getNickname()}"></td>
                 <td th:text="${mat.getApply().getQuestion().getQuestion()}"></td>
                 <td th:text="${mat.getStatus()}"></td>
-                <td th:text="|${mat.getIndate()?.getYear()}년 ${mat.getIndate()?.getMonthValue()}월 ${mat.getIndate()?.getDayOfMonth()}일|"></td>
+                <td th:text="|${(mat.getIndate()?.getYear() div 10) mod 10}${mat.getIndate()?.getYear() mod 10}년 ${mat.getIndate()?.getMonthValue()}월 ${mat.getIndate()?.getDayOfMonth()}일|"></td>
             </tr>
             </tbody>
         </table>
