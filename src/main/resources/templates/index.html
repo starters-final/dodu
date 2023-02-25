@@ -109,7 +109,12 @@
                             </div>
                         </div>
                         <div class="" style="padding: 10px 10px 10px 10px; background-color: rgba(216,90,123,1);">
-                            <div class="text-center">
+                            <div class="text-center" th:if="${session.isEmpty()}">
+                                <button class="btn btn-outline-light font btn-sm" style="font-size: 10px" onclick="checkLogin()" >
+                                    자세히 보기
+                                </button>
+                            </div>
+                            <div class="text-center" th:unless="${session.isEmpty()}">
                                 <a class="btn btn-outline-light font btn-sm" style="font-size: 10px" th:href="@{/applyForm/{mentorId}(mentorId=${mentor.getId()})}" >
                                     자세히 보기
                                 </a>
@@ -133,10 +138,7 @@
         const changeCategory = async () => {
             let categoryId = event.target.id;
             try {
-                const response = await fetch(
-                    `/api/v1?categoryId=${categoryId}`,
-                    { mode: "no-cors" }
-                );
+                const response = await fetch(`/api/v1?categoryId=${categoryId}`);
                 const data = await response.json();
                 const carouselFinal = document.getElementById("carousel-final");
                 carouselFinal.innerHTML =
@@ -178,6 +180,11 @@
             catch (error) {
                 console.error(error);
             }
+        }
+
+        function checkLogin() {
+            alert("로그인이 필요한 서비스입니다.");
+            window.location.href = "/doduLogin";  // 로그인 페이지로 리디렉션
         }
     </script>
 </th:block>

@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -28,40 +27,44 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .formLogin().disable()
-                .httpBasic().disable()
-                .authorizeHttpRequests((requests) -> {
-                    try {
-                        requests
-                                .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/images/**")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/profile")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/api/v1/**")).permitAll()
-                                //.requestMatchers(new AntPathRequestMatcher("/mypage/**")).hasRole("ROLE_MENTEE")
-                                .requestMatchers(new AntPathRequestMatcher("/applyForm/**")).hasRole("ROLE_MENTEE")
-                                .requestMatchers(new AntPathRequestMatcher("/mentee/applyList/**")).hasRole("ROLE-MENTEE")
-                                .anyRequest().permitAll() // 임시 - 수정 필요
-                                //.anyRequest().authenticated()
-                                //.anyRequest().hasRole("ROLE_MENTEE")
-                            .and()
-                                .logout()
-                                .logoutRequestMatcher(new AntPathRequestMatcher("/doduLogout"))
-                                .logoutSuccessUrl("/")
-                            .and()
-                                .oauth2Login().loginPage("/doduLogin").defaultSuccessUrl("/").userInfoEndpoint().userService(customOAuth2UserService);
 
-                                //.oauth2Login().userInfoEndpoint().userService(customOAuth2UserService);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
+        http
+            .csrf().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+            .and()
+            .formLogin().disable()
+            .httpBasic().disable()
+            .authorizeHttpRequests((requests) -> {
+              try {
+                  requests
+                        .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/images/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/profile")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/api/v1/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/mypage/**")).hasRole("MENTEE")
+                        .requestMatchers(new AntPathRequestMatcher("/applyForm/**")).hasRole("MENTEE")
+                        .requestMatchers(new AntPathRequestMatcher("/mentee/applyList/**")).hasRole("MENTEE")
+                        .anyRequest().permitAll() // 임시 - 수정 필요
+                        //.anyRequest().authenticated()
+                        //.anyRequest().hasRole("ROLE_MENTEE")
+                        .and()
+                          .logout()
+                          .logoutRequestMatcher(new AntPathRequestMatcher("/doduLogout"))
+                          .logoutSuccessUrl("/")
+                        .and()
+                          .oauth2Login()
+                          .loginPage("/doduLogin")
+                          .defaultSuccessUrl("/")
+                          .userInfoEndpoint()
+                          .userService(customOAuth2UserService);
+              } catch (Exception e) {
+                e.printStackTrace();
+              }
+            });
+
         return http.build();
     }
 }

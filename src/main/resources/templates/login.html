@@ -51,19 +51,26 @@
   </style>
 </head>
 <th:block layout:fragment="content">
+  <nav class="navbar navbar-light bg-light" style="position: relative; padding: 0px; height: 40px; background-color: transparent;">
+    <div class="container-fluid" style="height: 26px;">
+      <button class="navbar-toggler" type="button" style="padding: 0px; margin: 0px; width: 30px; height: 25px;" onClick="location.href='/'">
+        <span class="font" style="width: 15px;height: 15px; " > < </span>
+      </button>
+      <p class="navbar-brand font" style="font-size:17px; padding: 0px; margin: 0px auto;" href="#">DoDu</p>
+    </div>
+  </nav>
+
   <div class="container">
     <!-- Heading -->
     <h1 class="font">SIGN IN</h1>
-
 
     <!-- Form -->
       <div class="row ">
         <button class="sign_in" ><a href="/oauth2/authorization/google"><img class="sign_in_btn" src="images/btn_google_signin.png"></a></button>
         <button class="sign_in" ><a href="/oauth2/authorization/naver"><img  class="sign_in_btn" src="images/btnN_signin.png"></a></button>
       </div>
-
-    <br><br><br>
-    <hr>
+    <br />
+    <hr />
 
     <!-- separator -->
     <div class="separator">
@@ -77,9 +84,7 @@
         <td><button class="sign_up"><img class="sign_up_img" src="images/btnN.png"></button></td>
       </tr>
     </table>
-
   </div>
-
 
 </th:block>
 </html>
