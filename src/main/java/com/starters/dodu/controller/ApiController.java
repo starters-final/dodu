@@ -6,6 +6,7 @@ import com.starters.dodu.service.ChatService;
 import com.starters.dodu.service.MatchingService;
 import com.starters.dodu.service.MentorService;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,7 @@ public class ApiController {
   private final ChatService chatService;
   @Value("${chatgpt.api.key.script}")
   private String chatgptApiKeyScript;
+  private final HttpSession httpSession;
 
   @GetMapping
   public ResponseEntity<List<MentorDTO>> getMentorsByCategoryId(@RequestParam(defaultValue = "0", required = false) String categoryId) {
@@ -110,6 +112,11 @@ public class ApiController {
   @GetMapping("/config")
   public String getConfig() {
     return chatgptApiKeyScript;
+  }
+
+  @GetMapping("/session")
+  public String getSession() {
+    return httpSession.toString();
   }
 
 }

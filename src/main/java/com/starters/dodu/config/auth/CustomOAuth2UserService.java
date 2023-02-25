@@ -56,16 +56,11 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             throw new OAuth2AuthenticationException("허용되지 않는 인증입니다.");
         }
 
-
-        // 임시 수정
-        DefaultOAuth2User dUser = new DefaultOAuth2User(
-                //Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
+        return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_MENTEE")),
                 attributes.getAttributes(),
-                attributes.getNameAttributeKey());
-
-        System.out.println(dUser);
-        return dUser;
+                attributes.getNameAttributeKey()
+        );
     }
 
     //네이버

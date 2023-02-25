@@ -30,7 +30,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	implementation group: 'com.theokanning.openai-gpt3-java', name: 'client', version: '0.9.0'
 	implementation 'org.springframework.security:spring-security-oauth2-client'
-	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
+	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
+	implementation 'org.bouncycastle:bcprov-jdk15on:1.69'
 
 	compileOnly 'org.projectlombok:lombok'
 	compileOnly 'org.springframework.boot:spring-boot-starter-security'
