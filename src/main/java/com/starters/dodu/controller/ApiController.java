@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
 
@@ -57,14 +59,20 @@ public class ApiController {
 
   @ResponseStatus(HttpStatus.OK)
   @PostMapping("/offer/saveApply")
-  public void saveApply(ApplyFormDTO applyFormDTO, HttpServletResponse response) throws IOException {
-    ApplyFormDTO apply = mentorService.saveApply(applyFormDTO);
-    sendEmail(
-            apply.getMentor().getEmail(),
-            apply.getMentor().getNickname() + "님 새로운 dodu 신청서가 도착했어요!",
-            "http://localhost:8080/mentor/apply/confirm/" + apply.getId()
-    );
-    response.sendRedirect("/mentee/applyResult?menteeId=" + apply.getMentee().getId() + "&mentorId=" + apply.getMentor().getId());
+  public void saveApply(ApplyFormDTO applyFormDTO, HttpServletResponse res) throws IOException {
+    try {
+      ApplyFormDTO apply = applyService.saveApply(applyFormDTO);
+      sendEmail(
+              apply.getMentor().getEmail(),
+              apply.getMentor().getNickname() + "님 새로운 dodu 신청서가 도착했어요!",
+              "http://localhost:8080/mentor/apply/confirm/" + apply.getId()
+      );
+      res.sendRedirect("/mentee/applyResult?menteeId=" + apply.getMentee().getId() + "&mentorId=" + apply.getMentor().getId());
+    } catch (Exception e) {
+      String message = URLEncoder.encode(e.getMessage(), StandardCharsets.UTF_8);
+      String redirectUrl = "/applyForm/" + applyFormDTO.getMentor().getId() + "?alert=true&message=" + message;
+      res.sendRedirect(redirectUrl);
+    }
   }
 
   public ResponseEntity<String> updateApplyStatus(Long applyId, String status) {
@@ -114,9 +122,9 @@ public class ApiController {
     return chatgptApiKeyScript;
   }
 
-  @GetMapping("/session")
-  public String getSession() {
-    return httpSession.toString();
+  @ExceptionHandler(RuntimeException.class)
+  public ResponseEntity<String> handleMyException(RuntimeException e) {
+    return ResponseEntity.badRequest().body(e.getMessage());
   }
 
 }

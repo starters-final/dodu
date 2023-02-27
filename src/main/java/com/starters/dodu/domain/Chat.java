@@ -1,12 +1,9 @@
 package com.starters.dodu.domain;
 
-import com.starters.dodu.dto.ChatDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.sql.Timestamp;
 
 
 @Entity
@@ -29,7 +26,7 @@ public class Chat {
     @ToString.Exclude
     private Mentee mentee;
 
-    private String status;
+    private int status;
 
     private String startTime;
 

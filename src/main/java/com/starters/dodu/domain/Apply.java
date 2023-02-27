@@ -1,15 +1,10 @@
 package com.starters.dodu.domain;
 
-import com.starters.dodu.domain.Mentee;
-import com.starters.dodu.domain.Mentor;
-import com.starters.dodu.domain.Question;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
