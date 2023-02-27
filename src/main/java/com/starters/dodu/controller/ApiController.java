@@ -32,17 +32,17 @@ public class ApiController {
   private String chatgptApiKeyScript;
   private final HttpSession httpSession;
 
-  @GetMapping
+  @GetMapping("/carousel")
   public ResponseEntity<List<MentorDTO>> getMentorsByCategoryId(@RequestParam(defaultValue = "0", required = false) String categoryId) {
     List<MentorDTO> mentors = mentorService.findAllByCategoryId(categoryId);
     return ResponseEntity.ok(mentors);
   }
 
-  @GetMapping("/mypage/{id}")
-  public ResponseEntity<MentorDTO> getMentorById(@PathVariable String id) {
-    UUID uuid = stringtoUUID(id);
-    return ResponseEntity.ok(mentorService.findById(id));
-  }
+//  @GetMapping("/mypage/{id}")
+//  public ResponseEntity<MentorDTO> getMentorById(@PathVariable String id) {
+//    UUID uuid = stringtoUUID(id);
+//    return ResponseEntity.ok(mentorService.findById(id));
+//  }
 
   @GetMapping("/send")
   public ResponseEntity<MailDTO> sendEmail(@RequestParam String address, @RequestParam String title, @RequestParam String message) {
@@ -64,12 +64,12 @@ public class ApiController {
             apply.getMentor().getNickname() + "님 새로운 dodu 신청서가 도착했어요!",
             "http://localhost:8080/mentor/apply/confirm/" + apply.getId()
     );
-    response.sendRedirect("/applyResult?menteeId=" + apply.getMentee().getId() + "&mentorId=" + apply.getMentor().getId());
+    response.sendRedirect("/mentee/applyResult?menteeId=" + apply.getMentee().getId() + "&mentorId=" + apply.getMentor().getId());
   }
 
   public ResponseEntity<String> updateApplyStatus(Long applyId, String status) {
     try {
-      if(status.equals("미열람")) {
+      if(status.equals("0")) {
         applyService.updateApplyStatus(applyId, status);
         return ResponseEntity.ok("Apply status updated successfully");
       } else return ResponseEntity.noContent().build();

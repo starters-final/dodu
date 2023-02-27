@@ -10,8 +10,8 @@
 
     <div style="margin: auto; text-align: center;">
         <!-- list 1명 -->
-        <div style="margin: 2px;" th:each="apply : ${applyList}" th:if="${apply.getStatus()} == '미열람'">
-            <input type="button" class="btn-check" name="options3" id="mento1" th:onclick="|location.href='/applyResult?menteeId=${mentee.id}&mentorId=${apply.mentor.id}'|" />
+        <div style="margin: 2px;" th:each="apply : ${applyList}" th:if="${apply.getStatus()} == '0'">
+            <input type="button" class="btn-check" name="options3" id="mento1" th:onclick="|location.href='/mentee/applyResult?menteeId=${mentee.id}&mentorId=${apply.mentor.id}'|" />
             <label class="btn btn-secondary font" style="width: 310px;" for="mento1">
                 <img th:src="${apply.getMentor().getImage()}" class="rounded float-start prodo2" alt="..." style="width: 40px; height: 40px; margin: 5px 0px 0px 0px" />
                 <p class="font" style="display:inline; margin-left: -70px; margin-right: 5px; font-size: 20px;" th:text="${apply.getMentor().getNickname()}"></p>
@@ -30,9 +30,9 @@
 
     <div style="margin: auto; text-align: center;">
         <!-- 매칭 1명 -->
-        <div style="margin: 2px;" th:each="apply : ${applyList}" th:if="${apply.getStatus()} == '열람'">
+        <div style="margin: 2px;" th:each="apply : ${applyList}" th:if="${apply.getStatus()} == '1'">
             <input type="button" class="btn-check" name="options3" id="match1" />
-            <label class="btn btn-secondary font" style="width: 310px;border-color: rgba(216,90,123,1)!important; background-color: rgba(216,90,123,1)!important;" onClick="location.href='http://localhost:8080/chat'">
+            <label class="btn btn-secondary font" style="width: 310px;border-color: rgba(216,90,123,1)!important; background-color: rgba(216,90,123,1)!important;" onClick="location.href='http://localhost:8080/chat/1'">
                 <img th:src="${apply.getMentor().getImage()}" class="rounded float-start prodo2" alt="..." style="width: 40px; height: 40px; margin: 5px 0px 0px 0px" />
                 <p class="font" style="display:inline; margin-left: -70px; margin-right: 5px; font-size: 20px;" th:text="${apply.getMentor().getNickname()}"></p>
                 <p class="font" style="display:inline; font-size: 10px" th:text="${apply.getMentor().getUniversity()}"></p>

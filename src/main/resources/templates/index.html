@@ -3,7 +3,7 @@
                 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                 layout:decorate="~{layout/phonelay}">
 <th:block layout:fragment="content">
-    <div st>
+    <div>
         <!-- carousel -->
         <div id="carouselExampleIndicators" class="carousel slide">
             <div class="carousel-indicators">
@@ -78,6 +78,7 @@
         <section class="py-1">
             <div class="d-flex justify-content-start">
                 <div th:if="${session.user}" class="p-2 font" style="font-size: 8px; margin: 3px "> <b th:text="${session.user.getName()}" />님을 위한 추천 카테고리</div>
+                <div th:unless="${session.user}" class="p-2 font" style="font-size: 8px; margin: 3px "> <b th:text="DODU" />가 추천하는 카테고리</div>
             </div>
             <div th:if="${not #lists.isEmpty(categories)}">
             <div class="btn-toolbar text-center" role="toolbar" aria-label="Toolbar with button groups"
@@ -92,6 +93,7 @@
 
             <div class="d-flex justify-content-start">
                 <div th:if="${session.user}" class="p-2 font" style="font-size: 8px; margin: 3px "><b th:text="${session.user.getName()}" />님을 위한 추천 멘토</div>
+                <div th:unless="${session.user}" class="p-2 font" style="font-size: 8px; margin: 3px "> <b th:text="DODU" />가 추천하는 멘토</div>
             </div>
 
             <div class="container px-4 px-lg-5" id="carousel-final">
@@ -138,7 +140,7 @@
         const changeCategory = async () => {
             let categoryId = event.target.id;
             try {
-                const response = await fetch(`/api/v1?categoryId=${categoryId}`);
+                const response = await fetch(`/api/v1/carousel?categoryId=${categoryId}`);
                 const data = await response.json();
                 const carouselFinal = document.getElementById("carousel-final");
                 carouselFinal.innerHTML =
