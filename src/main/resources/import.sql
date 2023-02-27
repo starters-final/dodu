@@ -39,17 +39,17 @@ insert into mentors(mentor_id, age, email, gender, image, indate, nickname, univ
 insert into mentors(mentor_id, age, email, gender, image, indate, nickname, university, major, match_count, phone, status, category_id) values (10, 29, 'leesh@sba.com', '남자', 'https://w.namu.la/s/d35484e0690d6a37e6000c5f6b148e7c46de994f838dff311c20e4085c409138c394e3b9ef4c21297b65ebf45fc457c02d173e9cb8e68b4e716fc4fcf01f2150b968dbadac84649f734e750f290708816cff26a117c43deb76a2b3be6be186e110c7dd6323e9806308dddbe0430b5f4d', '2022-12-23T23:11:59.000000', '이수혁', '서강대학교', '공연예술학과', 0, '010-1214-1214', '검증단계', 2);
 insert into mentors(mentor_id, age, email, gender, image, indate, nickname, university, major, match_count, phone, status, category_id) values (11, 25, 'yoonsh@kaistt.com', '여자', 'https://w.namu.la/s/56626a8aab434b76b54f4adce2592213b067d37bfd20399ce2e5fa28c2fed0b04169e9ec1d682c91206028e95588de57fc4207f748a80c4d234cd785f2ba36c8ff9fcd3c053c5f22e5fc6ae9a50d70e60bd7957a53d25ff30e1488a40dc5603912e6164d4793202eb71311da2cbfc18d', '2022-12-24T23:11:59.000000', '윤소희', '한국과학기술원', '생명화학공학과', 11, '010-1215-1215', '가입완료', 3);
 
-insert into verifications values (1,null,'2023-02-12T11:11:49.000000','통과',1);
-insert into verifications values (2,null,'2023-02-13T11:58:49.000000','통과',4);
-insert into verifications values (3,null,'2023-02-14T15:38:49.000000','통과',2);
-insert into verifications values (4,null,'2023-02-15T13:58:49.000000','통과',3);
-insert into verifications values (5,null,'2023-02-16T16:18:49.000000','통과',5);
-insert into verifications values (6,null,'2023-02-17T09:52:49.000000','검토중',6);
-insert into verifications values (7,null,'2023-02-18T12:12:49.000000','반려',7);
-insert into verifications values (8,null,'2023-02-19T15:8:49.000000','통과',8);
-insert into verifications values (9,null,'2023-02-20T9:58:49.000000','반려',9);
-insert into verifications values (10,null,'2023-02-21T17:38:49.000000','반려',10);
-insert into verifications values (11,null,'2023-02-22T11:33:49.000000','통과',11);
+insert into verifications values (1,null,'2023-02-12T11:11:49.000000',3,1);
+insert into verifications values (2,null,'2023-02-13T11:58:49.000000',3,4);
+insert into verifications values (3,null,'2023-02-14T15:38:49.000000',3,2);
+insert into verifications values (4,null,'2023-02-15T13:58:49.000000',3,3);
+insert into verifications values (5,null,'2023-02-16T16:18:49.000000',3,5);
+insert into verifications values (6,null,'2023-02-17T09:52:49.000000',1,6);
+insert into verifications values (7,null,'2023-02-18T12:12:49.000000',2,7);
+insert into verifications values (8,null,'2023-02-19T15:8:49.000000',3,8);
+insert into verifications values (9,null,'2023-02-20T9:58:49.000000',2,9);
+insert into verifications values (10,null,'2023-02-21T17:38:49.000000',2,10);
+insert into verifications values (11,null,'2023-02-22T11:33:49.000000',3,11);
 
 
 insert into mentees (mentee_id, address, age, email, gender, indate, nickname, phone) values (1, '서울특별시 용산구', 19, 'yeji@sba.com', '여자', '2022-12-13T23:11:59.000000','김예지', '010-1111-1111');

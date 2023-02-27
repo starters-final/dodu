@@ -6,6 +6,7 @@ import com.starters.dodu.dto.*;
 import com.starters.dodu.repository.ApplyListRepository;
 import com.starters.dodu.repository.MentorRepository;
 import com.starters.dodu.repository.SaveApplyRepository;
+import com.starters.dodu.repository.VerificationRepository;
 import jakarta.persistence.NonUniqueResultException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
@@ -26,6 +27,8 @@ public class MentorService {
     private final MentorRepository mentorRepository;
     private final SaveApplyRepository saveApplyRepository;
     private final ApplyService applyService;
+
+    private final VerificationRepository verificationRepository;
 
     public void sendMail(MailDTO mailDTO) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -92,7 +95,8 @@ public class MentorService {
     // 맨토 관리
     public List<Mentor> findAllPass(){
 
-        return mentorRepository.findAllByStatusEquals("가입완료");
+        //return mentorRepository.findAllByStatusEquals("가입완료"); // 대체 예정
+        return mentorRepository.findAllByStatus(3);
     }
 }
 

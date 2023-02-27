@@ -1,7 +1,9 @@
 package com.starters.dodu.controller;
 
 import com.starters.dodu.domain.*;
+import com.starters.dodu.domain.enums.VerificationStatus;
 import com.starters.dodu.dto.CategoryDTO;
+import com.starters.dodu.dto.VerificationDTO;
 import com.starters.dodu.service.*;
 import com.starters.dodu.utils.SessionConst;
 import jakarta.servlet.http.HttpSession;
@@ -10,11 +12,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -89,13 +90,25 @@ public class AdminController {
         return "admin-home";
     }
 
-    // varification 관리
+    // verification 관리 및 정렬
     @GetMapping("/admin/veri")
-    public String getVeris(Model model) {
-        List<Verification> verification = verificationService.findAll();
-        model.addAttribute("verification", verification);
+    public String getVeris(@RequestParam(name = "sortBy", defaultValue = "id") String sortBy, Model model) {
+        List<Verification> verificationList = verificationService.findAll(sortBy);
+        model.addAttribute("verification", verificationList);
         return "admin-verification";
     }
+
+    @RequestMapping (value = "/admin/veri/update/{id}", method = RequestMethod.POST)
+    public String updateStatus(@PathVariable Long id, @RequestParam(name = "status") String status){
+        VerificationDTO veriDTO = new VerificationDTO();
+        veriDTO.setStatus(Integer.parseInt(status));
+        verificationService.updateStatus(id, veriDTO);
+        //dto.setStatus(dto.getStatus());
+        System.out.println("status22");
+        return "redirect:/admin/veri";
+    }
+
+
 
     // mentee 관리
     @GetMapping("/admin/mentee")
