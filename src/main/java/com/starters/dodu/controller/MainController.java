@@ -87,4 +87,12 @@ public class MainController {
         return "mentee-apply-list";
     }
 
+    @GetMapping("/applyRefuse/{id}")
+    public String refuseControl(@PathVariable String id, @RequestParam String message, Model model, @LoginUser SessionUser user, HttpSession session) {
+        ApplyFormDTO.GetApplyForm applyFormDTO = mentorService.getApplyForm(id);
+        model.addAttribute("mentorData", applyFormDTO);
+        model.addAttribute("refuse", message);
+        return "apply-form";
+    }
+
 }

@@ -14,7 +14,7 @@ public class ChatDTO {
 
     private Mentor mentor;
 
-    private String status;
+    private int status;
 
     private String startTime;
 

@@ -1,6 +1,5 @@
 package com.starters.dodu.service;
 
-import com.starters.dodu.domain.Apply;
 import com.starters.dodu.domain.Mentor;
 import com.starters.dodu.dto.*;
 import com.starters.dodu.repository.ApplyListRepository;
@@ -27,7 +26,6 @@ public class MentorService {
     private final MentorRepository mentorRepository;
     private final SaveApplyRepository saveApplyRepository;
     private final ApplyService applyService;
-
     private final VerificationRepository verificationRepository;
 
     public void sendMail(MailDTO mailDTO) {
@@ -54,29 +52,6 @@ public class MentorService {
         return new MentorDTO(entity);
     }
 
-    @Transactional(rollbackFor = NonUniqueResultException.class)
-    public ApplyFormDTO saveApply(ApplyFormDTO applyFormDTO) {
-
-        Apply apply = new Apply();
-        apply.setId(applyFormDTO.getId());
-        apply.setMatchTime1(applyFormDTO.getMatchTime1());
-        apply.setMatchTime2(applyFormDTO.getMatchTime2());
-        apply.setMatchTime3(applyFormDTO.getMatchTime3());
-        apply.setStatus(applyFormDTO.getStatus());
-        apply.setIndate(applyFormDTO.getIndate());
-        apply.setMentee(applyFormDTO.getMentee());
-        apply.setMentor(applyFormDTO.getMentor());
-        apply.setQuestion(applyFormDTO.getQuestion());
-
-        saveApplyRepository.save(apply);
-        if(applyService.findByMenteeIdAndMentorId(apply.getMentee().getId(), apply.getMentor().getId()) == null) {
-            throw new NonUniqueResultException("멘티와 멘토 사이에 이미 신청서가 존재합니다.");
-        }
-
-        return ApplyFormDTO.applyDto(apply);
-
-    }
-
     @Transactional(readOnly = true)
     public List<ApplyResultDTO> findAllDesc(String id) {
         return applyListRepository.findAllByIdOrderByIndateDesc(Long.parseLong(id)).stream()
@@ -93,9 +68,7 @@ public class MentorService {
     }
 
     // 맨토 관리
-    public List<Mentor> findAllPass(){
-
-        //return mentorRepository.findAllByStatusEquals("가입완료"); // 대체 예정
+    public List<Mentor> findAllPass() {
         return mentorRepository.findAllByStatus(3);
     }
 }

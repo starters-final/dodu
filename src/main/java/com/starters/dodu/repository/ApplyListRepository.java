@@ -11,6 +11,8 @@ public interface ApplyListRepository extends JpaRepository<Apply, Long> {
 
   List<Apply> findAllByMenteeId(Long id);
 
+  List<Apply> findAllByMentee_IdAndMentor_Id(Long menteeId, Long mentorId);
+
   Optional<Apply> findByMentee_IdAndMentor_Id(Long menteeId, Long mentorId);
 
 }
