@@ -2,6 +2,7 @@ package com.starters.dodu.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.starters.dodu.domain.enums.MentorStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.ToString;
@@ -43,8 +44,11 @@ public class Mentor implements Serializable {
 
   private String major;
 
-  private String status;
-
+  @Column(name = "status")
+  private int status;
+  public MentorStatus getStatusEnum(){
+    return MentorStatus.fromStatusCode(status);
+  }
   private int matchCount;
 
   @ManyToOne//(fetch = FetchType.LAZY)
@@ -55,5 +59,9 @@ public class Mentor implements Serializable {
   @OneToOne
   @JoinColumn(name = "wallet_id")
   private Wallet wallet;
+
+  public void update(int status){
+    this.status = status;
+  }
 
 }

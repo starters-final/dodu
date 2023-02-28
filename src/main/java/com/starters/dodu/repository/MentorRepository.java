@@ -1,6 +1,7 @@
 package com.starters.dodu.repository;
 
 import com.starters.dodu.domain.Mentor;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -15,6 +16,12 @@ public interface MentorRepository extends CrudRepository<Mentor, Long> {
 
   @Query(value = "select m from Mentor m join Verification v on m.id=v.mentor.id and v.status=3")
   List<Mentor> findAllByStatus(int status);
+
+  List<Mentor> findAll(Sort sort);
+
+
+  List<Mentor> findByStatusOrderByIdAsc(int status);
+
 
 
 }

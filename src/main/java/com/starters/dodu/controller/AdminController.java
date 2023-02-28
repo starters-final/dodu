@@ -3,6 +3,7 @@ package com.starters.dodu.controller;
 import com.starters.dodu.domain.*;
 import com.starters.dodu.domain.enums.VerificationStatus;
 import com.starters.dodu.dto.CategoryDTO;
+import com.starters.dodu.dto.MentorDTO;
 import com.starters.dodu.dto.VerificationDTO;
 import com.starters.dodu.service.*;
 import com.starters.dodu.utils.SessionConst;
@@ -109,6 +110,16 @@ public class AdminController {
     }
 
 
+    //mentor black 관리
+    @RequestMapping(value="/admin/mentor/update/{id}", method=RequestMethod.POST)
+    public String updateMentorStatus(@PathVariable Long id, @RequestParam(name="status") String status){
+        MentorDTO mentorDTO = new MentorDTO();
+        mentorDTO.setStatus(String.valueOf(Integer.parseInt(status)));
+
+        mentorService.updateMentorStatus(id, mentorDTO);
+        return "redirect:/admin/mentor";
+    }
+
 
     // mentee 관리
     @GetMapping("/admin/mentee")
@@ -126,10 +137,12 @@ public class AdminController {
         return "admin-mentor";
     }
 
-    // 신청관리
+
+
+    // 신청 관리 및 정렬
     @GetMapping("/admin/apply")
-    public String getApplyList(Model model){
-        List<Apply> applylist = applyService.findAll();
+    public String getApplyList(@RequestParam(name = "sortBy", defaultValue = "id") String sortBy, Model model){
+        List<Apply> applylist = applyService.findAll(sortBy);
         model.addAttribute("applylist", applylist);
         return "admin-apply";
     }

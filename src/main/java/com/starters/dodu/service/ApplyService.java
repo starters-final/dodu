@@ -87,7 +87,7 @@ public class ApplyService {
     return ApplyFormDTO.applyDto(apply);
   }
 
-  public List<Apply> findAll(){
+  public List<Apply> findAll(String sortBy){
     return applyListRepository.findAll();
   }
 
