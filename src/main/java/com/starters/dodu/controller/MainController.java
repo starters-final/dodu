@@ -3,15 +3,10 @@ package com.starters.dodu.controller;
 import com.starters.dodu.config.auth.CustomOAuth2UserService;
 import com.starters.dodu.config.auth.LoginUser;
 import com.starters.dodu.config.auth.SessionUser;
-import com.starters.dodu.dto.ApplyFormDTO;
 import com.starters.dodu.dto.*;
-import com.starters.dodu.service.ApplyService;
-import com.starters.dodu.service.CategoryService;
-import com.starters.dodu.service.MenteeService;
-import com.starters.dodu.service.MentorService;
+import com.starters.dodu.service.*;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +23,7 @@ public class MainController {
     private final MenteeService menteeService;
     private final MentorService mentorService;
     private final ApplyService applyService;
+    private final MatchingService matchingService;
     // 추가
     private final CustomOAuth2UserService customOAuth2UserService;
 
@@ -35,11 +31,6 @@ public class MainController {
     public String index(Model model, @RequestParam(defaultValue = "0", required = false) Long categoryId, HttpSession session) {
         List<CategoryDTO> categories = categoryService.findAll();
         model.addAttribute("categories", categories);
-        // check
-        System.out.println("[getAttrName] : " + session.getAttributeNames());
-        System.out.println("[servletContext] : " +session.getServletContext());
-        System.out.println("[user] : " +session.getAttribute("user"));
-        //System.out.println("[user] : " +session.getAttribute("user").toString());
         return "index";
     }
 
@@ -82,8 +73,10 @@ public class MainController {
     public String getMenteeApplyList(@PathVariable String id, Model model) {
         MenteeDTO mentee = menteeService.findById(Long.parseLong(id));
         List<ApplyResultDTO> applyList = applyService.findAllByMenteeId(Long.parseLong(id));
+        List<MatchingDTO> match = matchingService.findAllByApply_Mentee(Long.parseLong(id));
         model.addAttribute("mentee", mentee);
         model.addAttribute("applyList", applyList);
+        model.addAttribute("match", match);
         return "mentee-apply-list";
     }
 
