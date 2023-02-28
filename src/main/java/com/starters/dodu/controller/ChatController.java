@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
@@ -28,9 +27,9 @@ public class ChatController {
     }
 
     @GetMapping("/chat/{id}")
-    public String chat(@PathVariable Long id, Model model, HttpServletResponse res) throws RuntimeException, IOException {
+    public String chat(@PathVariable Long id, Model model, HttpServletResponse res, @LoginUser SessionUser user) throws Exception {
         try {
-            Optional<Chat> chat = chatService.findById(id);
+            Optional<Chat> chat = chatService.findById(id, user);
             model.addAttribute("chat", chat);
             log.info("@ChatController, chat GET()");
         } catch (Exception err) {
@@ -38,7 +37,7 @@ public class ChatController {
             String redirectUrl = "/?alert=true&message=" + message;
             res.sendRedirect(redirectUrl);
         }
-            return "chat";
+        return "chat";
     }
 
     @GetMapping("/chatList")

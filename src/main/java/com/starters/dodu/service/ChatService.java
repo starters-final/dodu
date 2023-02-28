@@ -1,5 +1,7 @@
 package com.starters.dodu.service;
 
+import com.starters.dodu.config.auth.LoginUser;
+import com.starters.dodu.config.auth.SessionUser;
 import com.starters.dodu.domain.Chat;
 import com.starters.dodu.domain.ChatLog;
 import com.starters.dodu.dto.ChatDTO;
@@ -10,9 +12,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,20 +39,21 @@ public class ChatService {
         chatLogRepository.save(chatLog);
     }
 
-    public Optional<Chat> findById(Long id) throws RuntimeException {
+    public Optional<Chat> findById(Long id, @LoginUser SessionUser user) throws Exception {
         Optional<Chat> chat = chatRepository.findById(id);
-        LocalDate now = LocalDate.now();
-        LocalDateTime start = LocalDateTime.parse(chat.get().getStartTime());
-        LocalDateTime finish = LocalDateTime.parse(chat.get().getStartTime());
-
-        System.out.println(LocalDateTime.now() + " this is local");
-        System.out.println(LocalDateTime.parse(chat.get().getStartTime()));
-        System.out.println(LocalDateTime.parse(chat.get().getFinishTime()));
-
-        if (now.isAfter(ChronoLocalDate.from(start)) && now.isBefore(ChronoLocalDate.from(finish))) {
+//        if (!chat.get().getMentee().getId().equals(user.getId())) throw new Exception("입장할 수 없는 채팅방이에요!");
+//
+//        LocalDate now = LocalDate.now();
+//        LocalDateTime start = LocalDateTime.parse(chat.get().getStartTime());
+//        LocalDateTime finish = LocalDateTime.parse(chat.get().getFinishTime());
+//        System.out.println(now);
+//        System.out.println(start);
+//        System.out.println(finish);
+//
+//        if (now.isAfter(ChronoLocalDate.from(start)) && now.isBefore(ChronoLocalDate.from(finish))) {
             return chat;
-        }
-        else throw new RuntimeException("아직 입장할 수 없어요!");
+//        }
+//        else throw new RuntimeException("입장 시간이 아니에요!");
     }
 
     //전체 채팅방 조회
@@ -72,10 +72,12 @@ public class ChatService {
         chat.setMentor(chatDTO.getMentor());
         chat.setStartTime(chatDTO.getStartTime());
         chat.setFinishTime(chatDTO.getStartTime().substring(0, 11)
-                + (Integer.parseInt(chatDTO.getStartTime().substring(11, 13)) + 1)
+                + (Integer.parseInt(chatDTO.getStartTime().substring(11, 13)) + 2)
+                + ":"
                 + chatDTO.getStartTime().substring(14, 16)
         );
         chat.setStatus(0);
+        System.out.println(chat);
 
         Chat savedChat = chatRepository.save(chat);
         return new ChatDTO(savedChat);
