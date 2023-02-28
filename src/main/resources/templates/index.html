@@ -34,7 +34,7 @@
                             src="/images/main1.jpg"
                             class="d-block w-100"
                             alt="..."
-                            height="100"
+                            height="150"
                     />
                 </div>
                 <div class="carousel-item">
@@ -42,7 +42,7 @@
                             src="/images/main2.jpg"
                             class="d-block w-100"
                             alt="..."
-                            height="100"
+                            height="150"
                     />
                 </div>
                 <div class="carousel-item">
@@ -50,7 +50,7 @@
                             src="/images/main3.jpg"
                             class="d-block w-100"
                             alt="..."
-                            height="100"
+                            height="150"
                     />
                 </div>
             </div>
@@ -77,26 +77,28 @@
         <!-- Section-->
         <section class="py-1">
             <div class="d-flex justify-content-start">
-                <div th:if="${session.user}" class="p-2 font" style="font-size: 8px; margin: 3px "> <b th:text="${session.user.getName()}" />님을 위한 추천 카테고리</div>
-                <div th:unless="${session.user}" class="p-2 font" style="font-size: 8px; margin: 3px "> <b th:text="DODU" />가 추천하는 카테고리</div>
+                <div th:if="${session.user}" class="p-2 font" style="font-size: 11px; margin: 3px "> <b th:text="${session.user.getName()}" />님을 위한 추천 카테고리</div>
+
+                <div th:unless="${session.user}" class="p-2 font" style="font-size: 11px; margin: 3px "> <b th:text="DODU" />가 추천하는 카테고리</div>
             </div>
             <div th:if="${not #lists.isEmpty(categories)}">
             <div class="btn-toolbar text-center" role="toolbar" aria-label="Toolbar with button groups"
-                style="margin-left: 15%; ">
+                style="margin-left: 15%;">
                 <div class="btn-group btn-group-sm " role="group" aria-label="First group" style="">
                     <div th:each="category : ${categories}">
-                        <button th:text="${category.getTitle()}" th:id="${category.id}" class="btn btn-outline-secondary font" onclick="changeCategory()" />
+                        <button th:text="${category.getTitle()}" th:id="${category.id}" class="btn btn-outline-secondary font" onclick="changeCategory()" style="font-family: 'Spoqa Han Sans Neo', 'sans-serif'; margin:1px; color:white; background-color: rgba(216,90,123,1); border-color: rgba(216,90,123,1)" />
                     </div>
                 </div>
             </div>
             </div>
 <br>
             <div class="d-flex justify-content-start">
-                <div th:if="${session.user}" class="p-2 font" style="font-size: 8px; margin: 3px "><b th:text="${session.user.getName()}" />님을 위한 추천 멘토</div>
-                <div th:unless="${session.user}" class="p-2 font" style="font-size: 8px; margin: 3px "> <b th:text="DODU" />가 추천하는 멘토</div>
+                <div th:if="${session.user}" class="p-2 font" style="font-size: 11px; margin: 3px "><b th:text="${session.user.getName()}" />님을 위한 추천 멘토</div>
+
+                <div th:unless="${session.user}" class="p-2 font" style="font-size: 11px; margin: 3px "> <b th:text="DODU" />가 추천하는 멘토</div>
             </div>
 
-            <div class="container px-4 px-lg-5" id="carousel-final" >
+            <div class="container px-4 px-lg-5" id="carousel-final">
                 <!-- mento carousel-->
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner" id="mentor-carousel-inner">

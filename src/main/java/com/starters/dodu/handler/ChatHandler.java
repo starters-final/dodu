@@ -33,16 +33,15 @@ public class ChatHandler extends TextWebSocketHandler {
         log.info("payload: " + payload);
 
         // chat의 id를 가져온다.
-        Long chat_id = (Long) session.getAttributes().get("chat_id");
-        chat_id = 1L; // 임시
+        Long chat_id = Long.parseLong(message.getPayload().split(":")[0]);
 
         // 임시로 유저 아이디와 텍스트 나눠주기
         String[] values = message.getPayload().split(":");
-        String user_id = values[0]; // 유저의 아이디
+        String user_id = values[1]; // 유저의 아이디
 
         // 텍스트 내용 (수정 필요)
         StringBuilder builder = new StringBuilder();
-        for(int i = 1; i < values.length; i ++) {
+        for(int i = 2; i < values.length; i++) {
             builder.append(values[i]);
         }
         String text_value = builder.toString();
@@ -51,9 +50,11 @@ public class ChatHandler extends TextWebSocketHandler {
         LocalDateTime now = LocalDateTime.now();
 
         // 메세지 전송
-        for(WebSocketSession sess : list) {
-            sess.sendMessage(message);
-        }
+        //for(WebSocketSession sess : list) {
+        //    sess.sendMessage(message);
+        //}
+
+        session.sendMessage(message);
 
         // db에 적재
         ChatLogDTO chatLog = new ChatLogDTO(user_id, text_value, now, chat_id);
