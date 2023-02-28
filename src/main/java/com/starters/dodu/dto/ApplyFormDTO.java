@@ -23,7 +23,7 @@ public class ApplyFormDTO {
   private String  matchTime1;
   private String matchTime2;
   private String  matchTime3;
-  private String status;
+  private int status;
   private LocalDateTime indate;
   private Mentee mentee;
   private Mentor mentor;

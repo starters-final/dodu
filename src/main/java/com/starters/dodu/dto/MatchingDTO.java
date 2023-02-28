@@ -13,7 +13,7 @@ public class MatchingDTO {
 
   private Long id;
   private String selectedMatchTime;
-  private String status;
+  private int status;
   private Apply apply;
 
   public MatchingDTO(Matching entity) {

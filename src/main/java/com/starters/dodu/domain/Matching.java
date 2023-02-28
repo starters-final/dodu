@@ -1,5 +1,6 @@
 package com.starters.dodu.domain;
 
+import com.starters.dodu.domain.enums.MatchingStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,8 +22,11 @@ public class Matching {
   private Long id; // 식별자
 
   private String selectedMatchTime;
-
-  private String status;
+  @Column(name = "status")
+  private int status;
+  public MatchingStatus getStatusEnum(){
+    return MatchingStatus.fromStatusCode(status);
+  }
 
   @CreationTimestamp
   private LocalDateTime indate;

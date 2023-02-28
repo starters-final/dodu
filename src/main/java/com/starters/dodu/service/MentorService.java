@@ -8,6 +8,7 @@ import com.starters.dodu.repository.SaveApplyRepository;
 import com.starters.dodu.repository.VerificationRepository;
 import jakarta.persistence.NonUniqueResultException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -67,12 +68,33 @@ public class MentorService {
         return new ApplyFormDTO.GetApplyForm(entity);
     }
 
-    // 맨토 관리
-    public List<Mentor> findAllPass() {
-        return mentorRepository.findAllByStatus(3);
+    // 맨토 관리 및 정렬
+    public List<Mentor> findAllPass(String sortBy){
+        List<Mentor> resultList = null;
+        switch (sortBy) {
+            case "id": // 번호순
+                resultList = mentorRepository.findAllByStatusOrStatusOrderByIdAsc(1,9);
+                break;
+            case "name": // 이름순
+                resultList = mentorRepository.findAllByStatusOrStatusOrderByNicknameAsc(1,9);
+                break;
+            case "university": // 대학순
+                resultList = mentorRepository.findAllByStatusOrStatusOrderByUniversityAsc(1,9);
+                break;
+            case "major": // 전공순
+                resultList = mentorRepository.findAllByStatusOrStatusOrderByMajorAsc(1,9);
+                break;
+            case "gender": // 성별순
+                resultList = mentorRepository.findAllByStatusOrStatusOrderByGenderAsc(1,9);
+                break;
+            default:
+                System.out.println();
+                resultList = mentorRepository.findAllByStatusOrStatusOrderByIdAsc(1,9);
+        }
+        System.out.println(resultList);
+        return resultList;
+
     }
-
-
     //멘토 블랙 관리
     @Transactional
     public void updateMentorStatus(Long id, MentorDTO status){
@@ -81,36 +103,5 @@ public class MentorService {
 
         mentor.update(Integer.parseInt(status.getStatus()));
     }
-    // 멘토 정렬
-//    public List<Mentor> findAllPass(String sortBy){
-//        List<Mentor> resultList;
-//        /*Sort sort;*/
-//        switch (sortBy) {
-//            case "id": // 번호순
-//                resultList = mentorRepository.findByStatusOrderByIdAsc(3);
-//                //sort = Sort.by(Sort.Direction.ASC, "id");
-//                break;
-//            case "name": // 이름순
-//                //sort = Sort.by(Sort.Direction.ASC, "nickname");
-//                break;
-//            case "university": // 대학순
-//                //sort = Sort.by(Sort.Direction.ASC, "university");
-//                break;
-//            case "major": // 전공순
-//                //sort = Sort.by(Sort.Direction.ASC, "major");
-//                break;
-//            case "gender": // 성별순
-//                //sort = Sort.by(Sort.Direction.ASC, "gender");
-//                break;
-//            case "signUpDate": // 가입일순
-//                //sort = Sort.by(Sort.Direction.ASC, "indate");
-//                break;
-//            default:
-//                resultList = new List<Mentor>();
-//                //sort = Sort.by(Sort.Direction.ASC, "id");
-//        }
-//        return resultList;
-
-//    }
 }
 

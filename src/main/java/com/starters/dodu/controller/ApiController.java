@@ -75,9 +75,9 @@ public class ApiController {
     }
   }
 
-  public ResponseEntity<String> updateApplyStatus(Long applyId, String status) {
+  public ResponseEntity<String> updateApplyStatus(Long applyId, int status) {
     try {
-      if(status.equals("0")) {
+      if(status == 0) {
         applyService.updateApplyStatus(applyId, status);
         return ResponseEntity.ok("Apply status updated successfully");
       } else return ResponseEntity.noContent().build();
