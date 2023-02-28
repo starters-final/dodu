@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,19 +42,14 @@ public class ChatService {
 
     public Optional<Chat> findById(Long id, @LoginUser SessionUser user) throws Exception {
         Optional<Chat> chat = chatRepository.findById(id);
-//        if (!chat.get().getMentee().getId().equals(user.getId())) throw new Exception("입장할 수 없는 채팅방이에요!");
-//
-//        LocalDate now = LocalDate.now();
-//        LocalDateTime start = LocalDateTime.parse(chat.get().getStartTime());
-//        LocalDateTime finish = LocalDateTime.parse(chat.get().getFinishTime());
-//        System.out.println(now);
-//        System.out.println(start);
-//        System.out.println(finish);
-//
-//        if (now.isAfter(ChronoLocalDate.from(start)) && now.isBefore(ChronoLocalDate.from(finish))) {
-            return chat;
-//        }
-//        else throw new RuntimeException("입장 시간이 아니에요!");
+        if (!chat.get().getMentee().getId().equals(user.getId())) throw new Exception("입장할 수 없는 채팅방이에요!");
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime start = LocalDateTime.parse(chat.get().getStartTime());
+        LocalDateTime finish = LocalDateTime.parse(chat.get().getFinishTime());
+
+        if (now.isAfter(start) && now.isBefore(finish)) return chat;
+        else throw new RuntimeException("입장 시간이 아니에요!");
     }
 
     //전체 채팅방 조회
@@ -77,10 +73,8 @@ public class ChatService {
                 + chatDTO.getStartTime().substring(14, 16)
         );
         chat.setStatus(0);
-        System.out.println(chat);
 
         Chat savedChat = chatRepository.save(chat);
         return new ChatDTO(savedChat);
-
     }
 }
