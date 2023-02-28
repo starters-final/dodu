@@ -3,8 +3,7 @@
        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
        layout:decorate="~{layout/phonelayNotnav}">
 
-
-<th:block layout:fragment="content">
+<th:block layout:fragment="content" th:if="${chat}">
     <nav class="navbar navbar-light bg-light" style="position: relative; padding: 0px; height: 50px; background-color: rgba(216,90,123,0.8)!important;">
         <div class="container-fluid" style="height: 26px;">
             <button class="navbar-toggler" type="button" style="padding: 0px; margin: 0px; width: 30px; height: 25px;" onclick="location.href='/'">
@@ -53,7 +52,7 @@
             <p style="margin-bottom: 0;">**주의사항**</p>
             <p style="margin-bottom: 0;">멘토링 중 전화번호 등의 <br>개인정보를 요구하거나 알려주지 마십시요. </p>
             <p style="margin-bottom: 8px;"></p>
-            <p style="margin-bottom: 0;" th:text="|멘토링 주제 : ${chat.get().mentor.category.title}|"></p>
+            <p style="margin-bottom: 0;" th:text="|멘토링 주제 : ${chat?.get().mentor.category.title}|"></p>
             <p style="margin-bottom: 0;" th:text="|${chat.get().mentor.category.title}에 대해 물어보세요!|"></p>
         </div>
 
@@ -150,6 +149,14 @@
                     $('#mentor').append(event.data.split(":")[1] + "<br>=>"+ event.data.split(":")[2]+ "<br>");
                 }
             }
+
+            // const params = new URLSearchParams(window.location.search);
+            // const isAlert = params.get('alert');
+            //
+            // if (isAlert === 'true') {
+            //     const message = decodeURIComponent(params.get('message'));
+            //     if (confirm(message)) history.back();
+            // }
         </script>
 
 
