@@ -18,9 +18,9 @@
                     </tr>
                     <tr th:each="chat : ${chatlist}">
                         <td th:text="${chat.getId()}" style="font-size: 3px; color: black;"></td>
-                        <td th:text="${chat.getStart_time()}" style="font-size: 3px; color: black;"></td>
-                        <td th:text="${chat.getFinish_time()}" style="font-size: 3px; color: black;"></td>
-                        <td th:text="${chat.getMentor_id()}" style="font-size: 3px; color: black;"></td>
+                        <td th:text="${chat.getStartTime()}" style="font-size: 3px; color: black;"></td>
+                        <td th:text="${chat.getFinishTime()}" style="font-size: 3px; color: black;"></td>
+                        <td th:text="${chat.getMentor().getNickname()}" style="font-size: 3px; color: black;"></td>
                         <td th:text="${chat.getStatus()}" style="font-size: 3px; color: black;"></td>
                         <td><button value="보기"></button> </td>
                     </tr>

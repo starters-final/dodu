@@ -48,6 +48,8 @@ public class SecurityConfig {
                                 .requestMatchers(new AntPathRequestMatcher("/profile")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/carousel/*")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/api/v1/**")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/chat/**")).hasRole(ROLE_MENTEE)
+                                .requestMatchers(new AntPathRequestMatcher("/chatList")).hasRole(ROLE_MENTEE)
                                 .requestMatchers(new AntPathRequestMatcher("/applyForm/**")).hasRole(ROLE_MENTEE)
                                 .requestMatchers(new AntPathRequestMatcher("/mentee/applyList/**")).hasRole(ROLE_MENTEE)
                                 .requestMatchers(new AntPathRequestMatcher("/chatgpt")).hasRole(ROLE_MENTEE)
