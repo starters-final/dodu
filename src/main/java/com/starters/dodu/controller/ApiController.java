@@ -103,7 +103,8 @@ public class ApiController {
             match.getApply().getMentee().getNickname() + "님, " + match.getApply().getMentor().getNickname() + " 멘토가 DoDu를 수락했어요!",
             "http://localhost:8080/chat/" + chatResult.getId()
     );
-    response.sendRedirect("/");
+    //response.sendRedirect("/");
+    response.sendRedirect("https://www.google.com/"); // 멘토는 완료 후 전혀 다른 화면(구글/네이버)로 리다이렉트
   }
 
   @GetMapping("/mypage/{id}/applyList")

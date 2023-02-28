@@ -1,7 +1,6 @@
 package com.starters.dodu.service;
 
 import com.starters.dodu.domain.Matching;
-import com.starters.dodu.domain.Verification;
 import com.starters.dodu.dto.MatchingDTO;
 import com.starters.dodu.repository.MatchingRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -59,5 +59,11 @@ public class MatchingService {
     }
     System.out.println(sort);
     return matchingRepository.findAll(sort);
+  }
+
+  public List<MatchingDTO> findAllByApply_Mentee(Long id) {
+    return matchingRepository.findAllByApply_Mentee_Id(id).stream()
+            .map(MatchingDTO::new)
+            .collect(Collectors.toList());
   }
 }
