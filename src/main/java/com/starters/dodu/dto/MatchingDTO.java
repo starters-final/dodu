@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,4 +25,6 @@ public class MatchingDTO {
     this.apply = entity.getApply();
   }
 
+  public MatchingDTO(List<Matching> match) {
+  }
 }
