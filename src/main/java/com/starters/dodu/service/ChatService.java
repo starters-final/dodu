@@ -10,6 +10,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,13 +40,29 @@ public class ChatService {
         chatLogRepository.save(chatLog);
     }
 
-    public Optional<Chat> findById(Long id) {
-        return chatRepository.findById(id);
+    public Optional<Chat> findById(Long id) throws RuntimeException {
+        Optional<Chat> chat = chatRepository.findById(id);
+        LocalDate now = LocalDate.now();
+        LocalDateTime start = LocalDateTime.parse(chat.get().getStartTime());
+        LocalDateTime finish = LocalDateTime.parse(chat.get().getStartTime());
+
+        System.out.println(LocalDateTime.now() + " this is local");
+        System.out.println(LocalDateTime.parse(chat.get().getStartTime()));
+        System.out.println(LocalDateTime.parse(chat.get().getFinishTime()));
+
+        if (now.isAfter(ChronoLocalDate.from(start)) && now.isBefore(ChronoLocalDate.from(finish))) {
+            return chat;
+        }
+        else throw new RuntimeException("아직 입장할 수 없어요!");
     }
 
     //전체 채팅방 조회
     public List<Chat> getAllChatList(){
         return chatRepository.findAll();
+    }
+
+    public List<Chat> getAllChatListByMentee(Long id) {
+        return chatRepository.findAllByMentee_Id(id);
     }
 
     @Transactional

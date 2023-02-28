@@ -184,6 +184,14 @@
             }
         }
 
+        const params = new URLSearchParams(window.location.search);
+        const isAlert = params.get('alert');
+
+        if (isAlert === 'true') {
+            const message = decodeURIComponent(params.get('message'));
+            if (confirm(message)) history.back();
+        }
+
         function checkLogin() {
             alert("로그인이 필요한 서비스입니다.");
             window.location.href = "/doduLogin";  // 로그인 페이지로 리디렉션
