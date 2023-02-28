@@ -1,9 +1,12 @@
 package com.starters.dodu.domain;
 
+import com.starters.dodu.domain.enums.VerificationStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
+
 
 @Entity
 @Getter
@@ -13,16 +16,20 @@ public class Verification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "verfication_id")
     private Long id; // 식별자
-
     private String file;
-
-    private String status;
-
+    @Column(name = "status")
+    private int status;
+    public VerificationStatus getStatusEnum(){
+        return VerificationStatus.fromStatusCode(status);
+    }
     private LocalDateTime indate;
 
-    @ManyToOne
-    @JoinColumn(name = "mentor_id")
-    private Mentor mentorId;
+    @OneToOne
+    @JoinColumn(name = "mentor_id", unique = true)
+    private Mentor mentor;
 
+    public void update(int status){
+        this.status = status;
+    }
 
 }

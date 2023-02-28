@@ -2,27 +2,28 @@ package com.starters.dodu.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "applys")
-@NoArgsConstructor
 @Getter
+@Setter
 public class Apply {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "apply_id")
   private Long id; // 식별자
 
-  private Timestamp matchTime1;
-  private Timestamp matchTime2;
-  private Timestamp matchTime3;
+  private String matchTime1;
+  private String matchTime2;
+  private String matchTime3;
 
   private String status;
 
+  @CreationTimestamp
   private LocalDateTime indate;
 
   @ManyToOne
@@ -31,9 +32,9 @@ public class Apply {
 
   @ManyToOne
   @JoinColumn(name = "mentor_id")
-  private Mentor mentorId;
+  private Mentor mentor;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "question_id")
   private Question question;
 

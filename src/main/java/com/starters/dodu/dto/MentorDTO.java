@@ -1,13 +1,15 @@
 package com.starters.dodu.dto;
 
+import com.starters.dodu.domain.Category;
 import com.starters.dodu.domain.Mentor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class MentorDTO {
 
@@ -31,13 +33,16 @@ public class MentorDTO {
 
   private String status;
 
-  private String matchCount;
+  private int matchCount;
+
+  private String category;
 
   public MentorDTO(Mentor entity) {
     this.id = entity.getId();
     this.nickname = entity.getNickname();
     this.image = entity.getImage();
     this.university = entity.getUniversity();
+    this.category = entity.getCategory().getTitle();
     this.major = entity.getMajor();
     this.matchCount = entity.getMatchCount();
   }

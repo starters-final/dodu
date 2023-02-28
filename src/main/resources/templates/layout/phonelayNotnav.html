@@ -18,6 +18,14 @@
           background-color: white;
       }
 
+      #contents::-webkit-scrollbar {
+          display: none;
+      }
+
+      #chatarea::-webkit-scrollbar {
+          display: none;
+      }
+
       #wrap {
           min-height: calc(100% - 230px);
       }
@@ -56,9 +64,20 @@
               background-size: contain;
               float: left;
           }
+
           #contents{
               margin: 109px 0px 0px 208px;
+              overflow: auto;
           }
+
+          #contents::-webkit-scrollbar {
+              display: none;
+          }
+
+          #chatarea::-webkit-scrollbar {
+              display: none;
+          }
+
           #logo{
               margin: 305px 0px 0px 0px;
           }

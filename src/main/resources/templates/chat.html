@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layout/phonelayNotnav}">
+
+
+<th:block layout:fragment="content">
+    <nav class="navbar navbar-light bg-light" style="position: relative; padding: 0px; height: 50px; background-color: rgba(216,90,123,0.8)!important;">
+        <div class="container-fluid" style="height: 26px;">
+            <button class="navbar-toggler" type="button" style="padding: 0px; margin: 0px; width: 30px; height: 25px;" onclick="location.href='/'">
+                <span class="font" style="width: 15px;height: 15px; " > < </span>
+            </button>
+            <p class="navbar-brand font"  style="font-size:17px; padding: 0px; margin: 0px;" href="#"><b>DoChat</b></p>
+
+            <button class="navbar-toggler" style="padding: 0px; margin: 0px; width: 30px; height: 25px;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <span class="navbar-toggler-icon" style="width: 15px;height: 15px;"></span>
+            </button>
+            <div class="offcanvas"  style="position: absolute; top: 0px; left: 225px; right: 0px;   max-height: 667px; width: 150px; height: 667px;" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <p class="font"  style="font-size: 8px" id="offcanvasNavbarLabel">프로필 신고하기</p>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end">
+                        <li class="nav-item">
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link active font" style="font-size: 3px; color: black;" aria-current="page" href="#">프로필<br>신고하기</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active font" style="font-size: 3px;color: black;" aria-current="page" href="#">프로필<br>작성자<br>신고하기</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active font" style="font-size: 3px;color: black;" aria-current="page" href="#">멘토<br>안보이게하기</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="outchat" class="nav-link active font" style="font-size: 3px;color: black;" aria-current="page">채팅나가기</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="gogpt" class="nav-link active font" style="font-size: 3px;color: black;" aria-current="page">chatGPT</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="alert alert-light" style="min-height: 595px;">
+
+        <!-- 안내문 -->
+        <div class="alert alert-dark font" role="alert" style="text-align: center; font-size: 1px; margin: 0 auto; padding: 5px; width: 250px;">
+            <p style="margin-bottom: 0;">**주의사항**</p>
+            <p style="margin-bottom: 0;">멘토링 중 전화번호 등의 <br>개인정보를 요구하거나 알려주지 마십시요. </p>
+            <p style="margin-bottom: 8px;"></p>
+            <p style="margin-bottom: 0;" th:text="|멘토링 주제 : ${chat.get().mentor.category.title}|"></p>
+            <p style="margin-bottom: 0;" th:text="|${chat.get().mentor.category.title}에 대해 물어보세요!|"></p>
+        </div>
+
+        <!--입장 기능 일단 만들어논거임 추후 삭제 -->
+        <p class="font" style="font-size: 5px; margin-bottom: 0px;" >ID : <input type="text" id="nickname" value="" style="width: 100px; margin: 10px 0px 0px 0px; ">
+        <input class="btn btn-light btn-sm" type="button"  style="font-size: 5px;" id="enterbtn" value="입장"></p>
+        <hr style="margin: 10px">
+
+        <!--채팅 영역 -->
+        <div id="chatarea" style="width: 325px; height: 370px; overflow-y: auto;display: flex; flex-direction: column-reverse;">
+        <div id="mentor" class="font" style="font-size: 5px;"></div>
+        <div id="mentee" class="font" style="font-size: 5px; margin-left: auto;"></div>
+        </div>
+
+        <!-- 채팅창 -->
+        <div style="position: absolute; bottom:0px; width: 330px">
+        <hr style="margin: 10px">
+        <p class="font" style="font-size: 14px; margin-bottom: 0px;" >Message :
+        <input type="text" id="message" style="width: 150px; ">
+        <input class="btn btn-light btn-sm" type="button" style="font-size: 14px;" id="sendbtn" value="send">
+        </p>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script>
+            $(function(){
+                var webSocket;
+
+                $("#enterbtn").on('click',function(){
+                    webSocket = new WebSocket("ws://localhost:8080/ws/chat");
+                    webSocket.onopen = open;
+                    webSocket.onclose = close;
+                    webSocket.onmessage = message; //서버가 응답한 내용 수신
+                });// on enterbtn
+
+                $("#sendbtn").on('click',function(){
+                    //서버로 보내는 이벤트 발생
+                    var nickname =  $('#nickname').val();
+                    var sendmessage = $('#message').val();
+                   // if(nickname == 'mentee'){
+                    webSocket.send(nickname + ":" + sendmessage);
+                   // }
+                    //else {
+                    //    webSocket.send(1 + ":" + nickname + ":" + sendmessage);
+                    //}
+                    $("#message").val('');
+                });// on sendbtn
+
+
+                $("#outchat").on('click', function(){
+                    var out = confirm('채팅방을 정말 나가시겠습니까?');
+                    if(out){
+                       location.href='/';
+
+                    }
+                });
+
+                $("#gogpt").on('click', function(){
+                    var go = confirm('chatgpt로 이동하시겠습니까?');
+                    if(go){
+                        location.href='http://localhost:8080/chatgpt';
+
+                    }
+                });
+
+
+              /*  
+
+
+                $('input').keyup(function(event) {
+
+                    if (event.which === 13) {
+                        var nickname =  $('#nickname').val();
+                        var sendmessage = $('#message').val();
+                        if(nickname == 'mentee'){
+                            webSocket.send(2 + ":"+ nickname + ":" + sendmessage);
+                        } else {
+                            webSocket.send(1 + ":" + nickname + ":" + sendmessage);
+                        }
+                        $("#message").val('');
+                    }
+
+                }); */
+
+                });
+
+            function open(){console.log("웹소켓연결성공");}
+            function close(){console.log("웹소켓해제성공");}
+            function message(event){
+                console.log("서버로부터 메세지 수신 성공");
+                if(event.data.split(":")[0] === '2'){
+                    $('#mentee').append(event.data.split(":")[1] + "<br>"+ event.data.split(":")[2]+ "<=<br>");
+                } else{
+                    $('#mentor').append(event.data.split(":")[1] + "<br>=>"+ event.data.split(":")[2]+ "<br>");
+                }
+            }
+        </script>
+
+
+
+    </div>
+</th:block>
+</html>

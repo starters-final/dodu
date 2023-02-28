@@ -2,7 +2,6 @@
 <html  xmlns:th="http://www.thymeleaf.org"
                 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                 layout:decorate="~{layout/phonelay}">
-
 <th:block layout:fragment="content">
     <div>
         <!-- carousel -->
@@ -78,106 +77,118 @@
         <!-- Section-->
         <section class="py-1">
             <div class="d-flex justify-content-start">
-                <div class="p-2 font" style="font-size: 8px; margin: 3px "> <b>예지</b>님을 위한 추천 카테고리</div>
+                <div th:if="${session.user}" class="p-2 font" style="font-size: 8px; margin: 3px "> <b th:text="${session.user.getName()}" />님을 위한 추천 카테고리</div>
+                <div th:unless="${session.user}" class="p-2 font" style="font-size: 8px; margin: 3px "> <b th:text="DODU" />가 추천하는 카테고리</div>
             </div>
+            <div th:if="${not #lists.isEmpty(categories)}">
             <div class="btn-toolbar text-center" role="toolbar" aria-label="Toolbar with button groups"
-                style="margin: 10px 10px 10px 60px; ">
+                style="margin-left: 15%; ">
                 <div class="btn-group btn-group-sm " role="group" aria-label="First group" style="">
-                    <button type="button" class="btn btn-outline-secondary font">진학</button>
-                    <button type="button" class="btn btn-outline-secondary font">워홀</button>
-                    <button type="button" class="btn btn-outline-secondary font">장학금</button>
-                    <button type="button" class="btn btn-outline-secondary font">동아리</button>
+                    <div th:each="category : ${categories}">
+                        <button th:text="${category.getTitle()}" th:id="${category.id}" class="btn btn-outline-secondary font" onclick="changeCategory()" />
+                    </div>
                 </div>
             </div>
-
-
+            </div>
 
             <div class="d-flex justify-content-start">
-                <div class="p-2 font" style="font-size: 8px; margin: 3px "><b>예지</b>님을 위한 추천 멘토</div>
+                <div th:if="${session.user}" class="p-2 font" style="font-size: 8px; margin: 3px "><b th:text="${session.user.getName()}" />님을 위한 추천 멘토</div>
+                <div th:unless="${session.user}" class="p-2 font" style="font-size: 8px; margin: 3px "> <b th:text="DODU" />가 추천하는 멘토</div>
             </div>
 
-            <div class="container px-4 px-lg-5">
+            <div class="container px-4 px-lg-5" id="carousel-final">
                 <!-- mento carousel-->
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-
-                <!-- mento 1 -->
-                    <div class="carousel-item active">
-                        <div class="badge bg-light position-absolute font" style="top: 0.5rem; right: 0.5rem; color: black">진학</div>
-                        <!-- Product image-->
-                        <img class="" src="/images/tube.jpg" alt="..." width="312px" height="80px" />
-                        <!-- Product details-->
-                        <div class="" style="padding: 10px 10px 10px 10px; height: 50px">
+                <div class="carousel-inner" id="mentor-carousel-inner">
+                    <div th:each="mentor, iterStat : ${categories.get(0).getMentors()}" class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active'">
+                        <div th:text="${mentor.getCategory().getTitle()}" class="badge bg-light position-absolute font" style="top: 0.5rem; right: 0.5rem; color: black"></div>
+                        <div class="carousel-caption" style="top: 0.5rem; right: 0.5rem; color: black"></div>
+                            <img class="" th:src="${mentor.getImage()}" alt="Slice" width="312px" height="80px" />
+                        <div class="" style="padding: 10px; height: 50px">
                             <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder font" style="font-size:10px;">시무룩한 튜브</h5>
-                                <!-- Product price-->
-                                <p class="font" style="font-size: 3px;">OO대학교 경영학과</p>
+                                <h5 th:text="${mentor.getNickname()}" class="fw-bolder font" style="font-size:10px;"></h5>
+                                <b th:text="${mentor.getUniversity()}" class="font" style="font-size: 3px;" /> <b th:text=" ${mentor.getMajor()}" class="font" style="font-size: 3px;" />
                             </div>
                         </div>
-                        <!-- Product actions-->
                         <div class="" style="padding: 10px 10px 10px 10px; background-color: rgba(216,90,123,1);">
-                            <div class="text-center"><a class="btn btn-outline-light font btn-sm" style="font-size: 10px " href="/applyRequest/1">자세히 보기</a></div>
-                        </div>
-                </div>
-
-                <!-- mento 2 -->
-                    <div class="carousel-item">
-                        <div class="badge bg-light position-absolute font" style="top: 0.5rem; right: 0.5rem; color: black">진학</div>
-                        <!-- Product image-->
-                        <img class="" src="/images/muji.jpg" alt="..." width="312px" height="80px" />
-                        <!-- Product details-->
-                        <div class="" style="padding: 10px 10px 10px 10px; height: 50px">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder font" style="font-size:10px;">성실한 무지</h5>
-                                <!-- Product price-->
-                                <p class="font" style="font-size: 3px;">OO대학교 경영학과</p>
+                            <div class="text-center" th:if="${session.isEmpty()}">
+                                <button class="btn btn-outline-light font btn-sm" style="font-size: 10px" onclick="checkLogin()" >
+                                    자세히 보기
+                                </button>
+                            </div>
+                            <div class="text-center" th:unless="${session.isEmpty()}">
+                                <a class="btn btn-outline-light font btn-sm" style="font-size: 10px" th:href="@{/applyForm/{mentorId}(mentorId=${mentor.getId()})}" >
+                                    자세히 보기
+                                </a>
                             </div>
                         </div>
-                        <!-- Product actions-->
-                        <div class="" style="padding: 10px 10px 10px 10px; background-color: rgba(216,90,123,1);">
-                            <div class="text-center"><a class="btn btn-outline-light font btn-sm" style="font-size: 10px " href="/applyRequest/2">자세히 보기</a></div>
-                        </div>
+                    </div>
                 </div>
-
-                <!-- mento 3 -->
-                    <div class="carousel-item">
-                        <div class="badge bg-light position-absolute font" style="top: 0.5rem; right: 0.5rem; color: black">진학</div>
-                        <!-- Product image-->
-                        <img class="" src="/images/prodo.png" alt="..." width="312px" height="80px" />
-                        <!-- Product details-->
-                        <div class="" style="padding: 10px 10px 10px 10px; height: 50px">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder font" style="font-size:10px;">똑똑한 프로도</h5>
-                                <!-- Product price-->
-                                <p class="font" style="font-size: 3px;">OO대학교 경영학과</p>
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="" style="padding: 10px 10px 10px 10px; background-color: rgba(216,90,123,1);">
-                            <div class="text-center"><a class="btn btn-outline-light font btn-sm" style="font-size: 10px " href="/applyRequest/3">자세히 보기</a></div>
-                        </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
                 </div>
-
-
-
-                </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-
+            </div>
         </section>
-
     </div>
-</th:block>
+    <script>
+        const changeCategory = async () => {
+            let categoryId = event.target.id;
+            try {
+                const response = await fetch(`/api/v1/carousel?categoryId=${categoryId}`);
+                const data = await response.json();
+                const carouselFinal = document.getElementById("carousel-final");
+                carouselFinal.innerHTML =
+                    `<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner" id="mentor-carousel-inner">
+                            ${data.map((item, index) =>`
+                                <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                                    <div class="badge bg-light position-absolute font" style="top: 0.5rem; right: 0.5rem; color: black">
+                                        ${item.category}
+                                    </div>
+                                    <div class="carousel-caption" style="top: 0.5rem; right: 0.5rem; color: black"></div>
+                                    <img class="" src="${item.image}" alt="Slice" width="312px" height="80px" />
+                                    <div class="" style="padding: 10px; height: 50px">
+                                        <div class="text-center">
+                                            <h5 class="fw-bolder font" style="font-size:10px;">${item.nickname}</h5>
+                                            <b class="font" style="font-size: 3px;">${item.university}</b>
+                                            <b class="font" style="font-size: 3px;">${item.major}</b>
+                                        </div>
+                                    </div>
+                                    <div class="" style="padding: 10px 10px 10px 10px; background-color: rgba(216,90,123,1);">
+                                        <div class="text-center">
+                                            <a class="btn btn-outline-light font btn-sm" style="font-size: 10px" href="/applyForm/${item.id}" >
+                                                자세히 보기
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target= "#carouselExampleControls" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                `;
+            }
+            catch (error) {
+                console.error(error);
+            }
+        }
 
+        function checkLogin() {
+            alert("로그인이 필요한 서비스입니다.");
+            window.location.href = "/doduLogin";  // 로그인 페이지로 리디렉션
+        }
+    </script>
+</th:block>
 </body>
 </html>

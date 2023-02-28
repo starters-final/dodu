@@ -2,20 +2,24 @@ package com.starters.dodu.dto;
 
 import com.starters.dodu.domain.Apply;
 import com.starters.dodu.domain.Mentee;
+import com.starters.dodu.domain.Mentor;
 import lombok.Getter;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Getter
 public class ApplyResultDTO {
   private Long id;
-  private Timestamp matchTime1;
-  private Timestamp matchTime2;
-  private Timestamp matchTime3;
+  private String matchTime1;
+  private String matchTime2;
+  private String matchTime3;
   private String status;
   private LocalDateTime indate;
   private Mentee mentee;
+  private Mentor mentor;
+  private String category;
+  private String question;
+  private String selectedMatchTime;
 
   public ApplyResultDTO(Apply entity) {
     this.id = entity.getId();
@@ -25,5 +29,8 @@ public class ApplyResultDTO {
     this.status = entity.getStatus();
     this.indate = entity.getIndate();
     this.mentee = entity.getMentee();
+    this.mentor = entity.getMentor();
+    this.category = entity.getMentor().getCategory().getTitle();
+    this.question = entity.getQuestion().getQuestion();
   }
 }

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layout/phonelayNotnav}">
+<style>
+    .chat-content { height: 350px; overflow-y: scroll;}
+    .line { margin-top: 10px; display: flex;}
+    .chat-box { padding: 5px; max-width: 200px;}
+    .mine {margin-left: auto;}
+</style>
+
+<th:block layout:fragment="content">
+    <nav class="navbar navbar-light bg-light" style="position: relative; padding: 0px; height: 50px; background-color: rgba(216,90,123,0.8)!important;">
+        <div class="container-fluid" style="height: 26px;">
+            <button class="navbar-toggler" type="button" style="padding: 0px; margin: 0px; width: 30px; height: 25px;" onclick="location.href='/'">
+                <span class="font" style="width: 15px;height: 15px; " > < </span>
+            </button>
+            <p class="navbar-brand font"  style="font-size:17px; padding: 0px; margin: 0px;" href="#"><b>DoChat</b></p>
+
+            <button class="navbar-toggler" style="padding: 0px; margin: 0px; width: 30px; height: 25px;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <span class="navbar-toggler-icon" style="width: 15px;height: 15px;"></span>
+            </button>
+            <div class="offcanvas"  style="position: absolute; top: 0px; left: 225px; right: 0px;   max-height: 667px; width: 150px; height: 667px;" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <p class="font"  style="font-size: 8px" id="offcanvasNavbarLabel">프로필 신고하기</p>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end">
+                        <li class="nav-item">
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav justify-content-end">
+                        <li class="nav-item">
+                            <a class="nav-link active font" style="font-size: 3px; color: black;" aria-current="page" href="#">프로필<br>신고하기</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active font" style="font-size: 3px;color: black;" aria-current="page" href="#">프로필<br>작성자<br>신고하기</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active font" style="font-size: 3px;color: black;" aria-current="page" href="#">멘토<br>안보이게하기</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="outchat" class="nav-link active font" style="font-size: 3px;color: black;" aria-current="page">채팅나가기</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="alert alert-light" style="min-height: 800px;">
+        <!-- 안내문 -->
+        <div class="alert alert-dark font" role="alert" style="text-align: center; font-size: 1px; margin: 0 auto; padding: 5px; width: 250px;">
+            <p style="margin-bottom: 0;">**주의사항**</p>
+            <p style="margin-bottom: 0;">멘토링 중 전화번호 등의 <br>개인정보를 요구하거나 알려주지 마십시요. </p>
+            <p style="margin-bottom: 8px;"></p>
+           <!-- <p style="margin-bottom: 0;" th:text="|멘토링 주제 : ${chat.get().mentor.category.title}|"></p>
+            <p style="margin-bottom: 0;" th:text="|${chat.get().mentor.category.title}에 대해 물어보세요!|"></p> -->
+
+        </div>
+
+
+        <hr style="margin: 10px">
+
+        <!--채팅 영역 -->
+        <!--<div id="chatarea" style="width: 325px; height: 370px; overflow-y: auto;display: flex; flex-direction: column-reverse;">
+            <div id="mentor" class="font" style="font-size: 5px;"></div>
+            <div id="mentee" class="font" style="font-size: 5px; margin-left: auto;"></div>
+        </div>-->
+        <div class="chat-content">
+            <div class="line">
+                <span class="chat-box"></span>
+            </div>
+            <div class="line">
+                <span class="chat-box mine"></span>
+            </div>
+        </div>
+        <div style="text-align: center">
+            <input class="chat-box" id="input">
+            <button id="send">전송</button>
+        </div>
+
+    <script type="module">
+        import { Configuration, OpenAIApi } from 'https://cdn.skypack.dev/openai';
+
+        document.querySelector('#send').addEventListener('click', async () => {
+            let template = `
+            <div class="line">
+              <span class="chat-box mine">${document.querySelector('#input').value}</span>
+            </div>
+        `;
+            document.querySelector('.chat-content').insertAdjacentHTML('beforeend', template);
+            try {
+                const response = await fetch('/api/v1/config');
+                const data = await response.text();
+                const configuration = new Configuration({
+                    apiKey: data
+                });
+                const openai = new OpenAIApi(configuration);
+                const result = await openai.createCompletion({
+                    model: "text-davinci-003",
+                    prompt: document.querySelector('#input').value,
+                    temperature: 0.7,
+                    max_tokens: 500,
+                    top_p: 1,
+                    frequency_penalty: 0,
+                    presence_penalty: 0,
+                });
+                document.querySelector('#input').value = "";
+                template = `
+              <div class="line">
+                <span class="chat-box">${result.data.choices[0].text}</span>
+              </div>
+            `;
+                document.querySelector('.chat-content').insertAdjacentHTML('beforeend', template);
+            }
+            catch (err) {
+                console.log(err);
+            }
+        });
+    </script>
+    </div>
+</th:block>
+</body>
+</html>
