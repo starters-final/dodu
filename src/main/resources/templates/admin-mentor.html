@@ -14,6 +14,9 @@
     <div class="table-responsive">
         <table class="table table-striped table-sm">
             <thead>
+            <div class="sortBtns">
+                <button onclick="location.href='/admin/mentor?sortBy=id'">번호순</button><button onclick="location.href='/admin/mentor?sortBy=name'">이름순</button><button onclick="location.href='/admin/mentor?sortBy=university'">대학순</button><button onclick="location.href='/admin/mentor?sortBy=major'">전공순</button><button onclick="location.href='/admin/mentor?sortBy=gender'">성별순</button>
+            </div>
             <tr>
                 <th scope="col">회원번호</th>
                 <th scope="col">이름</th>
@@ -23,8 +26,6 @@
                 <th scope="col">성별</th>
                 <th scope="col">전화번호</th>
                 <th scope="col">이메일</th>
-                <th scope="col">가입 여부</th>
-                <th scope="col">적용</th>
                 <th scope="col">가입상태</th>
                 <th scope="col">가입일</th>
             </tr>

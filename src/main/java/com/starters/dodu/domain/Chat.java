@@ -1,5 +1,6 @@
 package com.starters.dodu.domain;
 
+import com.starters.dodu.domain.enums.ChatStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +27,11 @@ public class Chat {
     @ToString.Exclude
     private Mentee mentee;
 
+    @Column(name="status")
     private int status;
+    public ChatStatus getStatusEnum(){
+        return ChatStatus.fromStatusCode(status);
+    }
 
     private String startTime;
 

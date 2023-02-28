@@ -3,10 +3,12 @@ package com.starters.dodu.service;
 import com.starters.dodu.domain.Apply;
 import com.starters.dodu.domain.Matching;
 import com.starters.dodu.dto.ApplyFormDTO;
+import com.starters.dodu.domain.Verification;
 import com.starters.dodu.dto.ApplyResultDTO;
 import com.starters.dodu.repository.ApplyListRepository;
 import com.starters.dodu.repository.MatchingRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -87,15 +89,31 @@ public class ApplyService {
     return ApplyFormDTO.applyDto(apply);
   }
 
-  public List<Apply> findAll(String sortBy){
-    return applyListRepository.findAll();
-  }
 
-  public void updateApplyStatus(Long id, String status) {
+  public void updateApplyStatus(Long id, int status) {
     Apply apply = applyListRepository.findById(id).orElse(new Apply());
     if (apply.equals(new Apply())) throw new RuntimeException("Apply not found with id : " + id);
-    if (apply.getStatus().equals("0")) apply.setStatus("1");
+    if (apply.getStatus() == 0) apply.setStatus(1);
     applyListRepository.save(apply);
   }
-
+  public List<Apply> findAll(String sortBy) {
+    Sort sort;
+    switch (sortBy) {
+      case "id": // 신청서 번호순
+        sort = Sort.by(Sort.Direction.ASC, "id");
+        break;
+      case "menteeName": // 멘티이름순
+        sort = Sort.by(Sort.Direction.ASC, "mentee.nickname");
+        break;
+      case "mentorName": // 멘토이름순
+        sort = Sort.by(Sort.Direction.ASC, "mentor.nickname");
+        break;
+      case "applyStatus": // 수락 여부순
+        sort = Sort.by(Sort.Direction.ASC, "status");
+        break;
+      default:
+        sort = Sort.by(Sort.Direction.ASC, "id");
+    }
+    return applyListRepository.findAll(sort);
+  }
 }

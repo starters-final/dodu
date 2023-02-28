@@ -46,6 +46,7 @@ public class Mentor implements Serializable {
 
   @Column(name = "status")
   private int status;
+
   public MentorStatus getStatusEnum(){
     return MentorStatus.fromStatusCode(status);
   }

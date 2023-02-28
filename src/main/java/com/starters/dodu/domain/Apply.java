@@ -1,5 +1,6 @@
 package com.starters.dodu.domain;
 
+import com.starters.dodu.domain.enums.ApplyStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,9 +21,11 @@ public class Apply {
   private String matchTime1;
   private String matchTime2;
   private String matchTime3;
-
-  private String status;
-
+  @Column(name = "status")
+  private int status;
+  public ApplyStatus getStatusEnum(){
+    return ApplyStatus.fromStatusCode(status);
+  }
   @CreationTimestamp
   private LocalDateTime indate;
 

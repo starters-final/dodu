@@ -2,9 +2,9 @@ package com.starters.dodu.controller;
 
 import com.starters.dodu.domain.*;
 import com.starters.dodu.domain.enums.VerificationStatus;
-import com.starters.dodu.dto.CategoryDTO;
-import com.starters.dodu.dto.MentorDTO;
-import com.starters.dodu.dto.VerificationDTO;
+//import com.starters.dodu.dto.CategoryDTO;
+//import com.starters.dodu.dto.MentorDTO;
+import com.starters.dodu.dto.*;
 import com.starters.dodu.service.*;
 import com.starters.dodu.utils.SessionConst;
 import jakarta.servlet.http.HttpSession;
@@ -94,6 +94,7 @@ public class AdminController {
     // verification 관리 및 정렬
     @GetMapping("/admin/veri")
     public String getVeris(@RequestParam(name = "sortBy", defaultValue = "id") String sortBy, Model model) {
+        //System.out.println("CHECK :: " + sortBy);
         List<Verification> verificationList = verificationService.findAll(sortBy);
         model.addAttribute("verification", verificationList);
         return "admin-verification";
@@ -121,23 +122,21 @@ public class AdminController {
     }
 
 
-    // mentee 관리
+    // mentee 관리 및 정렬
     @GetMapping("/admin/mentee")
-    public String getMentees(Model model) {
-        List<Mentee> mentees = menteeService.findAll();
+    public String getMentees(@RequestParam(name = "sortBy", defaultValue = "id") String sortBy, Model model) {
+        List<Mentee> mentees = menteeService.findAll(sortBy);
         model.addAttribute("mentees", mentees);
         return "admin-mentee";
     }
 
     // mentor 관리
     @GetMapping("/admin/mentor")
-    public String getMentors(Model model) {
-        List<Mentor> mentors = mentorService.findAllPass();
+    public String getMentors(@RequestParam(name = "sortBy", defaultValue = "id") String sortBy, Model model) {
+        List<Mentor> mentors = mentorService.findAllPass(sortBy);
         model.addAttribute("mentors", mentors);
         return "admin-mentor";
     }
-
-
 
     // 신청 관리 및 정렬
     @GetMapping("/admin/apply")
@@ -149,8 +148,9 @@ public class AdminController {
 
     // 매칭 관리
     @GetMapping("/admin/matching")
-    public String getMatchings(Model model) {
-        List<Matching> matching = matchingService.findAll();
+    public String getMatchings(@RequestParam(name = "sortBy", defaultValue = "id") String sortBy, Model model) {
+        List<Matching> matching = matchingService.findAll(sortBy);
+        System.out.println("EXPECTED :: " + matching);
         model.addAttribute("matching", matching);
         return "admin-matching";
     }
