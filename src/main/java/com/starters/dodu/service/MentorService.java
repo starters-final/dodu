@@ -71,5 +71,46 @@ public class MentorService {
     public List<Mentor> findAllPass() {
         return mentorRepository.findAllByStatus(3);
     }
+
+
+    //멘토 블랙 관리
+    @Transactional
+    public void updateMentorStatus(Long id, MentorDTO status){
+        Mentor mentor = mentorRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("해당 멘토는 존재하지 않습니다."));
+
+        mentor.update(Integer.parseInt(status.getStatus()));
+    }
+    // 멘토 정렬
+//    public List<Mentor> findAllPass(String sortBy){
+//        List<Mentor> resultList;
+//        /*Sort sort;*/
+//        switch (sortBy) {
+//            case "id": // 번호순
+//                resultList = mentorRepository.findByStatusOrderByIdAsc(3);
+//                //sort = Sort.by(Sort.Direction.ASC, "id");
+//                break;
+//            case "name": // 이름순
+//                //sort = Sort.by(Sort.Direction.ASC, "nickname");
+//                break;
+//            case "university": // 대학순
+//                //sort = Sort.by(Sort.Direction.ASC, "university");
+//                break;
+//            case "major": // 전공순
+//                //sort = Sort.by(Sort.Direction.ASC, "major");
+//                break;
+//            case "gender": // 성별순
+//                //sort = Sort.by(Sort.Direction.ASC, "gender");
+//                break;
+//            case "signUpDate": // 가입일순
+//                //sort = Sort.by(Sort.Direction.ASC, "indate");
+//                break;
+//            default:
+//                resultList = new List<Mentor>();
+//                //sort = Sort.by(Sort.Direction.ASC, "id");
+//        }
+//        return resultList;
+
+//    }
 }
 

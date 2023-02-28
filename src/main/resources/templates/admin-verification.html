@@ -52,7 +52,7 @@
                         <option th:text="${v.statusEnum.PASSED.status}" th:value="${v.statusEnum.PASSED.statusCode}"></option>
                     </select>
                 </td>
-                <td><button>적용</button></td>
+                <td><button type="submit">적용</button></td>
                 </form>
                 <td th:text="${v.statusEnum.getStatus()}"></td>
             </tr>
