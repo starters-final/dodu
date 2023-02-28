@@ -22,6 +22,7 @@ public class Verification {
     public VerificationStatus getStatusEnum(){
         return VerificationStatus.fromStatusCode(status);
     }
+
     private LocalDateTime indate;
 
     @OneToOne

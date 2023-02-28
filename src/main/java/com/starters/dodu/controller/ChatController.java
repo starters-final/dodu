@@ -1,26 +1,26 @@
 package com.starters.dodu.controller;
 
+import com.starters.dodu.config.auth.LoginUser;
+import com.starters.dodu.config.auth.SessionUser;
 import com.starters.dodu.domain.Chat;
-import com.starters.dodu.dto.ApplyFormDTO;
-import com.starters.dodu.dto.ChatDTO;
-import jakarta.websocket.server.PathParam;
-import org.springframework.ui.Model;
-import com.starters.dodu.dto.ChatLogDTO;
 import com.starters.dodu.service.ChatService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @Controller
 @Log4j2
 public class ChatController {
 
-    @Autowired
+//    @Autowired
     private final ChatService chatService;
 
     public ChatController(ChatService chatService) {
@@ -28,18 +28,23 @@ public class ChatController {
     }
 
     @GetMapping("/chat/{id}")
-    public String chat(@PathVariable Long id, Model model) {
-        Optional<Chat> chat = chatService.findById(id);
-        model.addAttribute("chat", chat);
-        log.info("@ChatController, chat GET()");
-
-        return "chat";
+    public String chat(@PathVariable Long id, Model model, HttpServletResponse res) throws RuntimeException, IOException {
+        try {
+            Optional<Chat> chat = chatService.findById(id);
+            model.addAttribute("chat", chat);
+            log.info("@ChatController, chat GET()");
+        } catch (Exception err) {
+            String message = URLEncoder.encode(err.getMessage(), StandardCharsets.UTF_8);
+            String redirectUrl = "/?alert=true&message=" + message;
+            res.sendRedirect(redirectUrl);
+        }
+            return "chat";
     }
 
-    @GetMapping("/chatlist")
-    public String chatlist(Model model) {
-        model.addAttribute("chatlist", chatService.getAllChatList());
-        return "chatlist";
+    @GetMapping("/chatList")
+    public String chatlist(Model model, @LoginUser SessionUser user) {
+        model.addAttribute("chatlist", chatService.getAllChatListByMentee(user.getId()));
+        return "chat-list";
     }
 
     @GetMapping("/chatgpt")

@@ -26,19 +26,19 @@ public class VerificationService {
     public List<Verification> findAll(String sortBy) {
         Sort sort;
         switch (sortBy) {
-            case "id":
+            case "id": // 번호순
                 sort = Sort.by(Sort.Direction.ASC, "mentor.id");
-                System.out.println(sort);
+                System.out.println("sort테스트 1" + sort);
                 break;
-            case "name":
+            case "name": // 이름순
                 sort = Sort.by(Sort.Direction.ASC, "mentor.nickname");
                 break;
-            case "submitDate":
+            case "submitDate": // 제출일순
                 sort = Sort.by(Sort.Direction.ASC, "indate");
                 break;
-            case "veriStatus":
-                sort = Sort.by(Sort.Direction.ASC, "statusEnum.getStatus");
-                System.out.println(sort);
+            case "veriStatus": // 검증상태순
+                sort = Sort.by(Sort.Direction.ASC, "status");
+                System.out.println("sort테스트 2" + sort);
                 break;
             default:
                 sort = Sort.by(Sort.Direction.ASC, "mentor.id");

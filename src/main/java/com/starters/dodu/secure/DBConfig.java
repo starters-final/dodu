@@ -23,5 +23,6 @@ public class DBConfig {
     encryptor.setConfig(config);
 
     return encryptor;
+
   }
 }
