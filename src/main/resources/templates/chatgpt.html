@@ -59,24 +59,23 @@
 
         </div>
 
-
-        <hr style="margin: 10px">
-
         <!--채팅 영역 -->
         <!--<div id="chatarea" style="width: 325px; height: 370px; overflow-y: auto;display: flex; flex-direction: column-reverse;">
             <div id="mentor" class="font" style="font-size: 5px;"></div>
             <div id="mentee" class="font" style="font-size: 5px; margin-left: auto;"></div>
         </div>-->
         <div class="chat-content">
-            <div class="line">
-                <span class="chat-box"></span>
+            <div class="line" style="text-align: center">
+                <span th:text="|${user?.getName()}님 안녕하세요|"></span><br />
+                <span th:text="|여기는 chatGpt에요!!|"></span>
             </div>
+            <hr style="margin: 10px">
             <div class="line">
                 <span class="chat-box mine"></span>
             </div>
         </div>
         <div style="text-align: center">
-            <input class="chat-box" id="input">
+            <input class="chat-box" id="input" />
             <button id="send">전송</button>
         </div>
 
