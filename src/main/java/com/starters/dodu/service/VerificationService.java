@@ -19,9 +19,9 @@ public class VerificationService {
     private final VerificationRepository verificationRepository;
 
     //검증관리
-    public List<Verification> findAll(){
+    /*public List<Verification> findAll(){
         return verificationRepository.findAllByStatusNot(3);
-    }
+    }*/
 
     public List<Verification> findAll(String sortBy) {
         Sort sort;
