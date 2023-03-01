@@ -73,7 +73,7 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
-
+<br>
         <!-- Section-->
         <section class="py-1">
             <div class="d-flex justify-content-start">
@@ -90,7 +90,7 @@
                 </div>
             </div>
             </div>
-
+<br>
             <div class="d-flex justify-content-start">
                 <div th:if="${session.user}" class="p-2 font" style="font-size: 8px; margin: 3px "><b th:text="${session.user.getName()}" />님을 위한 추천 멘토</div>
                 <div th:unless="${session.user}" class="p-2 font" style="font-size: 8px; margin: 3px "> <b th:text="DODU" />가 추천하는 멘토</div>
@@ -102,8 +102,9 @@
                 <div class="carousel-inner" id="mentor-carousel-inner">
                     <div th:each="mentor, iterStat : ${categories.get(0).getMentors()}" class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active'">
                         <div th:text="${mentor.getCategory().getTitle()}" class="badge bg-light position-absolute font" style="top: 0.5rem; right: 0.5rem; color: black"></div>
-                        <div class="carousel-caption" style="top: 0.5rem; right: 0.5rem; color: black"></div>
+                            <div style="min-height: 405px;">
                             <img class="" th:src="${mentor.getImage()}" alt="Slice" width="100%" height="405px" />
+                            </div>
                         <div class="" style="padding: 10px; height: 50px">
                             <div class="text-center">
                                 <h5 th:text="${mentor.getNickname()}" class="fw-bolder font" style="font-size:10px;"></h5>
@@ -151,8 +152,10 @@
                                     <div class="badge bg-light position-absolute font" style="top: 0.5rem; right: 0.5rem; color: black">
                                         ${item.category}
                                     </div>
-                                    <div class="carousel-caption" style="top: 0.5rem; right: 0.5rem; color: black"></div>
-                                    <img class="" src="${item.image}" alt="Slice" width="312px" height="80px" />
+
+                                    <div style="min-height: 405px">
+                                    <img class="" src="${item.image}" alt="Slice" width="100%" height="405px" />
+                                    </div>
                                     <div class="" style="padding: 10px; height: 50px">
                                         <div class="text-center">
                                             <h5 class="fw-bolder font" style="font-size:10px;">${item.nickname}</h5>
