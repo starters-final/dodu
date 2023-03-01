@@ -57,12 +57,21 @@
         </div>
 
         <!--입장 기능 일단 만들어논거임 추후 삭제 -->
-        <p class="font" style="font-size: 5px; margin-bottom: 0px;" >
-            ID : <input type="text" id="nickname" value="" style="width: 100px; margin: 10px 0px 0px 0px; " />
-            <input class="btn btn-light btn-sm" type="button"  style="font-size: 5px;" id="enterbtn" value="입장" />
-        </p>
-        <hr style="margin: 10px">
+<!--        <p class="font" style="font-size: 5px; margin-bottom: 0px;" >-->
+<!--            ID : <input type="text" id="nickname" value="" style="width: 100px; margin: 10px 0px 0px 0px; " />-->
+<!--            <input class="btn btn-light btn-sm" type="button"  style="font-size: 5px;" id="enterbtn" value="입장" />-->
+<!--        </p>-->
+        <br />
+        <div class="chat-content">
+            <div class="line" style="text-align: center">
+                <span th:text="|${user?.getName()}님이 입장하셨습니다.|"></span>
+            </div>
+            <div class="line">
+                <span class="chat-box mine"></span>
+            </div>
+        </div>
 
+        <hr style="margin: 10px">
         <!--채팅 영역 -->
         <div id="chatarea" style="width: 325px; height: 370px; overflow-y: auto;display: flex; flex-direction: column-reverse;">
             <div id="mentor" class="font" style="font-size: 5px;"></div>
@@ -114,7 +123,7 @@
 
                 $("#gogpt").on('click', function(){
                     var go = confirm('chatgpt로 이동하시겠습니까?');
-                    if(go) location.href='http://localhost:8080/chatgpt';
+                    if(go) location.href='/chatgpt';
                 });
 
               /*

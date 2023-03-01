@@ -48,7 +48,8 @@ public class ChatController {
     }
 
     @GetMapping("/chatgpt")
-    public String chatgpt(){
+    public String chatgpt(Model model, @LoginUser SessionUser user) {
+        model.addAttribute("user", user);
         return "chatgpt";
     }
 
