@@ -112,7 +112,6 @@ public class AdminController {
         return "admin-verification";
     }
 
-    // 검증 상태 업데이트 로직 (수정 필요) **
     @RequestMapping (value = "/admin/veri/update/{id}", method = RequestMethod.POST)
     public String updateStatus(@PathVariable Long id, @RequestParam(name = "status") String status){
         VerificationDTO veriDTO = new VerificationDTO();

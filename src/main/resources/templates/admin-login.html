@@ -35,18 +35,15 @@
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
                 <label for="floatingPassword">Password</label>
             </div>
-            <button class="w-50 btn btn-lg dodu-btn" type="submit">Sign in</button><button id="signUpBtn" class="w-50 btn btn-lg dodu-btn">Sign up</button>
+            <button class="w-50 btn btn-lg dodu-btn" type="submit">Sign in</button><button type="button" id="signUpBtn" onclick="signUp()" class="w-50 btn btn-lg dodu-btn">Sign up</button>
         </form>
     </div>
 
-
-</th:block>
 <script>
-    window.onload = function (){
-        document.getElementById("signUpBtn").onclick = function () {
-            alert("관리자 등목을 희망할시, 당당자에게 직접 문의하세요");
+        function signUp(){
+            alert("관리자에게 문의하세요!");
         }
-    };
 </script>
+</th:block>
 
 </html>
