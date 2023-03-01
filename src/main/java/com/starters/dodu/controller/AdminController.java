@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -31,6 +32,17 @@ public class AdminController {
     private final CategoryService categoryService;
     private final ChatService chatService;
     private final AdminService adminService;
+
+    // verification과 mentors의 상태 mapping 필요
+    // {'0' : 0, '1' :0, '2' : 0, '3' : 1}
+    private static final Map<String, String> veriToMentor;
+    static {
+        veriToMentor = new HashMap<>();
+        veriToMentor.put("0", "0");
+        veriToMentor.put("1", "0");
+        veriToMentor.put("2", "0");
+        veriToMentor.put("3", "1");
+    }
 
     @GetMapping("/admin")
     public  String admin(HttpSession session){
@@ -100,22 +112,38 @@ public class AdminController {
         return "admin-verification";
     }
 
+    // 검증 상태 업데이트 로직 (수정 필요) **
     @RequestMapping (value = "/admin/veri/update/{id}", method = RequestMethod.POST)
     public String updateStatus(@PathVariable Long id, @RequestParam(name = "status") String status){
         VerificationDTO veriDTO = new VerificationDTO();
         veriDTO.setStatus(Integer.parseInt(status));
+        // verification과 mentor의 상태 mapper(=veriToMentor) 사용하여 Mentor status도 함께 변경
+        // {'0' : 0, '1' :0, '2' : 0, '3' : 1}
+        MentorDTO mentorDTO = new MentorDTO();
+        mentorDTO.setStatus(veriToMentor.get(status));
+        // mentor 상태도 업데이트 필요 **
         verificationService.updateStatus(id, veriDTO);
-        //dto.setStatus(dto.getStatus());
+        mentorService.updateMentorStatus(id, mentorDTO);
         System.out.println("status22");
         return "redirect:/admin/veri";
     }
 
 
-    //mentor black 관리
+    //mentor 관리 페이지 API **
     @RequestMapping(value="/admin/mentor/update/{id}", method=RequestMethod.POST)
     public String updateMentorStatus(@PathVariable Long id, @RequestParam(name="status") String status){
         MentorDTO mentorDTO = new MentorDTO();
-        mentorDTO.setStatus(String.valueOf(Integer.parseInt(status)));
+        // 변경하려는 멘토 상태가 '검증 단계(0)'인지 체크 **
+        Integer intStatus = Integer.parseInt(status);
+        // '검증 단계(0)' 이면 검증 상태와 멘토 상태 모두 변경
+        if (intStatus == 0) {
+            VerificationDTO veriDTO = new VerificationDTO();
+            // 검증 테이블에서 검증 상태를 '반려(2)'로 변경
+            veriDTO.setStatus(2);
+            verificationService.updateStatus(id, veriDTO); // 멘토ID로 verification을 찾아서 상태 update
+        }
+        // '검증 단계(0)'가 아니면 멘토 상태만 변경
+        mentorDTO.setStatus(String.valueOf(intStatus));
 
         mentorService.updateMentorStatus(id, mentorDTO);
         return "redirect:/admin/mentor";
