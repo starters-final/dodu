@@ -43,6 +43,7 @@ public class ChatController {
 
     @GetMapping("/chatList")
     public String chatlist(Model model, @LoginUser SessionUser user) {
+        model.addAttribute("user", user);
         model.addAttribute("chatlist", chatService.getAllChatListByMentee(user.getId()));
         return "chat-list";
     }
