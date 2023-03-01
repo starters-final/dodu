@@ -32,7 +32,7 @@
                 <th scope="col">검증 상태</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody >
             <tr th:each="v : ${verification}" th:orderBy="${v.getMentor().getId()}">
                 <td th:text="${v.getMentor().getId()}"></td>
                 <td th:text="${v.getMentor().getNickname()}"></td>

@@ -16,54 +16,95 @@
           display: none;
       }
 
+      #wrap::-webkit-scrollbar {
+          display: none;
+      }
+
       #chatarea::-webkit-scrollbar {
           display: none;
       }
 
-      #wrap {
-          min-height: calc(100% - 265px);
-          position: absolute;
-          top: 14%;
-      }
-      #footer{
-          position:absolute;
-          bottom : -30%;
-      }
+
+
 
 
 
       @media (max-width: 767px){/*모바일*/
-          body{margin: 0 auto;}
+          body{margin: 0 auto;
+              display: flex;
+              justify-content: center;}
           #dodu {display: none;}
           #mobile{border: none;
           position: relative;
-              display: flex;
-              justify-content: center;}
+              }
           #wrap {
               min-height: calc(100% - 265px);
               position: absolute;
-              top: 90%;
+              top: 100%;
+              overflow: scroll;
+              left: 0%;
           }
           #footer{
-              position: absolute;
-              top : 850%
+              position: fixed;
+              bottom: 0px;
+              background-color: white;
+          }
+          #wrap::-webkit-scrollbar {
+              display: none;
           }
 
       }
 
       @media (min-width: 768px) and (max-width: 991px) { /* 조금작은 테블릿*/
-          body{margin: 0 auto;}
-          #mobile{border: none;
-              position: relative;}
+          body{margin: 0 auto;
+              display: flex;
+              justify-content: center;}
           #dodu {display: none;}
+          #mobile{border: none;
+              position: relative;
+              }
+          #wrap {
+              min-height: calc(100% - 265px);
+              position: absolute;
+              top: 100%;
+              overflow: scroll;
+              left: 0%;
+          }
+          #footer{
+              position: fixed;
+              bottom: 0px;
+              background-color: white;
+          }
+          #wrap::-webkit-scrollbar {
+              display: none;
+          }
 
       }
 
       @media (min-width: 992px) and (max-width: 1199px) {/* 태블릿*/
-          body{margin: 0 auto;}
+          body{margin: 0 auto;
+              display: flex;
+              justify-content: center;}
           #dodu {display: none;}
           #mobile{border: none;
-              position: relative;}
+              position: relative;
+              display: flex;
+              justify-content: center;}
+          #wrap {
+              min-height: calc(100% - 265px);
+              position: absolute;
+              top: 100%;
+              overflow: scroll;
+              left:0;
+          }
+          #footer{
+              position: fixed;
+              bottom: 0px;
+              background-color: white;
+          }
+          #wrap::-webkit-scrollbar {
+              display: none;
+          }
       }
 
       @media (min-width: 1200px) {/* 웹브라우저*/
@@ -110,6 +151,17 @@
               font-family: 'Spoqa Han Sans Neo', 'sans-serif';
           }
 
+          #footer {
+              position:fixed;
+              bottom : 310px;
+              background-color: white;
+          }
+          #wrap {
+              min-height: calc(100% - 265px);
+              position: absolute;
+              top: 14%;
+              overflow: scroll;
+          }
 
 
       }
@@ -128,6 +180,7 @@
         <th:block th:replace="/layout/fragments/navbar::navbar"></th:block>
         <div id="wrap" >
         <th:block layout:fragment="content"></th:block>
+            <br><br><br><br><br>
         </div>
 
         <div id="footer">
