@@ -49,7 +49,12 @@ public class ChatService {
         LocalDateTime finish = LocalDateTime.parse(chat.get().getFinishTime());
 
         if (now.isAfter(start) && now.isBefore(finish)) return chat;
-        else throw new RuntimeException("입장 시간이 아니에요!");
+        else {
+            System.out.println(now);
+            System.out.println(start);
+            System.out.println(finish);
+            throw new RuntimeException("입장 시간이 아니에요!");
+        }
     }
 
     //전체 채팅방 조회
