@@ -1,12 +1,10 @@
 package com.starters.dodu.domain;
 
-import com.starters.dodu.dto.ChatDTO;
+import com.starters.dodu.domain.enums.ChatStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.sql.Timestamp;
 
 
 @Entity
@@ -29,7 +27,11 @@ public class Chat {
     @ToString.Exclude
     private Mentee mentee;
 
-    private String status;
+    @Column(name="status")
+    private int status;
+    public ChatStatus getStatusEnum(){
+        return ChatStatus.fromStatusCode(status);
+    }
 
     private String startTime;
 

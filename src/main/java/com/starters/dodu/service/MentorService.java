@@ -1,16 +1,14 @@
 package com.starters.dodu.service;
 
-import com.starters.dodu.domain.Apply;
 import com.starters.dodu.domain.Mentor;
-import com.starters.dodu.dto.ApplyFormDTO;
-import com.starters.dodu.dto.ApplyResultDTO;
-import com.starters.dodu.dto.MailDTO;
-import com.starters.dodu.dto.MentorDTO;
+import com.starters.dodu.dto.*;
 import com.starters.dodu.repository.ApplyListRepository;
 import com.starters.dodu.repository.MentorRepository;
 import com.starters.dodu.repository.SaveApplyRepository;
+import com.starters.dodu.repository.VerificationRepository;
 import jakarta.persistence.NonUniqueResultException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -29,6 +27,7 @@ public class MentorService {
     private final MentorRepository mentorRepository;
     private final SaveApplyRepository saveApplyRepository;
     private final ApplyService applyService;
+    private final VerificationRepository verificationRepository;
 
     public void sendMail(MailDTO mailDTO) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -54,29 +53,6 @@ public class MentorService {
         return new MentorDTO(entity);
     }
 
-    @Transactional(rollbackFor = NonUniqueResultException.class)
-    public ApplyFormDTO saveApply(ApplyFormDTO applyFormDTO) {
-
-        Apply apply = new Apply();
-        apply.setId(applyFormDTO.getId());
-        apply.setMatchTime1(applyFormDTO.getMatchTime1());
-        apply.setMatchTime2(applyFormDTO.getMatchTime2());
-        apply.setMatchTime3(applyFormDTO.getMatchTime3());
-        apply.setStatus(applyFormDTO.getStatus());
-        apply.setIndate(applyFormDTO.getIndate());
-        apply.setMentee(applyFormDTO.getMentee());
-        apply.setMentor(applyFormDTO.getMentor());
-        apply.setQuestion(applyFormDTO.getQuestion());
-
-        saveApplyRepository.save(apply);
-        if(applyService.findByMenteeIdAndMentorId(apply.getMentee().getId(), apply.getMentor().getId()) == null) {
-            throw new NonUniqueResultException("멘티와 멘토 사이에 이미 신청서가 존재합니다.");
-        }
-
-        return ApplyFormDTO.applyDto(apply);
-
-    }
-
     @Transactional(readOnly = true)
     public List<ApplyResultDTO> findAllDesc(String id) {
         return applyListRepository.findAllByIdOrderByIndateDesc(Long.parseLong(id)).stream()
@@ -92,10 +68,40 @@ public class MentorService {
         return new ApplyFormDTO.GetApplyForm(entity);
     }
 
-    // 맨토 관리
-    public List<Mentor> findAllPass(){
+    // 맨토 관리 및 정렬
+    public List<Mentor> findAllPass(String sortBy){
+        List<Mentor> resultList = null;
+        switch (sortBy) {
+            case "id": // 번호순
+                resultList = mentorRepository.findAllByStatusOrStatusOrderByIdAsc(1,9);
+                break;
+            case "name": // 이름순
+                resultList = mentorRepository.findAllByStatusOrStatusOrderByNicknameAsc(1,9);
+                break;
+            case "university": // 대학순
+                resultList = mentorRepository.findAllByStatusOrStatusOrderByUniversityAsc(1,9);
+                break;
+            case "major": // 전공순
+                resultList = mentorRepository.findAllByStatusOrStatusOrderByMajorAsc(1,9);
+                break;
+            case "gender": // 성별순
+                resultList = mentorRepository.findAllByStatusOrStatusOrderByGenderAsc(1,9);
+                break;
+            default:
+                System.out.println();
+                resultList = mentorRepository.findAllByStatusOrStatusOrderByIdAsc(1,9);
+        }
+        System.out.println(resultList);
+        return resultList;
 
-        return mentorRepository.findAllByStatusEquals("가입완료");
+    }
+    //멘토 블랙 관리
+    @Transactional
+    public void updateMentorStatus(Long id, MentorDTO status){
+        Mentor mentor = mentorRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("해당 멘토는 존재하지 않습니다."));
+
+        mentor.update(Integer.parseInt(status.getStatus()));
     }
 }
 

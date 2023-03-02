@@ -18,14 +18,14 @@ public class SaveApplyDTO {
     private Timestamp matchTime1;
     private Timestamp matchTime2;
     private Timestamp matchTime3;
-    private String status;
+    private int status;
     private LocalDateTime indate;
     private Mentee mentee;
     private Question question;
 
     @Builder
     public SaveApplyDTO(Long id, Timestamp matchTime1, Timestamp matchTime2, Timestamp matchTime3,
-                        String status, LocalDateTime indate, Mentee mentee, Question question) {
+                        int status, LocalDateTime indate, Mentee mentee, Question question) {
         this.id = id;
         this.matchTime1 = matchTime1;
         this.matchTime2 = matchTime2;

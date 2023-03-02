@@ -1,15 +1,11 @@
 package com.starters.dodu.domain;
 
-import com.starters.dodu.domain.Mentee;
-import com.starters.dodu.domain.Mentor;
-import com.starters.dodu.domain.Question;
+import com.starters.dodu.domain.enums.ApplyStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,9 +21,11 @@ public class Apply {
   private String matchTime1;
   private String matchTime2;
   private String matchTime3;
-
-  private String status;
-
+  @Column(name = "status")
+  private int status;
+  public ApplyStatus getStatusEnum(){
+    return ApplyStatus.fromStatusCode(status);
+  }
   @CreationTimestamp
   private LocalDateTime indate;
 

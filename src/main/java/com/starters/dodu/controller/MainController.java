@@ -1,13 +1,10 @@
 package com.starters.dodu.controller;
 
+import com.starters.dodu.config.auth.CustomOAuth2UserService;
 import com.starters.dodu.config.auth.LoginUser;
 import com.starters.dodu.config.auth.SessionUser;
-import com.starters.dodu.dto.ApplyFormDTO;
 import com.starters.dodu.dto.*;
-import com.starters.dodu.service.ApplyService;
-import com.starters.dodu.service.CategoryService;
-import com.starters.dodu.service.MenteeService;
-import com.starters.dodu.service.MentorService;
+import com.starters.dodu.service.*;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -26,6 +23,9 @@ public class MainController {
     private final MenteeService menteeService;
     private final MentorService mentorService;
     private final ApplyService applyService;
+    private final MatchingService matchingService;
+    // 추가
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @GetMapping("/")
     public String index(Model model, @RequestParam(defaultValue = "0", required = false) Long categoryId, HttpSession session) {
@@ -37,6 +37,13 @@ public class MainController {
     @GetMapping("/doduLogin")
     public String login(){
         return "login";
+    }
+
+    // 추가
+    @GetMapping("/doduLogout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("user");
+        return "redirect:/";
     }
 
     @GetMapping("/applyForm/{id}")
@@ -53,7 +60,7 @@ public class MainController {
         return "mentor-apply-confirm";
     }
 
-    @GetMapping("/applyResult")
+    @GetMapping("/mentee/applyResult")
     public String getApplyResult(@RequestParam String menteeId, @RequestParam String mentorId, Model model) {
         ApplyResultDTO apply = applyService.findByMenteeIdAndMentorId(Long.parseLong(menteeId), Long.parseLong(mentorId));
         MenteeDTO mentee = menteeService.findById(Long.parseLong(menteeId));
@@ -66,9 +73,19 @@ public class MainController {
     public String getMenteeApplyList(@PathVariable String id, Model model) {
         MenteeDTO mentee = menteeService.findById(Long.parseLong(id));
         List<ApplyResultDTO> applyList = applyService.findAllByMenteeId(Long.parseLong(id));
+        List<MatchingDTO> match = matchingService.findAllByApply_Mentee(Long.parseLong(id));
         model.addAttribute("mentee", mentee);
         model.addAttribute("applyList", applyList);
+        model.addAttribute("match", match);
         return "mentee-apply-list";
+    }
+
+    @GetMapping("/applyRefuse/{id}")
+    public String refuseControl(@PathVariable String id, @RequestParam String message, Model model, @LoginUser SessionUser user, HttpSession session) {
+        ApplyFormDTO.GetApplyForm applyFormDTO = mentorService.getApplyForm(id);
+        model.addAttribute("mentorData", applyFormDTO);
+        model.addAttribute("refuse", message);
+        return "apply-form";
     }
 
 }

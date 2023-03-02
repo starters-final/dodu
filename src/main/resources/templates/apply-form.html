@@ -55,7 +55,7 @@
         <div class="alert alert-danger">회원가입부터 해주세요!</div>
         <button type="button" style="font-size: 3px; color: gray; width: 82px" class="alert alert-danger" onclick="location.href='/doduLogin'">로그인</button>
     </div>
-    <form th:action="@{/api/v1/offer/saveApply}" method="POST" th:if="${session.user}">
+    <form th:action="@{/api/v1/offer/saveApply}" method="POST" th:if="${session.user}" id="save-apply">
         <!-- Section-->
         <section class="py-1">
             <div class="d-flex justify-content-start">
@@ -139,15 +139,41 @@
                 <div class="font" style="font-size: 20px; text-align: right; margin-right: 20px; "><b style="color: rgba(216,90,123,1)">3500</b> DoDu</div>
             </div>
             <div style="margin-top: 20px; text-align: center;">
-                <input type="hidden" name="status" th:value="미열람" />
+                <input type="hidden" name="status" th:value=0 />
                 <input type="hidden" name="mentee" th:value="${session?.user?.id}" />
                 <input type="hidden" name="mentor" th:value="${mentorData.getId()}" />
-                <button th:if="${session.user}" class="btn" style="background-color: rgba(216,90,123,0.5); margin: 5px;" type="submit">제안하기</button>
+                <button th:if="${session.user}" class="btn" style="background-color: rgba(216,90,123,0.5); margin: 5px;" type="submit" onclick="checkDuplicates(event)">제안하기</button>
                 <button th:unless="${session.user}" class="btn" style="background-color: rgba(216,90,123,0.5); margin: 5px;" disabled="disabled">제안하기</button>
                 <input class="btn btn-secondary" style="margin: 5px;" type="reset" value="취소하기" onclick="location.href='/'" />
             </div>
         </section>
         <!--추후 value에 session 값을 담아 실제 mentee_id를 저장해야 함-->
     </form>
+    <script>
+        const checkDuplicates = (event) => {
+            event.preventDefault();
+
+            const uniqueValues = new Set([
+                document.getElementById('op1').value,
+                document.getElementById('op2').value,
+                document.getElementById('op3').value
+            ]);
+
+            if (uniqueValues.size !== 3) {
+                alert('각각 다른 날짜로 신청해 주세요!');
+                return;
+            }
+
+            event.target.form.submit();
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        const isAlert = params.get('alert');
+
+        if (isAlert === 'true') {
+            const message = decodeURIComponent(params.get('message'));
+            if (confirm(message)) history.back();
+        }
+    </script>
 </th:block>
 </html>

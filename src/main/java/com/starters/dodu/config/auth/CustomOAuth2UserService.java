@@ -31,10 +31,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         String registrationId = userRequest.getClientRegistration().getRegistrationId(); //서비스 구분을 위한 작업 (구글:google, 네이버:naver)
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
                 .getUserInfoEndpoint().getUserNameAttributeName(); //리턴해야하는 user 정보
-        // 추가
-        System.out.println("[registrationId] : " + registrationId);
-        System.out.println("[oAuth2USer] : " + oAuth2User);
-        System.out.println("[getAttribtues] : " + oAuth2User.getAttributes());
 
         OAuthAttributes attributes;
 
@@ -42,7 +38,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             //oauth2user에서 반환하는 사용자 정보는 map이기 때문에 값 하나하나를 반환하기 위해 of()
              attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
-            System.out.println("===LOG=== :: " + attributes.getGender());
             Mentee mentee = saveOrUpdate(attributes);
             httpSession.setAttribute("user", new SessionUser(mentee));
         }
@@ -57,10 +52,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         }
 
         return new DefaultOAuth2User(
+                //Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_MENTEE")),
                 attributes.getAttributes(),
-                attributes.getNameAttributeKey()
-        );
+                attributes.getNameAttributeKey());
     }
 
     //네이버

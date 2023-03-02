@@ -2,14 +2,52 @@
 <html  xmlns:th="http://www.thymeleaf.org"
        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
        layout:decorate="~{layout/phonelayNotnav}">
-<style>
-    .chat-content { height: 350px; overflow-y: scroll;}
-    .line { margin-top: 10px; display: flex;}
-    .chat-box { padding: 5px; max-width: 200px;}
-    .mine {margin-left: auto;}
-</style>
+<head>
+    <style>
+        .chat-parent{
+            height: 630px;
+            position: relative;
+        }
+        .send-box{
+            position: relative;
+            top: 10px;
+            background-color: #fbeef1;
+            padding-bottom: 10px;
+        }
+        .msg-box{
+            padding: 0px 15px 0px 15px;
+            margin-top: 10px;
+            border: 1px solid black;
+            height: 70%;
+            width: 300px;
+            background: #fff;
+            border-radius: 40px;
+            margin-right: 5px;
+        }
+        #send{
+            padding: 1px 15px 1px 15px;
+            background-color: #e79caf;
+            color: white;
+            border: 0px;
+            border-radius: 40px;
+        }
+        .chat-content{
+            overflow-y:scroll;
+            padding: 0px 16px 0px 16px;
+            margin-bottom: 0px !important;
+        }
+        .chat-content::-webkit-scrollbar{
+            width: 4px;
+        }
+        .chat-content::-webkit-scrollbar-thumb{
+            background-color: #fbeef1;
+            border-radius: 10px;
+        }
 
-<th:block layout:fragment="content">
+    </style>
+</head>
+
+<th:block layout:fragment="content" th:class="chat-parent">
     <nav class="navbar navbar-light bg-light" style="position: relative; padding: 0px; height: 50px; background-color: rgba(216,90,123,0.8)!important;">
         <div class="container-fluid" style="height: 26px;">
             <button class="navbar-toggler" type="button" style="padding: 0px; margin: 0px; width: 30px; height: 25px;" onclick="location.href='/'">
@@ -48,48 +86,42 @@
             </div>
         </div>
     </nav>
-    <div class="alert alert-light" style="min-height: 800px;">
-        <!-- 안내문 -->
-        <div class="alert alert-dark font" role="alert" style="text-align: center; font-size: 1px; margin: 0 auto; padding: 5px; width: 250px;">
-            <p style="margin-bottom: 0;">**주의사항**</p>
-            <p style="margin-bottom: 0;">멘토링 중 전화번호 등의 <br>개인정보를 요구하거나 알려주지 마십시요. </p>
-            <p style="margin-bottom: 8px;"></p>
-           <!-- <p style="margin-bottom: 0;" th:text="|멘토링 주제 : ${chat.get().mentor.category.title}|"></p>
-            <p style="margin-bottom: 0;" th:text="|${chat.get().mentor.category.title}에 대해 물어보세요!|"></p> -->
-
-        </div>
-
-
-        <hr style="margin: 10px">
-
+    <!-- 안내문 -->
+    <div class="alert alert-dark font" role="alert" style="text-align: center; font-size: 1px; margin: 10px auto 0px auto !important; padding: 5px; width: 250px;">
+        <p style="margin-bottom: 0;">**주의사항**</p>
+        <p style="margin-bottom: 0;">멘토링 중 전화번호 등의 <br>개인정보를 요구하거나 알려주지 마십시요. </p>
+        <p style="margin-bottom: 4px;"></p>
+    </div>
+    <hr style="margin: 5px 10px 5px 10px">
+    <div class="alert alert-light chat-content" style="height:480px; max-height: 480px;">
         <!--채팅 영역 -->
-        <!--<div id="chatarea" style="width: 325px; height: 370px; overflow-y: auto;display: flex; flex-direction: column-reverse;">
-            <div id="mentor" class="font" style="font-size: 5px;"></div>
-            <div id="mentee" class="font" style="font-size: 5px; margin-left: auto;"></div>
-        </div>-->
-        <div class="chat-content">
-            <div class="line">
-                <span class="chat-box"></span>
-            </div>
-            <div class="line">
-                <span class="chat-box mine"></span>
-            </div>
+        <div class="line">
+            <span class="chat-box "></span>
         </div>
-        <div style="text-align: center">
-            <input class="chat-box" id="input">
-            <button id="send">전송</button>
+        <div class="line">
+            <span class="chat-box"></span>
         </div>
+    </div>
+    <!--전송 영역-->
+    <div class="send-box" style="text-align: center">
+        <input class="msg-box font" id="input"><button id="send">전송</button>
+    </div>
 
     <script type="module">
         import { Configuration, OpenAIApi } from 'https://cdn.skypack.dev/openai';
 
-        document.querySelector('#send').addEventListener('click', async () => {
+        const chatContent = document.querySelector('.chat-content');
+
+        const sendMessage = async () => {
             let template = `
-            <div class="line">
-              <span class="chat-box mine">${document.querySelector('#input').value}</span>
-            </div>
-        `;
-            document.querySelector('.chat-content').insertAdjacentHTML('beforeend', template);
+        <div class="line" style="margin-left: auto; width:auto!important; max-width: 70%;word-break: break-all; border-radius: 0.5rem; padding: 0.5rem; margin-bottom: 5px; background-color: #efbdca; color: black;">
+          <span class="chat-box font" style="display: flex; flex-direction: column-reverse;  text-align: right; justify-content: end; width: auto;">${document.querySelector('#input').value}</span>
+        </div>
+      `;
+            chatContent.insertAdjacentHTML('beforeend', template);
+            setTimeout(() => {
+                chatContent.scrollTo({ top: chatContent.scrollHeight, behavior: 'smooth' });
+            }, 0);
             try {
                 const response = await fetch('/api/v1/config');
                 const data = await response.text();
@@ -108,18 +140,29 @@
                 });
                 document.querySelector('#input').value = "";
                 template = `
-              <div class="line">
-                <span class="chat-box">${result.data.choices[0].text}</span>
-              </div>
-            `;
+          <div class="line" style="width: auto!important; max-width: 70%; word-break: break-all; border-radius: 0.5rem; padding: 0.5rem; margin-bottom: 5px; background-color: #f7dee4; color: black;">
+            <span class="chat-box font" style="display: flex; flex-direction: column-reverse;  text-align: left; width: auto;">${result.data.choices[0].text}</span>
+          </div>
+        `;
                 document.querySelector('.chat-content').insertAdjacentHTML('beforeend', template);
             }
             catch (err) {
                 console.log(err);
             }
+            finally {
+                setTimeout(() => {
+                    chatContent.scrollTo({ top: chatContent.scrollHeight, behavior: 'smooth' });
+                }, 0);
+            }
+        }
+
+        document.querySelector('#send').addEventListener('click', sendMessage);
+
+        document.querySelector('#input').addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
         });
     </script>
-    </div>
 </th:block>
-</body>
 </html>
