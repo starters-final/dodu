@@ -17,7 +17,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
         System.out.println("this is web socket config 1 =============");
         registry.addHandler(chatHandler,"/ws/chat")
                 .setAllowedOrigins("*");
-               // .setAllowedOrigins("http://localhost:8080/");
         System.out.println("this is web socket config 2 =============");
 
     }

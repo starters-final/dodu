@@ -33,6 +33,8 @@ public class ApiController {
   @Value("${chatgpt.api.key.script}")
   private String chatgptApiKeyScript;
   private final HttpSession httpSession;
+  @Value("${server.url}")
+  private String url;
 
   @GetMapping("/carousel")
   public ResponseEntity<List<MentorDTO>> getMentorsByCategoryId(@RequestParam(defaultValue = "0", required = false) String categoryId) {
@@ -65,7 +67,7 @@ public class ApiController {
       sendEmail(
               apply.getMentor().getEmail(),
               apply.getMentor().getNickname() + "님 새로운 dodu 신청서가 도착했어요!",
-              "http://localhost:8080/mentor/apply/confirm/" + apply.getId()
+              url + apply.getId()
       );
       res.sendRedirect("/mentee/applyResult?menteeId=" + apply.getMentee().getId() + "&mentorId=" + apply.getMentor().getId());
     } catch (Exception e) {
@@ -96,12 +98,12 @@ public class ApiController {
     sendEmail(
             match.getApply().getMentor().getEmail(),
             match.getApply().getMentor().getNickname() + "님, " + match.getApply().getMentee().getNickname()  + " 멘티와의 매칭이 완료됐어요!",
-            "http://localhost:8080/chat/" + chatResult.getId()
+            url + chatResult.getId()
     );
     sendEmail(
             match.getApply().getMentee().getEmail(),
             match.getApply().getMentee().getNickname() + "님, " + match.getApply().getMentor().getNickname() + " 멘토가 DoDu를 수락했어요!",
-            "http://localhost:8080/chat/" + chatResult.getId()
+            url + chatResult.getId()
     );
     //response.sendRedirect("/");
     response.sendRedirect("https://www.google.com/"); // 멘토는 완료 후 전혀 다른 화면(구글/네이버)로 리다이렉트

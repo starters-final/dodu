@@ -44,12 +44,8 @@
                 if(mentorToken === "5c9c9100-b66c-445f-8965-9f7f31aea266" && menteeToken ==="18a8bcf6-7eb1-406b-b9ee-97fe632a0b1b" ){
                     $('#chatrooms td').bind('click', function() {
                         var x = $(this).closest('tr').index() + 1;
-                        //var y = $(this).closest('td').index();
-                        //console.log(x+"/"+y);
                         let num = $(`tr:eq(${x})>td:eq(0)`).html();
-                        //console.log("http://localhost:8080/chat/" + num);
-                        // 추후 localhost 주소를 ec2 endpoint로 변경 필요 **
-                        window.location.href ="http://localhost:8080/chat/" + num;
+                        window.location.href ="/chat/" + num;
                     });
                 }
                 else alert("토큰 값이 일치하지 않습니다.");
