@@ -102,13 +102,14 @@
 <!--                <input class="btn btn-light btn-sm" type="button" style="font-size: 14px;" id="sendbtn" value="send" />-->
 <!--&lt;!&ndash;            </p>&ndash;&gt;-->
 <!--        </div>-->
+
         <div class="send-box" style="text-align: center">
             <input class="msg-box font" id="message" />
             <button id="sendbtn">전송</button>
         </div>
         <script>
             document.querySelector('#sendbtn').addEventListener('click', () => {
-                let webSocket = new WebSocket("ws://localhost:8080/ws/chat");
+                let webSocket = new WebSocket("ws://www.doduchat.com/ws/chat");
                 let nick = document.querySelector('#nick');
                 let message = document.querySelector('#message');
 
@@ -150,7 +151,7 @@
                 };
             });
 
-            document.querySelector("#outchat").addEventListener('click', function(){
+            document.querySelector("#outchat").addEventListener('click', () => {
                 let out = confirm('채팅방을 정말 나가시겠습니까?');
                 if(out) location.href='/';
             });
