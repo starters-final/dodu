@@ -14,7 +14,7 @@ public class DBConfig {
   public StringEncryptor stringEncriptor(){
     PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
     SimpleStringPBEConfig config = new SimpleStringPBEConfig();
-    config.setPassword(DBSecureTest.getJasyptEncryptorPassword()); // 추후 환경 변수로 대체
+    config.setPassword(System.getenv("DB_PASSWORD")); // 추후 환경 변수로 대체
     config.setAlgorithm("PBEWithMD5AndDES");
     config.setKeyObtentionIterations("1000");
     config.setPoolSize("1");
