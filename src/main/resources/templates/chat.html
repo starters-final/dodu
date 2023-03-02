@@ -108,7 +108,7 @@
         </div>
         <script>
             document.querySelector('#sendbtn').addEventListener('click', () => {
-                let webSocket = new WebSocket("ws://localhost:8080/ws/chat");
+                let webSocket = new WebSocket("ws://ec2-13-56-171-130.us-west-1.compute.amazonaws.com:8080/ws/chat");
                 let nick = document.querySelector('#nick');
                 let message = document.querySelector('#message');
 
@@ -150,7 +150,7 @@
                 };
             });
 
-            document.querySelector("#outchat").addEventListener('click', function(){
+            document.querySelector("#outchat").addEventListener('click', () => {
                 let out = confirm('채팅방을 정말 나가시겠습니까?');
                 if(out) location.href='/';
             });
