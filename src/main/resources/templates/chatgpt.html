@@ -177,6 +177,11 @@
         input.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') sendMessage();
         });
+
+        document.querySelector("#outchat").addEventListener('click', () => {
+            let out = confirm('채팅방을 정말 나가시겠습니까?');
+            if(out) location.href='/';
+        });
     </script>
 </th:block>
 </html>
