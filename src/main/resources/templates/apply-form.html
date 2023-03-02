@@ -152,12 +152,16 @@
     <script>
         const checkDuplicates = (event) => {
             event.preventDefault();
+            const op1 = document.getElementById('op1').value;
+            const op2 = document.getElementById('op2').value;
+            const op3 = document.getElementById('op3').value;
 
-            const uniqueValues = new Set([
-                document.getElementById('op1').value,
-                document.getElementById('op2').value,
-                document.getElementById('op3').value
-            ]);
+            if (!(new Date(op1) > new Date()) || !(new Date(op2)> new Date()) || !(new Date(op3)> new Date())) {
+                alert('과거의 날짜는 신청할 수 없어요!!');
+                return;
+            }
+
+            const uniqueValues = new Set([op1, op2, op3]);
 
             if (uniqueValues.size !== 3) {
                 alert('각각 다른 날짜로 신청해 주세요!');
