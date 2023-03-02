@@ -2,12 +2,37 @@
 <html  xmlns:th="http://www.thymeleaf.org"
        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
        layout:decorate="~{layout/phonelayNotnav}">
-
+<head>
+    <style>
+        .send-box{
+            position: relative;
+            background-color: #fbeef1;
+            padding-bottom: 10px;
+        }
+        .msg-box{
+            padding: 0px 15px 0px 15px;
+            margin-top: 10px;
+            border: 1px solid black;
+            height: 70%;
+            width: 270px;
+            background: #fff;
+            border-radius: 40px;
+            margin-right: 5px;
+        }
+        #sendbtn{
+            padding: 1px 15px 1px 15px;
+            background-color: #e79caf;
+            color: white;
+            border: 0px;
+            border-radius: 40px;
+        }
+    </style>
+</head>
 <th:block layout:fragment="content" th:if="${chat}">
     <nav class="navbar navbar-light bg-light" style="position: relative; padding: 0px; height: 50px; background-color: rgba(216,90,123,0.8)!important;">
         <div class="container-fluid" style="height: 26px;">
             <button class="navbar-toggler" type="button" style="padding: 0px; margin: 0px; width: 30px; height: 25px;" onclick="location.href='/'">
-                <span class="font" style="width: 15px;height: 15px; " > < </span>
+                <span class="font" style="width: 15px;height: 15px;"> < </span>
             </button>
             <p class="navbar-brand font"  style="font-size:17px; padding: 0px; margin: 0px;" href="#"><b>DoChat</b></p>
 
@@ -55,112 +80,86 @@
             <p style="margin-bottom: 0;" th:text="|멘토링 주제 : ${chat?.get().mentor.category.title}|"></p>
             <p style="margin-bottom: 0;" th:text="|${chat.get().mentor.category.title}에 대해 물어보세요!|"></p>
         </div>
-
-        <!--입장 기능 일단 만들어논거임 추후 삭제 -->
-        <p class="font" style="font-size: 5px; margin-bottom: 0px;" >ID : <input type="text" id="nickname" value="" style="width: 100px; margin: 10px 0px 0px 0px; ">
-        <input class="btn btn-light btn-sm" type="button"  style="font-size: 5px;" id="enterbtn" value="입장"></p>
-        <hr style="margin: 10px">
-
-        <!--채팅 영역 -->
-        <div id="chatarea" style="width: 325px; height: 370px; overflow-y: auto;display: flex; flex-direction: column-reverse;">
-        <div id="mentor" class="font" style="font-size: 5px;"></div>
-        <div id="mentee" class="font" style="font-size: 5px; margin-left: auto;"></div>
+        <br />
+        <div class="chat-content">
+            <div class="line" style="text-align: center">
+                <span id="nick" th:value="${chat.get().getId()}" th:name="${user.getName()}" th:text="|${user?.getName()}님이 입장하셨습니다.|"></span>
+            </div>
+            <div class="line">
+                <span class="chat-box mine"></span>
+            </div>
         </div>
+
+        <hr style="margin: 10px">
+        <!--채팅 영역 -->
+        <div id="chatarea" style="width: 325px; height: 370px; overflow-y: auto;display: flex; flex-direction: column;"></div>
 
         <!-- 채팅창 -->
-        <div style="position: absolute; bottom:0px; width: 330px">
-        <hr style="margin: 10px">
-        <p class="font" style="font-size: 14px; margin-bottom: 0px;" >Message :
-        <input type="text" id="message" style="width: 150px; ">
-        <input class="btn btn-light btn-sm" type="button" style="font-size: 14px;" id="sendbtn" value="send">
-        </p>
+        <hr style="margin-bottom: 0px">
+<!--        <div style="position: absolute; bottom:0px; width: 330px" class="send-box">-->
+<!--&lt;!&ndash;            <p class="font" style="font-size: 14px; margin-bottom: 0px;" >&ndash;&gt;-->
+<!--                <input type="text" class="msg-box font" id="message" style="width: 150px; " />-->
+<!--                <input class="btn btn-light btn-sm" type="button" style="font-size: 14px;" id="sendbtn" value="send" />-->
+<!--&lt;!&ndash;            </p>&ndash;&gt;-->
+<!--        </div>-->
+        <div class="send-box" style="text-align: center">
+            <input class="msg-box font" id="message" />
+            <button id="sendbtn">전송</button>
         </div>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <script>
-            $(function(){
-                var webSocket;
+            document.querySelector('#sendbtn').addEventListener('click', () => {
+                let webSocket = new WebSocket("ws://localhost:8080/ws/chat");
+                let nick = document.querySelector('#nick');
+                let message = document.querySelector('#message');
 
-                $("#enterbtn").on('click',function(){
-                    webSocket = new WebSocket("ws://localhost:8080/ws/chat");
-                    webSocket.onopen = open;
-                    webSocket.onclose = close;
-                    webSocket.onmessage = message; //서버가 응답한 내용 수신
-                });// on enterbtn
+                webSocket.onopen = () => {
+                    console.log("웹소켓연결성공");
+                    webSocket.send(nick.getAttribute('value') + ":" + nick.getAttribute('name') + ":" + message.value);
+                    message.value = '';
+                };
 
-                $("#sendbtn").on('click',function(){
-                    //서버로 보내는 이벤트 발생
-                    var nickname =  $('#nickname').val();
-                    var sendmessage = $('#message').val();
-                   // if(nickname == 'mentee'){
-                    webSocket.send(nickname + ":" + sendmessage);
-                   // }
-                    //else {
-                    //    webSocket.send(1 + ":" + nickname + ":" + sendmessage);
-                    //}
-                    $("#message").val('');
-                });// on sendbtn
+                webSocket.onclose = () => {
+                    console.log("웹소켓연결해제");
+                };
 
+                webSocket.onmessage = async (event) => {
+                    console.log("서버로부터 메세지 수신 성공");
+                    let data = event.data.split(":");
+                    const date = new Date();
+                    const year = date.getFullYear();
+                    const month = date.getMonth();
+                    const day = date.getDate();
+                    const hour = date.getHours();
+                    const min = date.getMinutes();
+                    const clockTitle =`${year-2000}/${(month+1)<10?`0${(month+1)}`:(month+1)}/${day<10?`0${day}`:day}
+                        ${hour<13?` 오전 ${hour<10?`0${hour}`:hour}`:` 오후 ${(hour-12)<10?`0${(hour-12)}`:(hour-12)}`}
+                        : ${min<10?`0${min}`:min}
+                    `;
 
-                $("#outchat").on('click', function(){
-                    var out = confirm('채팅방을 정말 나가시겠습니까?');
-                    if(out){
-                       location.href='/';
+                    const chatArea = document.querySelector('#chatarea');
+                    let template = `
+                        <div id="mentor" class="font" style="margin-left: auto; width:auto!important; max-width: 70%;word-break: break-all; border-radius: 0.5rem; padding: 0.5rem; margin-bottom: 5px; background-color: #efbdca; color: black;">
+                            <span style="display: flex; flex-direction: column-reverse;  text-align: right; justify-content: end; width: auto;">${data[2]}</span>
+                        </div>
+                        <div id="mentor" class="font" style="font-size: 4px; text-align: right;">${clockTitle}</div>
+                    `;
+                    chatArea.insertAdjacentHTML("beforeend", template);
+                    setTimeout(() => {
+                        chatArea.scrollTo({ top: chatArea.scrollHeight, behavior: 'smooth' });
+                    }, 0);
+                };
+            });
 
-                    }
-                });
+            document.querySelector("#outchat").addEventListener('click', function(){
+                let out = confirm('채팅방을 정말 나가시겠습니까?');
+                if(out) location.href='/';
+            });
 
-                $("#gogpt").on('click', function(){
-                    var go = confirm('chatgpt로 이동하시겠습니까?');
-                    if(go){
-                        location.href='http://localhost:8080/chatgpt';
-
-                    }
-                });
-
-
-              /*  
-
-
-                $('input').keyup(function(event) {
-
-                    if (event.which === 13) {
-                        var nickname =  $('#nickname').val();
-                        var sendmessage = $('#message').val();
-                        if(nickname == 'mentee'){
-                            webSocket.send(2 + ":"+ nickname + ":" + sendmessage);
-                        } else {
-                            webSocket.send(1 + ":" + nickname + ":" + sendmessage);
-                        }
-                        $("#message").val('');
-                    }
-
-                }); */
-
-                });
-
-            function open(){console.log("웹소켓연결성공");}
-            function close(){console.log("웹소켓해제성공");}
-            function message(event){
-                console.log("서버로부터 메세지 수신 성공");
-                if(event.data.split(":")[0] === '2'){
-                    $('#mentee').append(event.data.split(":")[1] + "<br>"+ event.data.split(":")[2]+ "<=<br>");
-                } else{
-                    $('#mentor').append(event.data.split(":")[1] + "<br>=>"+ event.data.split(":")[2]+ "<br>");
-                }
-            }
-
-            // const params = new URLSearchParams(window.location.search);
-            // const isAlert = params.get('alert');
-            //
-            // if (isAlert === 'true') {
-            //     const message = decodeURIComponent(params.get('message'));
-            //     if (confirm(message)) history.back();
-            // }
+            document.querySelector("#gogpt").addEventListener('click', () => {
+                let go = confirm('chatgpt로 이동하시겠습니까?');
+                if(go) location.href='/chatgpt';
+            });
         </script>
-
-
-
     </div>
 </th:block>
 </html>

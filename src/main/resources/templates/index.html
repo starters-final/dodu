@@ -31,26 +31,26 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img
-                            src="https://images.unsplash.com/photo-1629131530695-30684ecb2366?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+                            src="/images/main2.jpg"
                             class="d-block w-100"
                             alt="..."
-                            height="100"
+                            height="150"
                     />
                 </div>
                 <div class="carousel-item">
                     <img
-                            src="https://images.unsplash.com/photo-1553905346-3b6e399115b4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+                            src="/images/main1.jpg"
                             class="d-block w-100"
                             alt="..."
-                            height="100"
+                            height="150"
                     />
                 </div>
                 <div class="carousel-item">
                     <img
-                            src="https://images.unsplash.com/photo-1577563908411-5077b6dc7624?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+                            src="/images/main3.jpg"
                             class="d-block w-100"
                             alt="..."
-                            height="100"
+                            height="150"
                     />
                 </div>
             </div>
@@ -73,27 +73,29 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
-
+<br>
         <!-- Section-->
         <section class="py-1">
             <div class="d-flex justify-content-start">
-                <div th:if="${session.user}" class="p-2 font" style="font-size: 8px; margin: 3px "> <b th:text="${session.user.getName()}" />님을 위한 추천 카테고리</div>
-                <div th:unless="${session.user}" class="p-2 font" style="font-size: 8px; margin: 3px "> <b th:text="DODU" />가 추천하는 카테고리</div>
+                <div th:if="${session.user}" class="p-2 font" style="font-size: 11px; margin: 3px "> <b th:text="${session.user.getName()}" />님을 위한 추천 카테고리</div>
+
+                <div th:unless="${session.user}" class="p-2 font" style="font-size: 11px; margin: 3px "> <b th:text="DODU" />가 추천하는 카테고리</div>
             </div>
             <div th:if="${not #lists.isEmpty(categories)}">
             <div class="btn-toolbar text-center" role="toolbar" aria-label="Toolbar with button groups"
-                style="margin-left: 15%; ">
+                style="margin-left: 10%;">
                 <div class="btn-group btn-group-sm " role="group" aria-label="First group" style="">
                     <div th:each="category : ${categories}">
-                        <button th:text="${category.getTitle()}" th:id="${category.id}" class="btn btn-outline-secondary font" onclick="changeCategory()" />
+                        <button th:text="${category.getTitle()}" th:id="${category.id}" class="btn btn-outline-secondary font" onclick="changeCategory()" style="font-family: 'Spoqa Han Sans Neo', 'sans-serif'; margin:1px; color:white; background-color: rgba(216,90,123,1); border-color: rgba(216,90,123,1)" />
                     </div>
                 </div>
             </div>
             </div>
-
+<br>
             <div class="d-flex justify-content-start">
-                <div th:if="${session.user}" class="p-2 font" style="font-size: 8px; margin: 3px "><b th:text="${session.user.getName()}" />님을 위한 추천 멘토</div>
-                <div th:unless="${session.user}" class="p-2 font" style="font-size: 8px; margin: 3px "> <b th:text="DODU" />가 추천하는 멘토</div>
+                <div th:if="${session.user}" class="p-2 font" style="font-size: 11px; margin: 3px "><b th:text="${session.user.getName()}" />님을 위한 추천 멘토</div>
+
+                <div th:unless="${session.user}" class="p-2 font" style="font-size: 11px; margin: 3px "> <b th:text="DODU" />가 추천하는 멘토</div>
             </div>
 
             <div class="container px-4 px-lg-5" id="carousel-final">
@@ -102,21 +104,22 @@
                 <div class="carousel-inner" id="mentor-carousel-inner">
                     <div th:each="mentor, iterStat : ${categories.get(0).getMentors()}" class="carousel-item" th:classappend="${iterStat.index == 0} ? 'active'">
                         <div th:text="${mentor.getCategory().getTitle()}" class="badge bg-light position-absolute font" style="top: 0.5rem; right: 0.5rem; color: black"></div>
-                        <div class="carousel-caption" style="top: 0.5rem; right: 0.5rem; color: black"></div>
-                            <img class="" th:src="${mentor.getImage()}" alt="Slice" width="312px" height="80px" />
+                            <div style="min-height: 405px;">
+                                <img class="" th:src="${mentor.getImage()}" alt="Slice" width="100%" height="405px" />
+                            </div>
                         <div class="" style="padding: 10px; height: 50px">
                             <div class="text-center">
-                                <h5 th:text="${mentor.getNickname()}" class="fw-bolder font" style="font-size:10px;"></h5>
+                                <h5 th:text="${mentor.getNickname()}" class="fw-bolder font" style="font-size:10px; margin-bottom: -5px;"></h5>
                                 <b th:text="${mentor.getUniversity()}" class="font" style="font-size: 3px;" /> <b th:text=" ${mentor.getMajor()}" class="font" style="font-size: 3px;" />
                             </div>
                         </div>
                         <div class="" style="padding: 10px 10px 10px 10px; background-color: rgba(216,90,123,1);">
-                            <div class="text-center" th:if="${session.isEmpty()}">
+                            <div class="text-center" th:unless="${session.user}">
                                 <button class="btn btn-outline-light font btn-sm" style="font-size: 10px" onclick="checkLogin()" >
                                     자세히 보기
                                 </button>
                             </div>
-                            <div class="text-center" th:unless="${session.isEmpty()}">
+                            <div class="text-center" th:if="${session.user}">
                                 <a class="btn btn-outline-light font btn-sm" style="font-size: 10px" th:href="@{/applyForm/{mentorId}(mentorId=${mentor.getId()})}" >
                                     자세히 보기
                                 </a>
@@ -151,11 +154,12 @@
                                     <div class="badge bg-light position-absolute font" style="top: 0.5rem; right: 0.5rem; color: black">
                                         ${item.category}
                                     </div>
-                                    <div class="carousel-caption" style="top: 0.5rem; right: 0.5rem; color: black"></div>
-                                    <img class="" src="${item.image}" alt="Slice" width="312px" height="80px" />
+                                    <div style="min-height: 405px;">
+                                        <img class="" src="${item.image}" alt="Slice" width="100%" height="405px" />
+                                    </div>
                                     <div class="" style="padding: 10px; height: 50px">
                                         <div class="text-center">
-                                            <h5 class="fw-bolder font" style="font-size:10px;">${item.nickname}</h5>
+                                            <h5 class="fw-bolder font" style="font-size:10px; margin-bottom: -5px;">${item.nickname}</h5>
                                             <b class="font" style="font-size: 3px;">${item.university}</b>
                                             <b class="font" style="font-size: 3px;">${item.major}</b>
                                         </div>

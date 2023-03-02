@@ -14,7 +14,7 @@ public class AdminLoginCheckFilter implements Filter {
     private static final String[] whitelist = {"/", "/doduLogin", "/admin", "/admin/home", "/admin/login", "/admin/logout" // admin 로그인 없이 접근
             ,"/chatgpt", "/applyForm/*" , "/mentee/applyList/*" 
             ,"/api/v1/**", "/mentor/**", "/mentee/**", "/chat/**", "/chatList"
-            ,"/css/*", "/images/*", "/js/*", "/layout/*"
+            ,"/css/*", "/images/*", "/js/*", "/layout/*", "/ws/chat"
     };
 
     @Override

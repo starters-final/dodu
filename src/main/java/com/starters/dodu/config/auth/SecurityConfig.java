@@ -53,6 +53,7 @@ public class SecurityConfig {
                                 .requestMatchers(new AntPathRequestMatcher("/applyForm/**")).hasRole(ROLE_MENTEE)
                                 .requestMatchers(new AntPathRequestMatcher("/mentee/applyList/**")).hasRole(ROLE_MENTEE)
                                 .requestMatchers(new AntPathRequestMatcher("/chatgpt")).hasRole(ROLE_MENTEE)
+                                .requestMatchers(new AntPathRequestMatcher("/ws/chat")).hasRole(ROLE_MENTEE)
                                 .anyRequest().permitAll()
                             .and()
                                 .logout()

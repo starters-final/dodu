@@ -26,24 +26,42 @@
           display: none;
       }
 
-      #wrap {
-          min-height: calc(100% - 230px);
-      }
 
       @media (max-width: 767px){/*모바일*/
-          body{margin: 0 auto;}
+          body{margin: 0 auto;
+              display: flex;
+              justify-content: center;}
           #dodu {display: none;}
+          #mobile{border: none;
+              position: relative;
+              display: flex;
+              justify-content: center;}
+
       }
 
       @media (min-width: 768px) and (max-width: 991px) { /* 조금작은 테블릿*/
-          body{margin: 0 auto;}
+          body{margin: 0 auto;
+              display: flex;
+              justify-content: center;}
           #dodu {display: none;}
+          #mobile{border: none;
+              position: relative;
+              display: flex;
+              justify-content: center;}
+
       }
 
       @media (min-width: 992px) and (max-width: 1199px) {/* 태블릿*/
-          body{margin: 0 auto;}
+          body{margin: 0 auto;
+              display: flex;
+              justify-content: center;}
           #dodu {display: none;}
-          #mobile{border: none;}
+          #mobile{border: none;
+              position: relative;
+              display: flex;
+              justify-content: center;}
+
+
       }
 
       @media (min-width: 1200px) {/* 웹브라우저*/
