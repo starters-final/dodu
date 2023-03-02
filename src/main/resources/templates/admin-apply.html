@@ -3,12 +3,17 @@
        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
        layout:decorate="~{layout/adminlay}">
 
+<style>
+
+
+</style>
+
 <th:block layout:fragment="content">
 
     <h2>신청 관리</h2>
     <div class="table-responsive">
         <table class="table table-striped table-sm">
-            <thead>
+            <thead class="th">
             <div class="sortBtns">
                 <button onclick="location.href='/admin/apply?sortBy=id'">번호순</button><button onclick="location.href='/admin/apply?sortBy=menteeName'">멘티이름순</button><button onclick="location.href='/admin/apply?sortBy=mentorName'">멘토이름순</button><button onclick="location.href='/admin/apply?sortBy=applyStatus'">수락여부순</button>
             </div>

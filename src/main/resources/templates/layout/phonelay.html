@@ -16,76 +16,137 @@
           display: none;
       }
 
+      #wrap::-webkit-scrollbar {
+          display: none;
+      }
+
       #chatarea::-webkit-scrollbar {
           display: none;
       }
 
-      #wrap {
-          min-height: calc(100% - 265px);
-          position: absolute;
-          top: 14%;
-      }
-      #footer{
-          position:absolute;
-          bottom : -30%;
-      }
 
-
-
-      @media (max-width: 767px){/*모바일*/
-          body{margin: 0 auto;}
-          #dodu {display: none;}
-          #mobile{border: none;
-          position: relative;
+      @media (max-width: 767px) {
+          /*모바일*/
+          body {
+              margin: 0 auto;
               display: flex;
-              justify-content: center;}
+              justify-content: center;
+          }
+
+          #dodu {
+              display: none;
+          }
+
+          #mobile {
+              border: none;
+              position: relative;
+          }
+
           #wrap {
               min-height: calc(100% - 265px);
               position: absolute;
-              top: 90%;
-          }
-          #footer{
-              position: absolute;
-              top : 850%
+              top: 100%;
+              overflow: scroll;
+              left: 0%;
           }
 
+          #footer {
+              position: fixed;
+              bottom: 0px;
+              background-color: white;
+          }
       }
 
+
+
       @media (min-width: 768px) and (max-width: 991px) { /* 조금작은 테블릿*/
-          body{margin: 0 auto;}
-          #mobile{border: none;
-              position: relative;}
-          #dodu {display: none;}
+          body {
+              margin: 0 auto;
+              display: flex;
+              justify-content: center;
+          }
+
+          #dodu {
+              display: none;
+          }
+
+          #mobile {
+              border: none;
+              position: relative;
+          }
+
+          #wrap {
+              min-height: calc(100% - 265px);
+              position: absolute;
+              top: 100%;
+              overflow: scroll;
+              left: 0%;
+          }
+
+          #footer {
+              position: fixed;
+              bottom: 0px;
+              background-color: white;
+          }
 
       }
 
       @media (min-width: 992px) and (max-width: 1199px) {/* 태블릿*/
-          body{margin: 0 auto;}
-          #dodu {display: none;}
-          #mobile{border: none;
-              position: relative;}
+          body {
+              margin: 0 auto;
+              display: flex;
+              justify-content: center;
+          }
+
+          #dodu {
+              display: none;
+          }
+
+          #mobile {
+              border: none;
+              position: relative;
+          }
+
+          #wrap {
+              min-height: calc(100% - 265px);
+              position: absolute;
+              top: 100%;
+              overflow: scroll;
+              left: 0%;
+          }
+
+          #footer {
+              position: fixed;
+              bottom: 0px;
+              background-color: white;
+          }
       }
 
-      @media (min-width: 1200px) {/* 웹브라우저*/
-          body{margin: 15px auto;
+      @media (min-width: 1200px) {
+          /* 웹브라우저*/
+          body {
+              margin: 15px auto;
               display: flex;
-              justify-content: center;}
-          #dodu{ /* 브랜드 설명 div*/
+              justify-content: center;
+          }
+
+          #dodu { /* 브랜드 설명 div*/
               width: 700px;
               height: 900px;
               float: left;
               text-align: center;
           }
-          #mobile{ /* 모바일 화면 div */
+
+          #mobile { /* 모바일 화면 div */
               width: 700px;
               height: 900px;
               background-image: url('/images/se.png');
               background-repeat: no-repeat;
               background-size: contain;
               float: left;
-              position: relative;
           }
-          #contents{
+
+          #contents {
               width: 375px;
               height: 667px;
               background-color: white;
@@ -102,17 +163,30 @@
           #chatarea::-webkit-scrollbar {
               display: none;
           }
-          #logo{
+
+          #logo {
               margin: 305px 0px 0px 0px;
           }
 
-          .font{
+          .font {
               font-family: 'Spoqa Han Sans Neo', 'sans-serif';
           }
 
+          #footer {
+              position: fixed;
+              bottom: 138px;
+              background-color: white;
+          }
 
-
+          #wrap {
+              min-height: calc(100% - 265px);
+              position: absolute;
+              top: 17%;
+              overflow: scroll;
+          }
       }
+
+
   </style>
 </head>
 <body>
@@ -128,6 +202,7 @@
         <th:block th:replace="/layout/fragments/navbar::navbar"></th:block>
         <div id="wrap" >
         <th:block layout:fragment="content"></th:block>
+            <br><br><br><br><br>
         </div>
 
         <div id="footer">

@@ -86,38 +86,51 @@
             </div>
         </div>
     </nav>
-        <!-- 안내문 -->
-        <div class="alert alert-dark font" role="alert" style="text-align: center; font-size: 1px; margin: 10px auto 0px auto !important; padding: 5px; width: 250px;">
-            <p style="margin-bottom: 0;">**주의사항**</p>
-            <p style="margin-bottom: 0;">멘토링 중 전화번호 등의 <br>개인정보를 요구하거나 알려주지 마십시요. </p>
-            <p style="margin-bottom: 4px;"></p>
+    <!-- 안내문 -->
+    <div class="alert alert-dark font" role="alert" style="text-align: center; font-size: 1px; margin: 10px auto 0px auto !important; padding: 5px; width: 250px;">
+        <p style="margin-bottom: 0;">**주의사항**</p>
+        <p style="margin-bottom: 0;">멘토링 중 전화번호 등의 <br>개인정보를 요구하거나 알려주지 마십시요. </p>
+        <p style="margin-bottom: 4px;"></p>
+    </div>
+    <hr style="margin: 5px 10px 5px 10px">
+    <div class="alert alert-light chat-content" style="height:480px; max-height: 480px;">
+        <!--채팅 영역 -->
+        <div class="line">
+            <span class="chat-box "></span>
         </div>
-        <hr style="margin: 5px 10px 5px 10px">
-        <div class="alert alert-light chat-content" style="height:480px; max-height: 480px;">
-            <!--채팅 영역 -->
-                <div class="line">
-                    <span class="chat-box "></span>
-                </div>
-                <div class="line">
-                    <span class="chat-box"></span>
-                </div>
+        <div class="line">
+            <span class="chat-box"></span>
         </div>
-        <!--전송 영역-->
+    </div>
+    <!--전송 영역-->
     <div class="send-box" style="text-align: center">
-        <input class="msg-box font" id="input"><button id="send">전송</button>
+        <input class="msg-box font" id="input" />
+        <button id="send">전송</button>
     </div>
 
     <script type="module">
         import { Configuration, OpenAIApi } from 'https://cdn.skypack.dev/openai';
 
-        const chatContent = document.querySelector('.chat-content');
+        let chatContent = document.querySelector('.chat-content');
+        let input = document.querySelector('#input');
 
         const sendMessage = async () => {
+            let date = new Date();
+            let year = date.getFullYear();
+            let month = date.getMonth();
+            let day = date.getDate();
+            let hour = date.getHours();
+            let min = date.getMinutes();
+            let clockTitle =`${year-2000}/${(month+1)<10?`0${(month+1)}`:(month+1)}/${day<10?`0${day}`:day}
+                ${hour<13?` 오전 ${hour<10?`0${hour}`:hour}`:` 오후 ${(hour-12)<10?`0${(hour-12)}`:(hour-12)}`}
+                : ${min<10?`0${min}`:min}
+            `;
             let template = `
-        <div class="line" style="margin-left: auto; width:auto!important; max-width: 70%;word-break: break-all; border-radius: 0.5rem; padding: 0.5rem; margin-bottom: 5px; background-color: #efbdca; color: black;">
-          <span class="chat-box font" style="display: flex; flex-direction: column-reverse;  text-align: right; justify-content: end; width: auto;">${document.querySelector('#input').value}</span>
-        </div>
-      `;
+                <div class="input" style="margin-left: auto; width:auto!important; max-width: 70%;word-break: break-all; border-radius: 0.5rem; padding: 0.5rem; margin-bottom: 5px; background-color: #efbdca; color: black;">
+                  <span class="chat-box font" style="display: flex; flex-direction: column-reverse;  text-align: right; justify-content: end; width: auto;">${input.value}</span>
+                </div>
+                <div class="font" style="font-size: 4px; text-align: right;">${clockTitle}</div>
+            `;
             chatContent.insertAdjacentHTML('beforeend', template);
             setTimeout(() => {
                 chatContent.scrollTo({ top: chatContent.scrollHeight, behavior: 'smooth' });
@@ -131,20 +144,23 @@
                 const openai = new OpenAIApi(configuration);
                 const result = await openai.createCompletion({
                     model: "text-davinci-003",
-                    prompt: document.querySelector('#input').value,
+                    prompt: input.value,
                     temperature: 0.7,
                     max_tokens: 500,
                     top_p: 1,
                     frequency_penalty: 0,
                     presence_penalty: 0,
                 });
-                document.querySelector('#input').value = "";
+                input.value = "";
                 template = `
-          <div class="line" style="width: auto!important; max-width: 70%; word-break: break-all; border-radius: 0.5rem; padding: 0.5rem; margin-bottom: 5px; background-color: #f7dee4; color: black;">
-            <span class="chat-box font" style="display: flex; flex-direction: column-reverse;  text-align: left; width: auto;">${result.data.choices[0].text}</span>
-          </div>
-        `;
-                document.querySelector('.chat-content').insertAdjacentHTML('beforeend', template);
+                  <div class="input" style="width: auto!important; max-width: 70%; word-break: break-all; border-radius: 0.5rem; padding: 0.5rem; margin-bottom: 5px; background-color: #f7dee4; color: black;">
+                    <span class="chat-box font" style="display: flex; flex-direction: column-reverse;  text-align: left; width: auto;">${result.data.choices[0].text}</span>
+                  </div>
+                  <div class="font" style="font-size: 4px; text-align: left;">${clockTitle}</div>
+                `;
+                chatContent.insertAdjacentHTML('beforeend', template);
+                const pos = input.getBoundingClientRect().top + window.pageYOffset;
+                window.scrollTo({top: pos, behavior: 'smooth'});
             }
             catch (err) {
                 console.log(err);
@@ -158,10 +174,8 @@
 
         document.querySelector('#send').addEventListener('click', sendMessage);
 
-        document.querySelector('#input').addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') sendMessage();
         });
     </script>
 </th:block>

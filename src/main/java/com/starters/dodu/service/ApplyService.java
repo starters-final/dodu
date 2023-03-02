@@ -3,7 +3,6 @@ package com.starters.dodu.service;
 import com.starters.dodu.domain.Apply;
 import com.starters.dodu.domain.Matching;
 import com.starters.dodu.dto.ApplyFormDTO;
-import com.starters.dodu.domain.Verification;
 import com.starters.dodu.dto.ApplyResultDTO;
 import com.starters.dodu.repository.ApplyListRepository;
 import com.starters.dodu.repository.MatchingRepository;
@@ -12,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,16 +45,21 @@ public class ApplyService {
 
   public int checkMatchTime(ApplyFormDTO applyFormDTO) {
     List<String> matchTimeList = Arrays.asList(
-            applyFormDTO.getMatchTime1().substring(0, 13),
-            applyFormDTO.getMatchTime2().substring(0, 13),
-            applyFormDTO.getMatchTime3().substring(0, 13)
+            applyFormDTO.getMatchTime1(),
+            applyFormDTO.getMatchTime2(),
+            applyFormDTO.getMatchTime3()
     );
-    List<Matching> match = matchingRepository.findAllByApply_Mentor(applyFormDTO.getMentor());
-    if (match.size() == 0) return 0;
+
+    for (String match : matchTimeList) {
+      if (LocalDateTime.now().isAfter(LocalDateTime.parse(match))) throw new RuntimeException("과거의 날짜는 신청할 수 없어요!");
+    }
+
+    List<Matching> matching = matchingRepository.findAllByApply_Mentor(applyFormDTO.getMentor());
+    if (matching.size() == 0) return 0;
 
     for (int i = 0; i < matchTimeList.size(); i++) {
-      for (int j = 0; j < match.size(); j++) {
-        if (matchTimeList.get(i).equals(match.get(j).getSelectedMatchTime().substring(0, 13))) {
+      for (Matching match : matching) {
+        if (matchTimeList.get(i).substring(0, 13).equals(match.getSelectedMatchTime().substring(0, 13))) {
           return i + 1;
         }
       }
@@ -88,7 +93,6 @@ public class ApplyService {
 
     return ApplyFormDTO.applyDto(apply);
   }
-
 
   public void updateApplyStatus(Long id, int status) {
     Apply apply = applyListRepository.findById(id).orElse(new Apply());

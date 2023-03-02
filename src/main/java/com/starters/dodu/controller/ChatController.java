@@ -31,7 +31,7 @@ public class ChatController {
         try {
             Optional<Chat> chat = chatService.findById(id, user);
             model.addAttribute("chat", chat);
-            model.addAttribute("user", user);
+            model.addAttribute("user", user); //session user
             log.info("@ChatController, chat GET()");
         } catch (Exception err) {
             String message = URLEncoder.encode(err.getMessage(), StandardCharsets.UTF_8);
